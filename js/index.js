@@ -6,6 +6,9 @@ var glPoint;
 var currentPointX = -8244776.525;
 var currentPointY = 512845.78;
 var modeManual = false;
+var photoURLS = new Array();
+
+var _url_photo = 'http://idecabogota.appspot.com/upload_test.jsp';
 
 gotoMain();
 myApp.addView('.view-main');
@@ -15,7 +18,7 @@ if (isPhoneGapExclusive()) {
     document.addEventListener("deviceready", onDeviceReady, false);
 } else {
     $(document).ready(function () {
-        initMap();        
+        init();        
     });
 };
 
@@ -27,10 +30,19 @@ function onDeviceReady() {
         }
     }
     $(document).ready(function () {
-        initMap();        
+        init();        
     });
 }
 
+function init() {
+    if (isPhoneGapExclusive()) {
+        if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
+            myApp.alert('Esta aplicación requiere conexión a internet.');
+            $("#bienvenida-toolbar").hide();
+        }
+    }
+    initMap();
+}
 
 function initMap() {
     try {
@@ -53,16 +65,22 @@ function initMap2() {
     });
     dojo.connect(map, "onClick", function (evt) {
         if (modeManual) {
+            alert(0);
             modeManual = false;
+            alert(1);
             currentPointX = evt.mapPoint.x;
+            alert(2);
             currentPointY = evt.mapPoint.y;
+            alert(3);
             var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 102100 });
             glPoint.clear();
+            alert(4);
             glPoint.add(new esri.Graphic(currentPoint,
                     new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("#FF0000"), 2),
                     new dojo.Color("#FF0000")),
                     null, null));
+            alert(5);
             map.centerAt(currentPoint);
         }
     });
@@ -96,11 +114,11 @@ function initLocationGPS() {
             map.centerAt(currentPoint);
         },
             function (error) {
-                alert(error);
+                
             },
             { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 });
     } catch (err) {
-        alert(err);
+        
     }
 }
 
@@ -149,6 +167,7 @@ function gotoMap(){
           
      $("#reporteDiv").hide();
      $("#reporte-toolbar").hide();
+     updateSize();
 };
 
 function gotoReporte() {
@@ -162,18 +181,74 @@ function gotoReporte() {
 
     $("#reporteDiv").show();
     $("#reporte-toolbar").show();
+
+    photoURLS = new Array();
 };
 
-function addPhotos() {
-    $("#photolist").append("<img src='icon.png' />");
+function addPhotos(sourceType) {
+    navigator.camera.getPicture(captureSuccess, captureFail, {
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: sourceType,
+        encodingType: Camera.EncodingType.JPEG
+    });
+};
+
+function captureSuccess(imageURI) {
+    myApp.showPreloader("Cargando foto, por favor, espere.");
+
+    var fail, ft, options, params, win;
+    options = new FileUploadOptions();
+    options.fileKey = "nva_imagen";
+    options.fileName = "imagen_" + new Date().getTime() + ".jpg";
+    ft = new FileTransfer();
+    ft.upload(imageURI, _url_photo, uploadSuccessFT, uploadFail, options);
+}
+
+function captureFail(imageURI) {
+    myApp.alert("Error en la captura de la imagen");
+}
+
+function uploadSuccessFT(response) {
+    myApp.hidePreloader();
+
+    var objResponse;
+    objResponse = JSON.parse(response.response);
+    if (objResponse.message == null) {
+        myApp.alert("Foto cargada exitosamente.");
+        photoURLS.push(objResponse.url);
+        $('#photolist').append('<img src="' + objResponse.url + '" />');
+    } else {
+        myApp.alert('No se pudo cargar la foto. Raz&oacute;n: ' + objResponse.message);
+    }
+};
+
+function uploadFail(error) {
+    myApp.hidePreloader();
+    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.");
 };
 
 function clearPhotos() {
+    photoURLS = new Array();
     $("#photolist").html("");
 };
 
 function submitReport() {
+    $.validity.start();
+    $("#fnombre").require();
+    $("#fcorreo").require();
+    $("#ftipo").require();
+    $("#fdescripcion").require();
+    if ($.validity.end().errors > 0) {
+        myApp.alert('Debe completar todos los campos para enviar un reporte.');
+        return;
+    };
 
+    $.validity.start();
+    $("#fcorreo").match("email");
+    if ($.validity.end().errors > 0) {
+        myApp.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
+        return;
+    };
 };
 
 function isPhoneGapExclusive() {

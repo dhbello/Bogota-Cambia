@@ -59,7 +59,7 @@
                                             <div class="item-content">
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <input type="text" placeholder="Nombre">
+                                                        <input id="fnombre" type="text" placeholder="Nombre">
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                             <div class="item-content">
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <input type="email" placeholder="E-mail">
+                                                        <input id="fcorreo" type="email" placeholder="E-mail">
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                             <div class="item-content">
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <select>
+                                                        <select id="ftipo">
                                                             <option>Opcion 1</option>
                                                             <option>Opcion 2</option>
                                                         </select>
@@ -104,7 +104,7 @@
                                             <div class="item-content">
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <textarea></textarea>
+                                                        <textarea id="fdescripcion"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,12 +122,11 @@
                                                                 
                                                             </div>
                                                         <br />
-                                                        <div class="right">
-                                                            <p class="buttons-row">
-                                                                <a href="#" onclick="addPhotos();" style="width: 50px;" class="button color-white bg-green"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            <p class="buttons-row" style="float: right;">
+                                                                <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="width: 50px;" class="button color-white bg-green"><i class="fa fa-camera" aria-hidden="true"></i></a>
+                                                                <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="width: 50px;" class="button color-white bg-green"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
                                                                 <a href="#" onclick="clearPhotos();" style="width: 50px;" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                             </p>
-                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -166,6 +165,7 @@
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validity.js"></script>
     <script src="js/terraformer.min.js"></script>
     <script src="js/terraformer-arcgis-parser.min.js"></script>
     <script src="arcgis/init.js"></script>
