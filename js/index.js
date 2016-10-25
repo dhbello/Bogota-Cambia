@@ -64,6 +64,11 @@ function initMap2() {
         extent: new esri.geometry.Extent({ xmin: -8245377.08, ymin: 512468.58, xmax: -8244175.97, ymax: 513222.98, spatialReference: { wkid: 102100 } }),
         autoresize: false
     });
+    document.dojoClick = false;
+    dojo.connect(map, "onClick", function (evt) {
+        setLocationPoint(evt);
+    });
+
     mapLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
     map.addLayer(mapLayer);
     glPoint = new esri.layers.GraphicsLayer();
@@ -72,23 +77,7 @@ function initMap2() {
             new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
             new dojo.Color([255, 0, 0, 0.75]), 2),
             new dojo.Color([255, 0, 0, 0.75]))));
-    map.addLayer(glPoint, 0);
-
-    if (isPhoneGapExclusive()) {
-        mapLayer.on("touchend, click", function (evt) {
-            alert(0);
-            setLocationPoint(evt);            
-        });
-        glPoint.on("touchend, click", function (evt) {
-            alert(1);
-            setLocationPoint(evt);
-        });
-    } else {
-        dojo.connect(map, "onClick", function (evt) {
-            setLocationPoint(evt);
-        });
-    }
-    
+    map.addLayer(glPoint, 0);        
     updateSize();
     initLocationGPS();
 }
