@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        -->
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Your app title -->
+    <title>Dinamica Urbana</title>
+    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
+        http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
+     -->
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="arcgis/esri/css/esri.css" />
+    <script src="arcgis/init.js"></script>
+</head>
+<body>
+    <!-- Status bar overlay for full screen mode (PhoneGap) -->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+        <div class="content-block">
+            <p>Left panel content goes here</p>
+        </div>
+    </div>
+    <!-- Views -->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                    <div class="center sliding">Dinamica Urbana</div>
+                    <div class="right">
+                    </div>
+                </div>
+            </div>
+            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="index" class="page">
+                    <!-- Scrollable page content -->
+                    <div class="page-content">
+                        <div id="bienvenidaDiv">
+                            <div class="content-block">
+                                <p>Texto de bienvenida</p>
+                            </div>
+                        </div>
+                        <div id="mapDiv"
+                             style="padding: 0px; width: 100%; position: absolute; top: 50px;">
+                            <div id="map" style="padding: 0px; width: 100%; height: 100%;"></div>
+                        </div>
+                        <div id="reporteDiv">
+                            <div class="content-block">
+                                <div class="content-block-title">Full Layout</div>
+                                <div class="list-block">
+                                    <ul>
+                                        <!-- Text inputs -->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Name</div>
+                                                    <div class="item-input">
+                                                        <input type="text" placeholder="Your name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">E-mail</div>
+                                                    <div class="item-input">
+                                                        <input type="email" placeholder="E-mail">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        ...
+                                        <!-- Select -->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Gender</div>
+                                                    <div class="item-input">
+                                                        <select>
+                                                            <option>Male</option>
+                                                            <option>Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- Date -->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Birth date</div>
+                                                    <div class="item-input">
+                                                        <input type="date" placeholder="Birth day" value="2014-04-30">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- Date time-->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Date time</div>
+                                                    <div class="item-input">
+                                                        <input type="datetime-local">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- Switch (Checkbox) -->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-toggle"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Switch</div>
+                                                    <div class="item-input">
+                                                        <label class="label-switch">
+                                                            <input type="checkbox">
+                                                            <div class="checkbox"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- Slider (Range input) -->
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-settings"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Slider</div>
+                                                    <div class="item-input">
+                                                        <div class="range-slider">
+                                                            <input type="range" min="0" max="100" value="50" step="0.1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- Textarea -->
+                                        <li class="align-top">
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Textarea</div>
+                                                    <div class="item-input">
+                                                        <textarea></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar" id="footer">
+
+                <!-- Toolbar links -->
+                <div id="map-toolbar" class="toolbar-inner">
+                    <a href="#" onclick="gotoReporte();" class="link">(+)</a>
+                    <a href="#" onclick="gotoReporte();" class="link">+</a>
+                </div>
+                <div id="bienvenida-toolbar" class="toolbar-inner">
+                    <a href="#" class="link"></a>
+                    <a href="#" onclick="gotoMap();" class="link">Continuar</a>
+                </div>
+                <div id="reporte-toolbar" class="toolbar-inner">
+                    <a href="#" onclick="gotoMap();" class="link">Aceptar</a>
+                    <a href="#" onclick="gotoMap();" class="link">Cancelar</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
