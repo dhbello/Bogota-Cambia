@@ -7,6 +7,7 @@ var currentPointX = -8244776.525;
 var currentPointY = 512845.78;
 var modeManual = false;
 var photoURLS = new Array();
+var msgtitle = "Dinamica Urbana"
 
 var _url_photo = 'http://idecabogota.appspot.com/upload_test.jsp';
 
@@ -37,7 +38,7 @@ function onDeviceReady() {
 function init() {
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
-            myApp.alert('Esta aplicación requiere conexión a internet.');
+            myApp.alert('Esta aplicación requiere conexión a internet.', msgtitle);
             $("#bienvenida-toolbar").hide();
         }
     }
@@ -63,27 +64,6 @@ function initMap2() {
         extent: new esri.geometry.Extent({ xmin: -8245377.08, ymin: 512468.58, xmax: -8244175.97, ymax: 513222.98, spatialReference: { wkid: 102100 } }),
         autoresize: false
     });
-    dojo.connect(map, "onClick", function (evt) {
-        if (modeManual) {
-            alert(0);
-            modeManual = false;
-            alert(1);
-            currentPointX = evt.mapPoint.x;
-            alert(2);
-            currentPointY = evt.mapPoint.y;
-            alert(3);
-            var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 102100 });
-            glPoint.clear();
-            alert(4);
-            glPoint.add(new esri.Graphic(currentPoint,
-                    new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
-                    new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("#FF0000"), 2),
-                    new dojo.Color("#FF0000")),
-                    null, null));
-            alert(5);
-            map.centerAt(currentPoint);
-        }
-    });
     mapLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
     map.addLayer(mapLayer);
     glPoint = new esri.layers.GraphicsLayer();
@@ -93,6 +73,22 @@ function initMap2() {
             new dojo.Color([255, 0, 0, 0.75]), 2),
             new dojo.Color([255, 0, 0, 0.75]))));
     map.addLayer(glPoint, 0);
+
+    if (isPhoneGapExclusive()) {
+        mapLayer.on("touchend, click", function (evt) {
+            alert(0);
+            setLocationPoint(evt);            
+        });
+        glPoint.on("touchend, click", function (evt) {
+            alert(1);
+            setLocationPoint(evt);
+        });
+    } else {
+        dojo.connect(map, "onClick", function (evt) {
+            setLocationPoint(evt);
+        });
+    }
+    
     updateSize();
     initLocationGPS();
 }
@@ -122,8 +118,6 @@ function initLocationGPS() {
     }
 }
 
-
-
 function updateSize() {
     var the_height = window.innerHeight - $("#header").height() - $("#footer").height() - 10;
     if (isPhoneGapExclusive()) {
@@ -142,6 +136,22 @@ function setLocation() {
     modeManual = true;
     glPoint.clear();
 };
+
+function setLocationPoint(evt) {
+    if (modeManual) {
+        modeManual = false;
+        currentPointX = evt.mapPoint.x;
+        currentPointY = evt.mapPoint.y;
+        var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 102100 });
+        glPoint.clear();
+        glPoint.add(new esri.Graphic(currentPoint,
+                new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
+                new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("#FF0000"), 2),
+                new dojo.Color("#FF0000")),
+                null, null));
+        map.centerAt(currentPoint);
+    }
+}
 
 function gotoMain(){
     $("#mapDiv").css("left", "-2000px");
@@ -205,7 +215,7 @@ function captureSuccess(imageURI) {
 }
 
 function captureFail(imageURI) {
-    myApp.alert("Error en la captura de la imagen");
+    myApp.alert("Error en la captura de la imagen", msgtitle);
 }
 
 function uploadSuccessFT(response) {
@@ -214,17 +224,17 @@ function uploadSuccessFT(response) {
     var objResponse;
     objResponse = JSON.parse(response.response);
     if (objResponse.message == null) {
-        myApp.alert("Foto cargada exitosamente.");
+        myApp.alert("Foto cargada exitosamente. (" + objResponse.url + ")", msgtitle);
         photoURLS.push(objResponse.url);
         $('#photolist').append('<img src="' + objResponse.url + '" />');
     } else {
-        myApp.alert('No se pudo cargar la foto. Raz&oacute;n: ' + objResponse.message);
+        myApp.alert('No se pudo cargar la foto. Raz&oacute;n: ' + objResponse.message, msgtitle);
     }
 };
 
 function uploadFail(error) {
     myApp.hidePreloader();
-    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.");
+    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.", msgtitle);
 };
 
 function clearPhotos() {
@@ -239,16 +249,35 @@ function submitReport() {
     $("#ftipo").require();
     $("#fdescripcion").require();
     if ($.validity.end().errors > 0) {
-        myApp.alert('Debe completar todos los campos para enviar un reporte.');
+        myApp.alert('Debe completar todos los campos para enviar un reporte.', msgtitle);
         return;
     };
 
     $.validity.start();
     $("#fcorreo").match("email");
     if ($.validity.end().errors > 0) {
-        myApp.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
+        myApp.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.', msgtitle);
         return;
     };
+
+    myApp.showPreloader("Enviando reporte, por favor, espere.");
+/*
+    $.ajax({
+        url: msgURL,
+        type: 'GET',
+        success: function () {
+            */
+            myApp.hidePreloader();
+            myApp.alert('Reporte enviado exitosamente.', msgtitle);
+    /*
+        },
+        error: function () {
+            myApp.hidePreloader();
+            myApp.alert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.', msgtitle);
+        }
+    });
+*/
+    gotoMap();
 };
 
 function isPhoneGapExclusive() {
