@@ -24,12 +24,6 @@ if (isPhoneGapExclusive()) {
 };
 
 function onDeviceReady() {
-    if (isPhoneGapExclusive()) {
-        if (window.device && parseFloat(window.device.version) >= 7.0) {
-            $("#header").css("padding-top", "20px");
-            $("body").css("margin-top", "20px");
-        }
-    }
     $(document).ready(function () {
         init();        
     });
@@ -109,11 +103,6 @@ function initLocationGPS() {
 
 function updateSize() {
     var the_height = window.innerHeight - $("#header").height() - $("#footer").height() - 10;
-    if (isPhoneGapExclusive()) {
-        if (window.device && parseFloat(window.device.version) >= 7.0) {
-            the_height = the_height - 20;
-        }
-    }
     $("#map").height(the_height);
     if (map) {
         map.resize();
@@ -223,7 +212,7 @@ function uploadSuccessFT(response) {
 
 function uploadFail(error) {
     myApp.hidePreloader();
-    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.", msgtitle);
+    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde." + JSON.stringify(error), msgtitle);
 };
 
 function clearPhotos() {
