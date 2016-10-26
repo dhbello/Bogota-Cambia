@@ -58,9 +58,11 @@ function initMap2() {
         extent: new esri.geometry.Extent({ xmin: -8245377.08, ymin: 512468.58, xmax: -8244175.97, ymax: 513222.98, spatialReference: { wkid: 102100 } }),
         autoresize: false
     });
-    document.dojoClick = false;
+    window.document.dojoClick = false;
+    esri.layers._GraphicsContainer.prototype._tolerance = 15;
     dojo.connect(map, "onClick", function (evt) {
-        setLocationPoint(evt);
+        alert(0);
+        //setLocationPoint(evt);
     });
 
     mapLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
