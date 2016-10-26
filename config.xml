@@ -63,8 +63,9 @@
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <!--
         <plugin name="com.phonegap.plugins.barcodescanner" />
-    -->
+   
     <plugin name="cordova-plugin-crosswalk-webview" />
+     -->
   
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
