@@ -1,19 +1,18 @@
 var myApp = new Framework7();
 var $$ = Dom7;
 var map;
+var view;
 var mapLayer;
 var glPoint;
-var currentPointX = -8244776.525;
-var currentPointY = 512845.78;
 var modeManual = false;
 var photoURLS = new Array();
 var msgtitle = "Dinamica Urbana"
-
+var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
+                  
 var _url_photo = 'http://idecabogota.appspot.com/upload_test.jsp';
 
-gotoMain();
 myApp.addView('.view-main');
-
+gotoMain();
 
 if (isPhoneGapExclusive()) {
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -40,41 +39,69 @@ function init() {
 }
 
 function initMap() {
-    try {
-        dojo.require("esri.map");
-        dojo.require("esri.layers.MapImageLayer");
-        dojo.require("esri.layers.MapImage");
-        dojo.require("esri.graphic");
-        dojo.require("esri.geometry.webMercatorUtils");
-        dojo.addOnLoad(initMap2);
-    } catch (err) {
 
-    };
+        require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/layers/TileLayer",
+          "esri/layers/GraphicsLayer",
+          "esri/symbols/SimpleLineSymbol",
+          "dojo/dom",
+          "dojo/domReady!"
+            ], function(
+          Map,
+          MapView,
+          TileLayer,
+          GraphicsLayer,
+          SimpleLineSymbol,
+          dom
+        ) {
+
+                mapLayer = new TileLayer({
+                    url: baseMapUrl
+                });
+
+                glPoint = new GraphicsLayer();
+
+                map = new Map({
+                    layers: [mapLayer, glPoint]
+                });
+
+                view = new MapView({
+                    container: "map",
+                    map: map
+                });
+
+                view.on("click", function (evt) {
+                    alert(1);
+                });
+                initLocationGPS();
+        });
 }
 
 function initMap2() {
-    map = new esri.Map("map", {
-        minZoom: 10,
-        extent: new esri.geometry.Extent({ xmin: -8245377.08, ymin: 512468.58, xmax: -8244175.97, ymax: 513222.98, spatialReference: { wkid: 102100 } }),
-        autoresize: false
-    });
-    window.document.dojoClick = false;
-    esri.layers._GraphicsContainer.prototype._tolerance = 15;
-    dojo.connect(map, "onClick", function (evt) {
-        alert(0);
-        //setLocationPoint(evt);
-    });
-
-    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
-    map.addLayer(mapLayer);
-    glPoint = new esri.layers.GraphicsLayer();
-    glPoint.setRenderer(new esri.renderer.SimpleRenderer(
-            new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-            new dojo.Color([255, 0, 0, 0.75]), 2),
-            new dojo.Color([255, 0, 0, 0.75]))));
+    
     map.addLayer(glPoint, 0);        
     updateSize();
+
+    window.document.dojoClick = false;
+    dojo.connect(map, "onMouseDown", function (evt) {
+        alert(0);
+        setLocationPoint(evt);
+    });
+    dojo.connect(map, "onClick", function (evt) {
+        alert(2);
+        setLocationPoint(evt);
+    });
+    dojo.connect(mapLayer, "onClick", function (evt) {
+        alert(3);
+        setLocationPoint(evt);
+    });
+    dojo.connect(glPoint, "onClick", function (evt) {
+        alert(4);
+        setLocationPoint(evt);
+    });
+
     initLocationGPS();
 }
 
@@ -82,10 +109,7 @@ function initLocationGPS() {
     try {
  
         navigator.geolocation.getCurrentPosition(function (position) {
-            var pointWSG84 = esri.geometry.geographicToWebMercator(new esri.geometry.Point(position.coords.longitude, position.coords.latitude, { wkid: 3857 }));
-            currentPointX = pointWSG84.x;
-            currentPointY = pointWSG84.y;
-            var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 102100 });
+            var currentPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
             glPoint.clear();
             glPoint.add(new esri.Graphic(currentPoint,
                     new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
@@ -120,9 +144,7 @@ function setLocation() {
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-        currentPointX = evt.mapPoint.x;
-        currentPointY = evt.mapPoint.y;
-        var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 102100 });
+        var currentPoint = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
         glPoint.clear();
         glPoint.add(new esri.Graphic(currentPoint,
                 new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
@@ -157,6 +179,7 @@ function gotoMap(){
           
      $("#reporteDiv").hide();
      $("#reporte-toolbar").hide();
+
      updateSize();
 };
 
