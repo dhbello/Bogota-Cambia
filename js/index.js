@@ -1,7 +1,6 @@
 var myApp = new Framework7();
 var $$ = Dom7;
 var map;
-var view;
 var mapLayer;
 var glPoint;
 var modeManual = false;
@@ -11,8 +10,9 @@ var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services
                   
 var _url_photo = 'http://idecabogota.appspot.com/upload_test.jsp';
 
-myApp.addView('.view-main');
 gotoMain();
+myApp.addView('.view-main');
+
 
 if (isPhoneGapExclusive()) {
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -39,69 +39,42 @@ function init() {
 }
 
 function initMap() {
+    try {
+        dojo.require("esri.map");
+        dojo.require("esri.layers.MapImageLayer");
+        dojo.require("esri.layers.MapImage");
+        dojo.require("esri.graphic");
+        dojo.require("esri.geometry.webMercatorUtils");
+        dojo.addOnLoad(initMap2);
+    } catch (err) {
 
-        require([
-          "esri/Map",
-          "esri/views/MapView",
-          "esri/layers/TileLayer",
-          "esri/layers/GraphicsLayer",
-          "esri/symbols/SimpleLineSymbol",
-          "dojo/dom",
-          "dojo/domReady!"
-            ], function(
-          Map,
-          MapView,
-          TileLayer,
-          GraphicsLayer,
-          SimpleLineSymbol,
-          dom
-        ) {
-
-                mapLayer = new TileLayer({
-                    url: baseMapUrl
-                });
-
-                glPoint = new GraphicsLayer();
-
-                map = new Map({
-                    layers: [mapLayer, glPoint]
-                });
-
-                view = new MapView({
-                    container: "map",
-                    map: map
-                });
-
-                view.on("click", function (evt) {
-                    alert(1);
-                });
-                initLocationGPS();
-        });
+    };
 }
 
 function initMap2() {
-    
-    map.addLayer(glPoint, 0);        
-    updateSize();
-
+    map = new esri.Map("map", {
+        autoresize: false,
+        zoom: 8
+    });
     window.document.dojoClick = false;
-    dojo.connect(map, "onMouseDown", function (evt) {
+    dojo.connect(map, "onClick", function (evt) {
         alert(0);
         setLocationPoint(evt);
     });
-    dojo.connect(map, "onClick", function (evt) {
-        alert(2);
-        setLocationPoint(evt);
-    });
-    dojo.connect(mapLayer, "onClick", function (evt) {
-        alert(3);
-        setLocationPoint(evt);
-    });
-    dojo.connect(glPoint, "onClick", function (evt) {
-        alert(4);
-        setLocationPoint(evt);
+    map.on('click', function (evt) {
+        alert(1);
     });
 
+    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer(baseMapUrl);
+    map.addLayer(mapLayer);
+    glPoint = new esri.layers.GraphicsLayer();
+    glPoint.setRenderer(new esri.renderer.SimpleRenderer(
+            new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+            new dojo.Color([255, 0, 0, 0.75]), 2),
+            new dojo.Color([255, 0, 0, 0.75]))));
+    map.addLayer(glPoint, 0);        
+    updateSize();
     initLocationGPS();
 }
 
@@ -179,7 +152,7 @@ function gotoMap(){
           
      $("#reporteDiv").hide();
      $("#reporte-toolbar").hide();
-
+     
      updateSize();
 };
 
