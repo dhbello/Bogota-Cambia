@@ -90,7 +90,8 @@ function initMap() {
         updateSize();
         $("#titleBar").html(4);
         map = new __Map({
-            layers: [mapLayer, glPoint],
+            basemap: 'streets',
+            layers: [glPoint],
         });
         $("#titleBar").html(5);
         view = new MapView({
@@ -236,7 +237,7 @@ function uploadSuccessFT(response) {
 
     var objResponse;
     objResponse = response.response;
-    myApp.alert("Foto cargada exitosamente. (" + objResponse + ")", msgtitle);
+    myApp.alert("Foto cargada exitosamente.", msgtitle);
     photoURLS.push(objResponse);
     $('#photolist').append('<img class="image_thumb" src="' + imageCache + '" />');
 };
