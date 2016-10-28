@@ -7274,7 +7274,7 @@ require({
                             dependsOn: ["loaded", "parsedUrl"],
                             get: function() {
                                 var a = this.loaded && this.parsedUrl && b.id && b.id.findCredential(this.parsedUrl.path) || null;
-                                a && a.ssl && (this.url = this.url.replace(/^http:/i, "https:"));
+                                a && a.ssl && (this.url = this.url.replace(/^http:/i, "http:"));
                                 return a
                             }
                         },
@@ -7707,7 +7707,7 @@ require({
 
                     function f(f, b, a) {
                         void 0 === b && (b = l.appBaseUrl);
-                        if (E(f)) return a && a.preserveProtocolRelative ? f : "file" === l.appUrl.scheme ? "https:" + f : l.appUrl.scheme + ":" + f;
+                        if (E(f)) return a && a.preserveProtocolRelative ? f : "file" === l.appUrl.scheme ? "http:" + f : l.appUrl.scheme + ":" + f;
                         if (G.test(f)) return f;
                         a = z;
                         if ("/" === f[0]) {
@@ -7778,7 +7778,7 @@ require({
                     }
 
                     function L(f) {
-                        return E(f) ? "https:" + f : f.replace(F, "https:")
+                        return E(f) ? "http:" + f : f.replace(F, "http:")
                     }
 
                     function B(f, b) {
@@ -8181,7 +8181,7 @@ require({
                         t;
                     t = b.crossOrigin;
                     b = k.mixin({}, b);
-                    b._ssl && (b.url = b.url.replace(/^http:/i, "https:"));
+                    b._ssl && (b.url = b.url.replace(/^http:/i, "http:"));
                     var E = b.content,
                         z = b.url,
                         u = a && b.form;
@@ -12777,13 +12777,13 @@ require({
                             }) : d()
                         };
                         q.prototype._normalizeSSL = function(a) {
-                            var f = this.allSSL || window && "https:" === window.location.protocol;
+                            var f = this.allSSL || window && "http:" === window.location.protocol;
                             if (this.isPortal) {
                                 var b = q._getLocation(a);
                                 if (-1 < this.portalHostname.toLowerCase().indexOf(b.hostname.toLowerCase()) && b.port && "80" !==
                                     b.port && "443" !== b.port) return a = b.pathname, 0 !== a.indexOf("/") && (a = "/" + a), f ? "https://" + b.hostname + (this.httpsPort && 443 !== this.httpsPort ? ":" + this.httpsPort : "") + a + b.search : "http://" + b.hostname + (this.httpPort && 80 !== this.httpPort ? ":" + this.httpPort : "") + a + b.search
                             }
-                            return f ? a.replace("http:", "https:") : a
+                            return f ? a.replace("http:", "http:") : a
                         };
                         q.prototype._normalizeUrl = function(a) {
                             var f = this.credential && this.credential.token;
@@ -17420,13 +17420,13 @@ require({
                                 }, this);
                                 c || (b = a.toLowerCase().indexOf("/sharing"), -1 !== b && (c = a.substring(0, b) + this._gwTokenUrl));
                                 c || (c = this._getOrigin(a) + this._gwTokenUrl);
-                                c && (f = (new g(a)).port, /^http:\/\//i.test(a) && "7080" === f && (c = c.replace(/:7080/i, ":7443")), c = c.replace(/http:/i, "https:"));
+                                c && (f = (new g(a)).port, /^http:\/\//i.test(a) && "7080" === f && (c = c.replace(/:7080/i, ":7443")), c = c.replace(/http:/i, "http:"));
                                 return c
                             }
                             if (-1 !== a.toLowerCase().indexOf("premium.arcgisonline.com")) return "https://premium.arcgisonline.com/server/tokens"
                         },
                         _getPortalSelf: function(a, f) {
-                            "https:" === window.location.protocol ? a = a.replace(/^http:/i, "https:").replace(/:7080/i, ":7443") : /^http:/i.test(f) && (a = a.replace(/^https:/i, "http:").replace(/:7443/i, ":7080"));
+                            "http:" === window.location.protocol ? a = a.replace(/^http:/i, "http:").replace(/:7080/i, ":7443") : /^http:/i.test(f) && (a = a.replace(/^https:/i, "http:").replace(/:7443/i, ":7080"));
                             return w(a, {
                                 query: {
                                     f: "json"
@@ -17481,7 +17481,7 @@ require({
                         _checkProtocol: function(a, f, b, c) {
                             var d = !0;
                             c = c ? f.adminTokenServiceUrl : f.tokenServiceUrl;
-                            if (0 === n.trim(c).toLowerCase().indexOf("https:") && 0 !== window.location.href.toLowerCase().indexOf("https:") &&
+                            if (0 === n.trim(c).toLowerCase().indexOf("http:") && 0 !== window.location.href.toLowerCase().indexOf("http:") &&
                                 (!s.request.useCors || !t.canUseXhr(c) && !t.canUseXhr(t.getProxyUrl(!0).path))) d = this._protocolFunc ? !!this._protocolFunc({
                                 resourceUrl: a,
                                 serverInfo: f
@@ -17547,7 +17547,7 @@ require({
                                         token: e.token,
                                         expires: null
                                     })) : m ? (m = "", e = window.location.href, m = b.signInPage ? b.signInPage : p ? p.baseUrl +
-                                        p.signin : b._isIdProvider(e, a.resUrl_) ? b._getOrigin(e) + "/home/signin.html" : k.tokenServiceUrl.replace(b._rePortalTokenSvc, "") + "/home/signin.html", m = m.replace(/http:/i, "https:"), p && !1 === p.useSSL && (m = m.replace(/https:/i, "http:")), 0 === e.toLowerCase().replace("https", "http").indexOf(m.toLowerCase().replace("https", "http")) ? (k = Error("Cannot redirect to Sign-In page from within Sign-In page. URL of the resource that triggered this workflow: " + a.resUrl_), k.code = "IdentityManagerBase.5", k.log = l.isDebug, d(k)) :
+                                        p.signin : b._isIdProvider(e, a.resUrl_) ? b._getOrigin(e) + "/home/signin.html" : k.tokenServiceUrl.replace(b._rePortalTokenSvc, "") + "/home/signin.html", m = m.replace(/http:/i, "http:"), p && !1 === p.useSSL && (m = m.replace(/https:/i, "http:")), 0 === e.toLowerCase().replace("https", "http").indexOf(m.toLowerCase().replace("https", "http")) ? (k = Error("Cannot redirect to Sign-In page from within Sign-In page. URL of the resource that triggered this workflow: " + a.resUrl_), k.code = "IdentityManagerBase.5", k.log = l.isDebug, d(k)) :
                                         b._redirectFunc ? b._redirectFunc({
                                             signInPage: m,
                                             returnUrlParamName: "returnUrl",
@@ -20057,7 +20057,7 @@ require({
                             };
                         c.forceLogin && (e.force_login = !0);
                         c.showSocialLogins && (e.showSocialLogins = !0);
-                        var g = c.portalUrl.replace(/^http:/i, "https:") + "/sharing/oauth2/authorize",
+                        var g = c.portalUrl.replace(/^http:/i, "http:") + "/sharing/oauth2/authorize",
                             f = g + "?" + s.objectToQuery(e);
                         if (c.popup) {
                             var p;
@@ -20729,7 +20729,7 @@ require({
                                 callbackParamName: "callback"
                             })
                         }.bind(this)).then(function(a) {
-                            a.ssl && (this.url = this.url.replace(/^http:/i, "https:"));
+                            a.ssl && (this.url = this.url.replace(/^http:/i, "http:"));
                             this.read(a.data, {
                                 origin: "service",
                                 url: this.parsedUrl
@@ -28797,7 +28797,7 @@ require({
                         }
                     },
                     _updateUrl: function(a) {
-                        a && (this.url = this.url.replace(/^http:/i, "https:"))
+                        a && (this.url = this.url.replace(/^http:/i, "http:"))
                     },
                     _fetchService: function() {
                         return null ==
@@ -29319,8 +29319,8 @@ require({
                     _useSSL: function() {
                         var a = this.parsedUrl,
                             k = /^http:/i;
-                        this.url && this.set("url", this.url.replace(k, "https:"));
-                        a && a.path && (a.path = a.path.replace(k, "https:"))
+                        this.url && this.set("url", this.url.replace(k, "http:"));
+                        a && a.path && (a.path = a.path.replace(k, "http:"))
                     },
                     _encode: function(m, k, g) {
                         var h, e, d = {},
@@ -29885,7 +29885,7 @@ require({
                                     callbackParamName: "callback"
                                 })
                             }.bind(this)).then(function(a) {
-                                a.ssl && (this.url = this.url.replace(/^http:/i, "https:"));
+                                a.ssl && (this.url = this.url.replace(/^http:/i, "http:"));
                                 this.read(a.data, {
                                     origin: "service",
                                     url: this.parsedUrl
