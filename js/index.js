@@ -92,7 +92,7 @@ function initMap() {
         currentPoint = new Point(-74.0668084, 4.600885262127369);
         map = new __Map({
             basemap: 'streets',
-            layers: [glPoint],
+            layers: [mapLayer],
         });
         view = new MapView({
             container: "map",
