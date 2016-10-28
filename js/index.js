@@ -10,7 +10,7 @@ var currentPoint;
 var modeManual = false;
 var photoURLS = new Array();
 var msgtitle = "Dinamica Urbana";
-var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
+var baseMapUrl = "http://http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
 var _url_photo = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Imagen';
 var _url_msg = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Registro?';
 
@@ -91,7 +91,6 @@ function initMap() {
 
         currentPoint = new Point(-74.0668084, 4.600885262127369);
         map = new __Map({
-            basemap: 'streets',
             layers: [mapLayer, glPoint]
         });
         view = new MapView({
