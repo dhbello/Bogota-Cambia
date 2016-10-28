@@ -14,7 +14,7 @@ var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services
 var _url_photo = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Imagen';
 var _url_msg = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Registro?';
 
-var __Map, MapView, TileLayer, GraphicsLayer, Point, Graphic, SimpleMarkerSymbol, SimpleLineSymbol, Color, dom;
+var __Map, MapView, TileLayer, GraphicsLayer, Point, Graphic, SimpleMarkerSymbol, SimpleLineSymbol, WebMercatorUtils, Color, dom;
 
 myApp.addView('.view-main');
 gotoMap();
@@ -54,6 +54,7 @@ function initMap() {
       "esri/symbols/SimpleMarkerSymbol",
       "esri/symbols/SimpleLineSymbol",
       "esri/Color",
+      "esri/geometry/support/webMercatorUtils",
       "dojo/dom",
       "dojo/domReady!"
     ], function (
@@ -66,6 +67,7 @@ function initMap() {
       _SimpleMarkerSymbol,
       _SimpleLineSymbol,
       _Color,
+      _webMercatorUtils,
       _dom
     ) {
 
@@ -78,34 +80,31 @@ function initMap() {
         SimpleMarkerSymbol = _SimpleMarkerSymbol;
         SimpleLineSymbol = _SimpleLineSymbol;
         Color = _Color;
+        WebMercatorUtils = _webMercatorUtils;
         dom = _dom;
 
-        $("#titleBar").html(1);
         mapLayer = new TileLayer({
             url: baseMapUrl
         });
-        $("#titleBar").html(2);
         glPoint = new GraphicsLayer();
-        $("#titleBar").html(3);
         updateSize();
-        $("#titleBar").html(4);
+
+        currentPoint = new Point(-74.0668084, 4.600885262127369);
         map = new __Map({
             basemap: 'streets',
             layers: [glPoint],
         });
-        $("#titleBar").html(5);
         view = new MapView({
             container: "map",
+            center: [currentPoint.x, currentPoint.y],
             map: map,
-            zoom: 10
+            zoom: 15
         });
-        $("#titleBar").html(6);
+
         view.on("click", function (evt) {
             setLocationPoint(evt);
         });
-        $("#titleBar").html(7);
         initLocationGPS();
-        $("#titleBar").html(8);
     });
     
 }
@@ -114,13 +113,14 @@ function initLocationGPS() {
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
-            currentPoint = new Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
+            currentPoint = new Point(position.coords.longitude, position.coords.latitude);
+            glPoint.removeAll();
             glPoint.add(new Graphic(currentPoint,
                     new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
                     new Color("#FF0000")),
                     null, null));
-            view.center = currentPoint;
+            view.center = [currentPoint.x, currentPoint.y];
 
         },
             function (error) {
@@ -148,7 +148,8 @@ function setLocation() {
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
+        var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
+        currentPoint = new Point(cTemp[0], cTemp[1]);
         glPoint.removeAll();
         glPoint.add(new Graphic(currentPoint,
                 new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
