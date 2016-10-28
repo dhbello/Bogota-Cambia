@@ -80,29 +80,33 @@ function initMap() {
         Color = _Color;
         dom = _dom;
 
+        $("#titleBar").html(1);
         mapLayer = new TileLayer({
             url: baseMapUrl
         });
-
+        $("#titleBar").html(2);
         glPoint = new GraphicsLayer();
-
+        $("#titleBar").html(3);
         updateSize();
+        $("#titleBar").html(4);
         map = new __Map({
             layers: [mapLayer, glPoint],
         });
-
+        $("#titleBar").html(5);
         view = new MapView({
             container: "map",
             map: map,
             zoom: 10
         });
-
+        $("#titleBar").html(6);
         view.on("click", function (evt) {
             setLocationPoint(evt);
         });
-        
+        $("#titleBar").html(7);
         initLocationGPS();
+        $("#titleBar").html(8);
     });
+    
 }
 
 function initLocationGPS() {
@@ -195,6 +199,10 @@ function gotoReporte() {
     $("#reporte-toolbar").show();
 
     photoURLS = new Array();
+    $('#fnombre')[0].value = "";
+    $('#fcorreo')[0].value = "";
+    $('#fdescripcion')[0].value = "";
+    $('#photolist').html("");
 };
 
 function addPhotos(sourceType) {
@@ -230,7 +238,7 @@ function uploadSuccessFT(response) {
     objResponse = response.response;
     myApp.alert("Foto cargada exitosamente. (" + objResponse + ")", msgtitle);
     photoURLS.push(objResponse);
-    $('#photolist').append('<img src="' + imageCache + '" />');
+    $('#photolist').append('<img class="image_thumb" src="' + imageCache + '" />');
 };
 
 function uploadFail(error) {
@@ -266,7 +274,7 @@ function submitReport() {
     var photoMSG = '';
     if (photoURLS.length > 0) {
         for (var i = 0; i < photoURLS.length; i++) {
-            photoMSG = photoMSG + '&foto=' + photoURLS[i];
+            photoMSG = photoMSG + '&foto=' + encodeURIComponent(photoURLS[i]);
         }
     };
     var msgURL = _url_msg + "nombre=" + $('#fnombre')[0].value + "&email=" + $('#fcorreo')[0].value

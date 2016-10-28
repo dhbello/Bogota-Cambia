@@ -24,3 +24,11 @@
     border: 5px solid white;
     border-radius: 50%;
 }
+
+.image_thumb {
+  display: block;
+  max-width:100px;
+  max-height:100px;
+  width: auto;
+  height: auto;
+}
