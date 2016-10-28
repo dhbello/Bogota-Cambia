@@ -1,30 +1,35 @@
 var myApp = new Framework7();
 var $$ = Dom7;
+
 var map;
+var view;
 var mapLayer;
 var glPoint;
+var currentPoint;
+
 var modeManual = false;
 var photoURLS = new Array();
-var msgtitle = "Dinamica Urbana"
+var msgtitle = "Dinamica Urbana";
 var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
-                  
-var _url_photo = 'http://idecabogota.appspot.com/upload_test.jsp';
+var _url_photo = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Imagen';
+var _url_msg = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Registro?';
 
-gotoMain();
+var __Map, MapView, TileLayer, GraphicsLayer, Point, Graphic, SimpleMarkerSymbol, SimpleLineSymbol, Color, dom;
+
 myApp.addView('.view-main');
-
+gotoMap();
 
 if (isPhoneGapExclusive()) {
     document.addEventListener("deviceready", onDeviceReady, false);
 } else {
     $(document).ready(function () {
-        init();        
+        init();
     });
 };
 
 function onDeviceReady() {
     $(document).ready(function () {
-        init();        
+        init();
     });
 }
 
@@ -38,97 +43,118 @@ function init() {
     initMap();
 }
 
-function initMap() {
-    try {
-        dojo.require("esri.map");
-        dojo.require("esri.layers.MapImageLayer");
-        dojo.require("esri.layers.MapImage");
-        dojo.require("esri.graphic");
-        dojo.require("esri.geometry.webMercatorUtils");
-        dojo.addOnLoad(initMap2);
-    } catch (err) {
+function initMap() {   
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/TileLayer",
+      "esri/layers/GraphicsLayer",
+      "esri/geometry/Point",
+      "esri/Graphic",
+      "esri/symbols/SimpleMarkerSymbol",
+      "esri/symbols/SimpleLineSymbol",
+      "esri/Color",
+      "dojo/dom",
+      "dojo/domReady!"
+    ], function (
+      _Map,
+      _MapView,
+      _TileLayer,
+      _GraphicsLayer,
+      _Point,
+      _Graphic,
+      _SimpleMarkerSymbol,
+      _SimpleLineSymbol,
+      _Color,
+      _dom
+    ) {
 
-    };
-}
+        __Map = _Map;
+        MapView = _MapView;
+        TileLayer = _TileLayer;
+        GraphicsLayer = _GraphicsLayer;
+        Point = _Point;
+        Graphic = _Graphic;
+        SimpleMarkerSymbol = _SimpleMarkerSymbol;
+        SimpleLineSymbol = _SimpleLineSymbol;
+        Color = _Color;
+        dom = _dom;
 
-function initMap2() {
-    map = new esri.Map("map", {
-        autoresize: false,
-        zoom: 8
-    });
-    window.document.dojoClick = false;
-    dojo.connect(map, "onClick", function (evt) {
-        alert(0);
-        setLocationPoint(evt);
-    });
-    map.on('click', function (evt) {
-        alert(1);
-    });
+        mapLayer = new TileLayer({
+            url: baseMapUrl
+        });
 
-    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer(baseMapUrl);
-    map.addLayer(mapLayer);
-    glPoint = new esri.layers.GraphicsLayer();
-    glPoint.setRenderer(new esri.renderer.SimpleRenderer(
-            new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-            new dojo.Color([255, 0, 0, 0.75]), 2),
-            new dojo.Color([255, 0, 0, 0.75]))));
-    map.addLayer(glPoint, 0);        
-    updateSize();
-    initLocationGPS();
+        glPoint = new GraphicsLayer();
+
+        updateSize();
+        map = new __Map({
+            layers: [mapLayer, glPoint],
+        });
+
+        view = new MapView({
+            container: "map",
+            map: map,
+            zoom: 10
+        });
+
+        view.on("click", function (evt) {
+            setLocationPoint(evt);
+        });
+        
+        initLocationGPS();
+    });
 }
 
 function initLocationGPS() {
     try {
- 
+
         navigator.geolocation.getCurrentPosition(function (position) {
-            var currentPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
-            glPoint.clear();
-            glPoint.add(new esri.Graphic(currentPoint,
-                    new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
-                    new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("#FF0000"), 2),
-                    new dojo.Color("#FF0000")),
+            currentPoint = new Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
+            glPoint.add(new Graphic(currentPoint,
+                    new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
+                    new Color("#FF0000")),
                     null, null));
-            map.centerAt(currentPoint);
+            view.center = currentPoint;
+
         },
             function (error) {
-                
+
             },
             { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 });
     } catch (err) {
-        
+
     }
 }
+
+
 
 function updateSize() {
     var the_height = window.innerHeight - $("#header").height() - $("#footer").height() - 10;
     $("#map").height(the_height);
-    if (map) {
-        map.resize();
-        map.reposition();
-    };
+    $("#map").height(the_height);
 };
 
 function setLocation() {
     modeManual = true;
-    glPoint.clear();
+    glPoint.removeAll();
 };
 
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-        var currentPoint = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
-        glPoint.clear();
-        glPoint.add(new esri.Graphic(currentPoint,
-                new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, 15,
-                new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("#FF0000"), 2),
-                new dojo.Color("#FF0000")),
-                null, null));
-        map.centerAt(currentPoint);
+        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
+        glPoint.removeAll();
+        glPoint.add(new Graphic(currentPoint,
+                new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
+                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
+                new Color("#FF0000"),
+                null, null)));
+        //view.center = currentPoint;
     }
 }
 
-function gotoMain(){
+function gotoMain() {
     $("#mapDiv").css("left", "-2000px");
     $("#mapDiv").css("position", "absolute");
     $("#map-toolbar").hide();
@@ -141,19 +167,19 @@ function gotoMain(){
     $("#bienvenida-toolbar").show();
 }
 
-function gotoMap(){
-     $("#mapDiv").css("left", "0px");
-     $("#mapDiv").css("position", "");
-     $("#map-toolbar").show();
-     $("#map-header").show();
+function gotoMap() {
+    $("#mapDiv").css("left", "0px");
+    $("#mapDiv").css("position", "");
+    $("#map-toolbar").show();
+    $("#map-header").show();
 
-     $("#bienvenidaDiv").hide();
-     $("#bienvenida-toolbar").hide();
-          
-     $("#reporteDiv").hide();
-     $("#reporte-toolbar").hide();
-     
-     updateSize();
+    $("#bienvenidaDiv").hide();
+    $("#bienvenida-toolbar").hide();
+
+    $("#reporteDiv").hide();
+    $("#reporte-toolbar").hide();
+
+    updateSize();
 };
 
 function gotoReporte() {
@@ -179,6 +205,8 @@ function addPhotos(sourceType) {
     });
 };
 
+var imageCache;
+
 function captureSuccess(imageURI) {
     myApp.showPreloader("Cargando foto, por favor, espere.");
 
@@ -187,6 +215,7 @@ function captureSuccess(imageURI) {
     options.fileKey = "nva_imagen";
     options.fileName = "imagen_" + new Date().getTime() + ".jpg";
     ft = new FileTransfer();
+    imageCache = imageURI;
     ft.upload(imageURI, _url_photo, uploadSuccessFT, uploadFail, options);
 }
 
@@ -198,14 +227,10 @@ function uploadSuccessFT(response) {
     myApp.hidePreloader();
 
     var objResponse;
-    objResponse = JSON.parse(response.response);
-    if (objResponse.message == null) {
-        myApp.alert("Foto cargada exitosamente. (" + objResponse.url + ")", msgtitle);
-        photoURLS.push(objResponse.url);
-        $('#photolist').append('<img src="' + objResponse.url + '" />');
-    } else {
-        myApp.alert('No se pudo cargar la foto. Raz&oacute;n: ' + objResponse.message, msgtitle);
-    }
+    objResponse = response.response;
+    myApp.alert("Foto cargada exitosamente. (" + objResponse + ")", msgtitle);
+    photoURLS.push(objResponse);
+    $('#photolist').append('<img src="' + imageCache + '" />');
 };
 
 function uploadFail(error) {
@@ -237,22 +262,29 @@ function submitReport() {
     };
 
     myApp.showPreloader("Enviando reporte, por favor, espere.");
-/*
+
+    var photoMSG = '';
+    if (photoURLS.length > 0) {
+        for (var i = 0; i < photoURLS.length; i++) {
+            photoMSG = photoMSG + '&foto=' + photoURLS[i];
+        }
+    };
+    var msgURL = _url_msg + "nombre=" + $('#fnombre')[0].value + "&email=" + $('#fcorreo')[0].value
+                          + "&tipoRegistro=" + $('#ftipo')[0].value + "&descripcion=" + $('#fdescripcion')[0].value
+                          + "&latitud=" + currentPoint.x + "&longitud=" + currentPoint.y + photoMSG;
     $.ajax({
         url: msgURL,
         type: 'GET',
-        success: function () {
-            */
+        success: function () {                
             myApp.hidePreloader();
-            myApp.alert('Reporte enviado exitosamente.', msgtitle);
-    /*
+            myApp.alert('Reporte enviado exitosamente.', msgtitle);    
         },
         error: function () {
             myApp.hidePreloader();
             myApp.alert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.', msgtitle);
         }
     });
-*/
+
     gotoMap();
 };
 
