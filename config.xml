@@ -81,10 +81,10 @@
     <icon src="res/icon/windows-phone/icon-173.png" platform="winphone"   role="background" />
 
     <!-- Define app splash screen for each platform. -->
-    <splash src="res/screen/android/screen-ldpi-portrait.png"       platform="android" qualifier="port-ldpi" />
-    <splash src="res/screen/android/screen-mdpi-portrait.png"       platform="android" qualifier="port-mdpi" />
-    <splash src="res/screen/android/screen-hdpi-portrait.png"       platform="android" qualifier="port-hdpi" />
-    <splash src="res/screen/android/screen-xhdpi-portrait.png"      platform="android" qualifier="port-xhdpi" />
+    <splash src="res/screen/android/screen-ldpi-portrait.png"       platform="android" qualifier="ldpi" />
+    <splash src="res/screen/android/screen-mdpi-portrait.png"       platform="android" qualifier="mdpi" />
+    <splash src="res/screen/android/screen-hdpi-portrait.png"       platform="android" qualifier="hdpi" />
+    <splash src="res/screen/android/screen-xhdpi-portrait.png"      platform="android" qualifier="xhdpi" />
     <splash src="res/screen/ios/screen-iphone-portrait.png"         platform="ios"     width="320" height="480" />
     <splash src="res/screen/ios/screen-iphone-portrait-2x.png"      platform="ios"     width="640" height="960" />
     <splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" platform="ios"     width="640" height="1136" />
