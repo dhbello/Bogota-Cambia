@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"Lagret ${name} har inga f\u00e4lt som kan anv\u00e4ndas f\u00f6r filtrering.",addToViewer:"L\u00e4gg till lager p\u00e5 karta",noItemsToDisplay:"Det finns inga objekt att visa.",searchFor:"S\u00f6k efter",searching:"S\u00f6ker",items:{organizationLabel:"Min organisation",onlineLabel:"ArcGIS Online",contentLabel:"Mitt inneh\u00e5ll",favoritesLabel:"Mina favoriter"},title:"V\u00e4lj webbkarta",searchTitle:"S\u00f6k",ok:"OK",cancel:"Avbryt",placeholder:"Ange s\u00f6kterm",instructionsLeft:"Vad vill du g\u00f6ra?",
+instructionsRight:"V\u00e4lj en konfigurerbar app.",go:"K\u00f6r",selectDetails:"V\u00c4LJ",configure:"Skapa",close:"St\u00e4ng",learnMoreConfigurableApps:"L\u00e4s mer om konfigurerbara appar"});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define(["../../core/Warning","../SimpleRenderer","../UniqueValueRenderer","../ClassBreaksRenderer"],function(f,g,h,k){var d={simple:g,uniqueValue:h,classBreaks:k},e={fromJson:function(a){try{throw Error("fromJson is deprecated, use fromJSON instead");}catch(b){console.warn(b.stack)}return e.fromJSON(a)},read:function(a,b,c){if(b=!a?null:d[a.type]||null)return b=new b,b.read(a,c),b;c&&(c.messages&&a)&&c.messages.push(new f("renderer:unsupported","Renderers of type '"+(a.type||"unknown")+"' are not supported",
+{definition:a,context:c}));return null},fromJSON:function(a){var b=!a?null:d[a.type]||null;return b?b.fromJSON(a):null}};return e});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"Vrstva ${name} neobsahuje pole pou\u017eiteln\u00e1 k filtrov\u00e1n\u00ed.",addToViewer:"P\u0159idat vrstvu do mapy",noItemsToDisplay:"Moment\u00e1ln\u011b nejsou k dispozici \u017e\u00e1dn\u00e9 polo\u017eky.",searchFor:"Hledat",searching:"Vyhled\u00e1v\u00e1n\u00ed",items:{organizationLabel:"Moje organizace",onlineLabel:"ArcGIS Online",contentLabel:"M\u016fj obsah",favoritesLabel:"Moje obl\u00edben\u00e9"},title:"Vybrat webovou mapu",searchTitle:"Hledat",ok:"OK",cancel:"Storno",
+placeholder:"Zadat vyhled\u00e1vac\u00ed v\u00fdraz",instructionsLeft:"Co chcete d\u011blat?",instructionsRight:"Vyberte konfigurovatelnou aplikaci.",go:"P\u0159ej\u00edt",selectDetails:"V\u00ddB\u011aR",configure:"Vytvo\u0159it",close:"Zav\u0159\u00edt",learnMoreConfigurableApps:"Dal\u0161\u00ed informace o konfigurovateln\u00fdch aplikac\u00edch"});

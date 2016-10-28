@@ -1,19 +1,7 @@
-/*
- COPYRIGHT 2009 ESRI
-
- TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
- Unpublished material - all rights reserved under the
- Copyright Laws of the United States and applicable international
- laws, treaties, and conventions.
-
- For additional information, contact:
- Environmental Systems Research Institute, Inc.
- Attn: Contracts and Legal Services Department
- 380 New York Street
- Redlands, California, 92373
- USA
-
- email: contracts@esri.com
- */
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
 //>>built
-define("esri/symbols/CartographicLineSymbol",["dojo/_base/declare","dojo/_base/lang","dojo/_base/Color","dojo/has","dojox/gfx/_base","esri/kernel","esri/lang","esri/symbols/SimpleLineSymbol"],function(_1,_2,_3,_4,_5,_6,_7,_8){var _9={STYLE_SOLID:"solid",STYLE_DASH:"dash",STYLE_DOT:"dot",STYLE_DASHDOT:"dashdot",STYLE_DASHDOTDOT:"longdashdotdot",STYLE_NULL:"none",STYLE_INSIDE_FRAME:"insideframe",STYLE_SHORTDASH:"shortdash",STYLE_SHORTDOT:"shortdot",STYLE_SHORTDASHDOT:"shortdashdot",STYLE_SHORTDASHDOTDOT:"shortdashdotdot",STYLE_LONGDASH:"longdash",STYLE_LONGDASHDOT:"longdashdot",CAP_BUTT:"butt",CAP_ROUND:"round",CAP_SQUARE:"square",JOIN_MITER:"miter",JOIN_ROUND:"round",JOIN_BEVEL:"bevel"};var _a={color:[0,0,0,1],style:_9.STYLE_SOLID,width:1,cap:_9.CAP_BUTT,join:_9.JOIN_MITER,miterLimit:10};var _b=_1(_8,{declaredClass:"esri.symbol.CartographicLineSymbol",type:"cartographiclinesymbol",_caps:{butt:"esriLCSButt",round:"esriLCSRound",square:"esriLCSSquare"},_joins:{miter:"esriLJSMiter",round:"esriLJSRound",bevel:"esriLJSBevel"},constructor:function(_c,_d,_e,_f,_10,_11){if(_c){if(_2.isString(_c)){this.style=_c;if(_d){this.color=_d;}if(_e!==undefined){this.width=_e;}if(_f){this.cap=_f;}if(_10){this.join=_10;}if(_11!==undefined){this.miterLimit=_11;}}else{this.cap=_7.valueOf(this._caps,_c.cap);this.join=_7.valueOf(this._joins,_c.join);this.width=_5.pt2px(_c.width);this.miterLimit=_5.pt2px(_c.miterLimit);}}else{_2.mixin(this,_a);this.color=new _3(this.color);this.width=_5.pt2px(this.width);this.miterLimit=_5.pt2px(this.miterLimit);}},setCap:function(cap){this.cap=cap;return this;},setJoin:function(_12){this.join=_12;return this;},setMiterLimit:function(_13){this.miterLimit=_13;return this;},getStroke:function(){return _2.mixin(this.inherited("getStroke",arguments),{cap:this.cap,join:(this.join===_9.JOIN_MITER?this.miterLimit:this.join)});},getFill:function(){return null;},getShapeDescriptors:function(){return {defaultShape:{type:"path",path:"M -15,0 L 15,0 E"},fill:null,stroke:this.getStroke()};},toJson:function(){var _14=_5.px2pt(this.miterLimit);_14=isNaN(_14)?undefined:_14;return _7.fixJson(_2.mixin(this.inherited("toJson",arguments),{type:"esriCLS",cap:this._caps[this.cap],join:this._joins[this.join],miterLimit:_14}));}});_2.mixin(_b,_9);_b.defaultProps=_a;if(_4("extend-esri")){_2.setObject("symbol.CartographicLineSymbol",_b,_6);_6.symbol.defaultCartographicLineSymbol=_a;}return _b;});
+define(["../core/declare","dojo/_base/lang","../core/lang","../core/screenUtils","./SimpleLineSymbol"],function(n,g,e,h,p){var b={STYLE_SOLID:"solid",STYLE_DASH:"dash",STYLE_DOT:"dot",STYLE_DASHDOT:"dash-dot",STYLE_DASHDOTDOT:"long-dash-dot-dot",STYLE_NULL:"none",STYLE_INSIDE_FRAME:"inside-frame",STYLE_SHORTDASH:"short-dash",STYLE_SHORTDOT:"short-dot",STYLE_SHORTDASHDOT:"short-dash-dot",STYLE_SHORTDASHDOTDOT:"short-dash-dot-dot",STYLE_LONGDASH:"long-dash",STYLE_LONGDASHDOT:"long-dash-dot",CAP_BUTT:"butt",
+CAP_ROUND:"round",CAP_SQUARE:"square",JOIN_MITER:"miter",JOIN_ROUND:"round",JOIN_BEVEL:"bevel"},k={color:[0,0,0,1],style:b.STYLE_SOLID,width:0.75,cap:b.CAP_BUTT,join:b.JOIN_MITER,miterLimit:7.5},l={butt:"esriLCSButt",round:"esriLCSRound",square:"esriLCSSquare"},m={miter:"esriLJSMiter",round:"esriLJSRound",bevel:"esriLJSBevel"},d=n(p,{declaredClass:"esri.symbols.CartographicLineSymbol",properties:{type:"cartographic-line-symbol",cap:{json:{read:function(a){return e.valueOf(l,a)},write:function(a,f){f.cap=
+l[this.cap]}}},join:{json:{read:function(a){return e.valueOf(m,a)},write:function(a,f){f.join=m[this.join]}}},miterLimit:{cast:h.toPt,json:{writable:!0}},width:{}},getDefaults:function(){return g.mixin(this.inherited(arguments),k)},normalizeCtorArgs:function(a,f,b,d,e,g){if(a&&"string"!==typeof a)return a;var c={};a&&(c.style=a);f&&(c.color=f);null!=b&&(c.width=h.toPt(b));d&&(c.cap=d);e&&(c.join=e);null!=g&&(c.miterLimit=h.toPt(g));return c},clone:function(){return new d({cap:this.cap,color:e.clone(this.color),
+join:this.join,miterLimit:this.miterLimit,style:this.style,width:this.width})}});g.mixin(d,b);d.defaultProps=k;return d});

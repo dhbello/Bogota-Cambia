@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"Kihil ${name} puuduvad v\u00e4ljad, mida saaks kasutada filtreerimiseks.",addToViewer:"Lisa kiht kaardile",noItemsToDisplay:"Hetkel ei ole kuvatavaid objekte.",searchFor:"Otsi",searching:"Otsin",items:{organizationLabel:"Minu organisatsioon",onlineLabel:"ArcGIS Online",contentLabel:"Minu sisu",favoritesLabel:"Minu lemmikud"},title:"Vali veebikaart",searchTitle:"Otsi",ok:"Ok",cancel:"T\u00fchista",placeholder:"Sisesta otsingus\u00f5na",instructionsLeft:"Mida soovite teha?",
+instructionsRight:"Valige konfigureeritav rakendus.",go:"Liigu",selectDetails:"VALI",configure:"Loo",close:"Sulge",learnMoreConfigurableApps:"Lugege rohkem konfigureeritavate rakenduste kohta"});

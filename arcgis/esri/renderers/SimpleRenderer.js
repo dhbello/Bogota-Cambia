@@ -1,19 +1,5 @@
-/*
- COPYRIGHT 2009 ESRI
-
- TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
- Unpublished material - all rights reserved under the
- Copyright Laws of the United States and applicable international
- laws, treaties, and conventions.
-
- For additional information, contact:
- Environmental Systems Research Institute, Inc.
- Attn: Contracts and Legal Services Department
- 380 New York Street
- Redlands, California, 92373
- USA
-
- email: contracts@esri.com
- */
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
 //>>built
-define("esri/renderers/SimpleRenderer",["dojo/_base/declare","dojo/_base/lang","dojo/has","esri/kernel","esri/lang","esri/symbols/jsonUtils","esri/renderers/Renderer"],function(_1,_2,_3,_4,_5,_6,_7){var _8=_1(_7,{declaredClass:"esri.renderer.SimpleRenderer",constructor:function(_9){if(_9&&!_9.declaredClass){var _a=_9;_9=_a.symbol;if(_9){this.symbol=_6.fromJson(_9);}this.label=_a.label;this.description=_a.description;}else{this.symbol=_9;}},getSymbol:function(_b){return this.symbol;},toJson:function(){return _5.fixJson({type:"simple",label:this.label,description:this.description,symbol:this.symbol&&this.symbol.toJson()});}});if(_3("extend-esri")){_2.setObject("renderer.SimpleRenderer",_8,_4);}return _8;});
+define(["../core/declare","../core/lang","../symbols/support/jsonUtils","./Renderer"],function(b,c,d,e){var a=b(e,{declaredClass:"esri.renderer.SimpleRenderer",properties:{description:{value:null,json:{writable:!0}},label:{value:null,json:{writable:!0}},symbol:{value:null,json:{read:d.read,write:function(a,b,c){b.symbol=d.write(a,{},c)},writeNull:!0}},type:"simple"},getSymbol:function(a){return this.symbol},clone:function(){return new a({description:this.description,label:this.label,symbol:this.symbol&&
+this.symbol.clone(),visualVariables:c.clone(this.visualVariables)})}});return a});

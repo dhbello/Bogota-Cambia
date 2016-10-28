@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"Sl\u0101nim ${name} nav lauku, kurus var izmantot filtr\u0113\u0161anai.",addToViewer:"Pievienot sl\u0101ni kartei",noItemsToDisplay:"Nav vien\u012bbu, ko pa\u0161laik iesp\u0113jams par\u0101d\u012bt.",searchFor:"Mekl\u0113t \u0161\u0101du vien\u012bbu",searching:"Mekl\u0113",items:{organizationLabel:"Mana organiz\u0101cija",onlineLabel:"ArcGIS Online",contentLabel:"Mans Saturs",favoritesLabel:"Mani favor\u012bti"},title:"Izv\u0113lieties t\u012bmek\u013ca karti",searchTitle:"Mekl\u0113t",
+ok:"Labi",cancel:"Atcelt",placeholder:"Ievadiet mekl\u0113\u0161anas terminu",instructionsLeft:"Ko v\u0113laties dar\u012bt?",instructionsRight:"Izv\u0113lieties konfigur\u0113jamu lietotni.",go:"Doties",selectDetails:"IZV\u0112L\u0112TIES",configure:"Izveidot",close:"Aizv\u0113rt",learnMoreConfigurableApps:"Papildinform\u0101cija par konfigur\u0113jam\u0101m lietotn\u0113m"});

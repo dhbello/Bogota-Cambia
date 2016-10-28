@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"\u30ec\u30a4\u30e4\u30fc ${name} \u306b\u3001\u30d5\u30a3\u30eb\u30bf\u30fc\u3067\u4f7f\u7528\u3067\u304d\u308b\u30d5\u30a3\u30fc\u30eb\u30c9\u304c\u3042\u308a\u307e\u305b\u3093\u3002",addToViewer:"\u30ec\u30a4\u30e4\u30fc\u3092\u30de\u30c3\u30d7\u306b\u8ffd\u52a0",noItemsToDisplay:"\u8868\u793a\u3067\u304d\u308b\u30a2\u30a4\u30c6\u30e0\u306f\u73fe\u5728\u3042\u308a\u307e\u305b\u3093\u3002",searchFor:"\u691c\u7d22",searching:"\u691c\u7d22\u3057\u3066\u3044\u307e\u3059",items:{organizationLabel:"\u7d44\u7e54",
+onlineLabel:"ArcGIS Online",contentLabel:"\u30de\u30a4 \u30b3\u30f3\u30c6\u30f3\u30c4",favoritesLabel:"\u304a\u6c17\u306b\u5165\u308a"},title:"Web \u30de\u30c3\u30d7\u306e\u9078\u629e",searchTitle:"\u691c\u7d22",ok:"OK",cancel:"\u30ad\u30e3\u30f3\u30bb\u30eb",placeholder:"\u691c\u7d22\u8a9e\u53e5\u306e\u5165\u529b",instructionsLeft:"\u76ee\u7684:",instructionsRight:"\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u306e\u9078\u629e",go:"\u79fb\u52d5",selectDetails:"\u9078\u629e",configure:"\u4f5c\u6210",close:"\u9589\u3058\u308b",
+learnMoreConfigurableApps:"\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u306e\u8a73\u7d30"});

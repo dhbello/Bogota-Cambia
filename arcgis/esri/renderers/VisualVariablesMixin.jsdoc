@@ -1,0 +1,634 @@
+/**
+* @module esri/renderers/VisualVariablesMixin
+* @mixin
+*/
+
+
+
+
+////////////////////////////////////////////////////////////
+//
+// Properties
+//
+////////////////////////////////////////////////////////////
+
+/**
+* Visual variables define the parameters
+* for data-driven geographic visualizations of numeric data. They allow you to
+* easily map continuous ramps of [color](#color), [size](#size),
+* [opacity](#opacity), and/or [rotation](#rotation) to minimum and maximum data values
+* of one of the layer's numeric attribute fields.
+*
+* Visual variables can primarily be used in two ways.
+*
+* #### 1. Thematic mapping
+*
+* Visual variables allow you to easily create stunning visualizations
+* based on thematic attributes (e.g. population, education, rank, money, magnitude, etc.) in
+* either 2D or 3D. This is accomplished by mapping data values from a numeric field attribute
+* to color, size, and/or opacity values.
+* The renderer then takes over and re-sizes or shades features based on the value of the given
+* field and its position relative to the minimum and maximum values. The sample below uses
+* three visual variables (size, color, and opacity).
+*
+* [![renderer-unique-vv](../assets/img/apiref/renderers/renderer-unique-vv.png)](../sample-code/visualization-multivariate-2d/index.html)
+*
+* #### 2. Mapping real-world sizes
+*
+* The [size](#size) visual variable can be used to
+* visualize the true sizes of features (e.g. tree canopy, road width, building height, etc.)
+* based on their size in the real world. This can be particularly powerful when working in a 3D
+* {@link module:esri/views/SceneView}. The image below shows a layer of building footprints
+* that uses visual variables to extrude each feature to the true height of the buildings
+* based on data stored in an attribute field.
+*
+* [![renderer-vv-rw](../assets/img/samples/2-extrude-height.png)](../sample-code/visualization-buildings-3d/index.html)
+*
+* The `visualVariables` property of the renderer is an array of objects called "visual variables".
+* Each object must indicate
+* the type of visual variable to apply (e.g. color, size, opacity, rotation), the numeric
+* field from which to drive the visualization, and the ramp of visual values to map to the data.
+* The following list identifies each visual variable type and provides a link to the specification table
+* of each.
+*
+* Type | Object Specification | Legend Example
+* -----|----------------------|---------------
+* color | [color object specification](#color) | ![legend-color-vv](../assets/img/apiref/renderers/legend-color-vv.png)
+* size | [size object specification](#size) | ![legend-color-vv](../assets/img/apiref/renderers/legend-size-vv.png)
+* opacity | [opactiy object specification](#opacity) | ![legend-color-vv](../assets/img/apiref/renderers/legend-opacity-vv.png)
+* rotation | [rotation object specification](#rotation) | -
+*
+* See the [Visualize features with realistic 3D symbols](../sample-code/visualization-trees-realistic/index.html)
+* for an example of using multiple visual variables to visualize your data.
+*
+* @name visualVariables
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @type {Object[]}
+*
+* @see [Get started with visualization](../sample-code/get-started-visualization/index.html)
+*/
+
+
+////////////////////////////////////////////////////////////
+//
+// color
+//
+////////////////////////////////////////////////////////////
+
+
+/**
+* The **color** visual variable defines how a continuous color ramp is applied to features based
+* on the values of a numeric attribute field. The minimum and maximum values of the data should be indicated
+* along with their respective color values. You must specify either `colors` or `stops` to construct
+* the color ramp.
+*
+* [![renderer-vv-color](../assets/img/samples/7-vv-color.png)](../sample-code/visualization-vv-color/index.html)
+*
+* The object specification for color is provided below.
+*
+* @typedef {Object} color
+* @memberof module:esri/renderers/VisualVariablesMixin
+*
+* @property {string} type - **Required.** Value must be `color`.
+* @property {string | Function} field - **Required.** Indicates the name of the numeric attribute field
+* that contains the data values used to determine the color of each feature.
+* @property {string} normalizationField - Name of the numeric attribute field by which to normalize
+* the data. If this field is used, then the values in `maxDataValue`, `minDataValue`, or `stops` should be
+* normalized as percentages or ratios.
+* @property {number} maxDataValue - The maximum data value by which to base the color ramp. Features
+* with this value or higher will be shaded with the last color defined in `colors`. This property
+* is required if `stops` is not defined.
+* @property {number} minDataValue - The minimum data value by which to base the color ramp. Features
+* with this value or lower will be shaded with the first color defined in `colors`. This property is
+* required if `stops` is not defined.
+* @property {module:esri/Color[]} colors - An array of colors that defines the color ramp.
+* The first color will be used to render the `minDataValue` and the last color will be
+* used to render the `maxDataValue`.
+* At least two colors are required. If defining three or more colors in the ramp, the
+* intermediate colors will be placed proportionally between the first and the last to create
+* a multi-color ramp. This property is required if `stops` is not defined.
+* @property {Object[]} stops - An array of objects that defines the color ramp in a sequence of stops.
+* At least two stops are required. Features with values between the given stops will be assigned colors
+* along the ramp proportial to the minimum and maximum values used.
+*  This property is
+* required if `minDataValue`, `maxDataValue`, and `colors` are not defined.
+* Each stop object has the following specification:
+* @property {number} stops.value - **Required**. Specifies the data value to map with the given `color`.
+* @property {module:esri/Color} stops.color - **Required**. The {@link module:esri/Color} used to render
+* features with the given `value`.
+* @property {string} stops.label - A string value used to label the stop in the legend.
+*
+* @see [Sample - Continuous color](../sample-code/visualization-vv-color/index.html)
+* @see [Sample - Visualize features thematically with extrusion](../sample-code/visualization-vv-extrusion/index.html)
+* @see [Sample - Visualize features thematically with multiple variables (3D)](../sample-code/visualization-multivariate-3d/index.html)
+* @see [Sample - Visualize features thematically with multiple variables (2D)](../sample-code/visualization-multivariate-2d/index.html)
+*
+* @example
+* // color visual variable using min and max data values
+* var colorVisVar = {
+*   // The type must be set to color
+*   type: "color",
+*   // Assign the field name to visualize with color
+*   field: "POPULATION",
+*   // If normalizing set the field to normalize
+*   normalizationField: "SQ_KM",
+*   // Set the minimum value to render with the low color
+*   minDataValue: 30,
+*   // Set the maximum value to render with the high color
+*   maxDataValue: 6000,
+*   // Set the low and high colors in that order
+*   colors: ["#FFFCD4", "#0D2644"]
+* };
+* renderer.visualVariables.push(colorVisVar);
+*
+* @example
+* // color visual variable using stops
+* var colorVisVar = {
+*   // The type must be set to color
+*   type: "color",
+*   // Assign the field name to visualize with color
+*   field: "POPULATION",
+*   // If normalizing set the field to normalize
+*   normalizationField: "SQ_KM",
+*   // Set color ramp using stops
+*   stops: [{ value: 30, color: "#FFFCD4" },
+*           { value: 6000, color: "#0D2644" }]
+* };
+* renderer.visualVariables.push(colorVisVar);
+*/
+
+
+////////////////////////////////////////////////////////////
+//
+// size
+//
+////////////////////////////////////////////////////////////
+
+
+/**
+* The **size** visual variable defines how a continuous size ramp is applied to features based
+* on the value of a numeric attribute field. The minimum and maximum values of the data should be indicated
+* along with their respective size values. You must specify `minSize` and `maxSize` or `stops` to construct
+* the size ramp. All features with values falling in between the specified min and max data values
+* (or stops) will be scaled proportionally between the provided min and max sizes.
+*
+* Continuous size ramps may be applied to renderers in either a {@link module:esri/views/MapView} or a
+* {@link module:esri/views/SceneView}. This object may be used to change the diameter and width of
+* marker symbols or icons in 2D or to creating extrusions in 3D.
+* See the documentation for {@link module:esri/symbols/Symbol} and its subclasses
+* to learn how to create various 2D and 3D visualizations by selecting the proper symbol type.
+*
+* Symbol size may be applied either thematically, or literally using real-world units. When defining a
+* size visual variable for thematic mapping purposes, you must set a combination of either
+* `minDataValue`/`minSize` and `maxDataValue`/`maxSize` or `stops`.
+*
+* [![renderer-unique-vv](../assets/img/apiref/renderers/renderer-unique-vv.png)](../sample-code/visualization-multivariate-2d/index.html)
+*
+* When applying size to map real-world sizes and distances, you must indicate a `valueUnit`.
+* Min and max data values with sizes/stops should not be defined in real-world size scenarios. An
+* optional `valueRepresentation` property may be set when visualizing real-world sizes in 2D.
+*
+* [![renderer-vv-rw](../assets/img/samples/2-extrude-height.png)](../sample-code/visualization-buildings-3d/index.html)
+*
+* The object specification for this object is provided below.
+*
+* @typedef {Object} size
+* @memberof module:esri/renderers/VisualVariablesMixin
+*
+* @property {string} type - **Required.** Value must be `size`.
+* @property {string | Function} field - **Required.** The name of the numeric attribute field
+* containing data values used to determine the size of each feature's symbol.
+* @property {string} normalizationField - The name of the numeric attribute field used to normalize
+* the data in `field`. If this field is used, then the values in `maxDataValue`, `minDataValue`, or `stops` should be
+* normalized as percentages or ratios.
+* @property {string} axis - Only applicable when working in a {@link module:esri/views/SceneView}.
+* Defines the axis the size visual variable should be applied to when rendering features with an
+* {@link module:esri/symbols/ObjectSymbol3DLayer}. See the
+* [local scene sample](../sample-code/scene-local/index.html) for an example of this.
+* <br>
+* Possible Value | Description
+* ----------------|-----------
+* width | The diameter of the symbol from east to west.
+* depth | The diameter of the symbol from north to south.
+* height | The height of the symbol.
+* width-and-depth | Applies the size visual variable to both width and depth axes.
+* all | Applies the size visual variable to all axes.
+* <br><br>**Default Value:** all
+* @property {string} expression - Defines how size is applied to features. The only supported expression is
+* `view.scale`, which allows feature size to be defined based on {@link module:esri/views/MapView#scale view.scale}.
+* Scale-dependent rendering only applies to data renderered in a {@link module:esri/views/MapView}.
+* @property {number} maxDataValue - The maximum data value used in the size ramp. Features
+* with this value or higher will be rendered at the size defined in `maxSize`. This property
+* is required if `stops` is not defined.
+* @property {number} minDataValue - The minimum data value used in the size ramp. Features
+* with this value or lower will be rendered at the size defined in `minSize`. This property
+* is required if `stops` is not defined.
+* @property {string | number | Object} maxSize - The size used to render a feature containing the maximum data value.
+* This can be a non-scale dependant number, or a [size visual variable](#size) object that applies size
+* based on an expression.<br>
+* * When setting a number, sizes are expressed in points for all 2D symbols and 3D flat symbol layers; size is
+* expressed in meters for all 3D volumetric symbols.
+* * String values are only supported for 2D symbols and 3D flat symbol layers. Strings may specify size in
+* either points or pixels (e.g. `minSize: "16pt"`, `minSize: "12px"`).
+* * When setting an object, three properties may only be used: `type` (the value
+* is always `size`), `expression`, and `stops`.
+* @property {string | number | Object} minSize - The size used to render a feature containing the minimum data value.
+* This can be a non-scale dependant number, or a [size visual variable](#size) object that applies size
+* based on an expression.<br>
+* * When setting a number, sizes are expressed in points for all 2D symbols and 3D flat symbol layers; size is
+* expressed in meters for all 3D volumetric symbols.
+* * String values are only supported for 2D symbols and 3D flat symbol layers. Strings may specify size in
+* either points or pixels (e.g. `minSize: "16pt"`, `minSize: "12px"`).
+* * When setting an object, three properties may only be used: `type` (the value
+* is always `size`), `expression`, and `stops`.
+* @property {Object[]} stops - An array of objects that defines the thematic size ramp in a sequence of data or
+* expression stops.
+* At least two stops are required. This property is
+* required if `minDataValue`, `maxDataValue`, `minSize`, and `maxSize` are not defined. This property is also
+* required when setting a size visual variable to the `minSize` or `maxSize` properties based on
+* `expression` (e.g. `expression: 'view.scale'`).
+* Each stop object has the following specification:
+* @property {number} stops.value - **Required**. Specifies the data or expression value to map with the given `size`.
+* @property {string | number | Object} stops.size - **Required**. The size at which to render features containing the
+* specified `value`. See `minSize` and `maxSize` for details regarding how to express size in different scenarios.
+* @property {string} stops.label - A string value used to label the stop in the legend.
+* @property {string} valueUnit - **Required.** Indicates the unit of measurement if the data represents
+* a real-world size or distance. If the data value represents a thematic quantity (e.g. traffic count,
+* census data, etc.) this property should be set to `unknown`.
+* <br><br>**Possible Values:** unknown | inches | feet | yards | miles | nautical-miles | millimeters | centimeters | decimeters | meters | kilometers | decimal-degrees
+* @property {string} valueRepresentation - Specifies
+* how to apply the data value when mapping real-world sizes. See table below for supported values.<br><br>
+* Value | Description
+* ------|-----------
+* radius | Data value represents the radius of a circular feature.
+* diameter | Data value represents the diameter of a circular feature.
+* area | Data value represents the area of a feature.
+* width | Data value represents the width of a line.
+* distance | Data value represents the distance from the center line (one half of the width).
+* @property {boolean} useSymbolValue - When setting a size visual variable on a renderer using an
+* {@link module:esri/symbols/ObjectSymbol3DLayer}, this property indicates whether to apply the value
+* defined by the {@link module:esri/symbols/ObjectSymbol3DLayer#height height},
+* {@link module:esri/symbols/ObjectSymbol3DLayer#width width}, or
+* {@link module:esri/symbols/ObjectSymbol3DLayer#depth depth} properties to the corresponding axis of
+* this visual variable instead of proportionally scaling this axis' value after other axes.
+* [View an example](../sample-code/visualization-multivariate-3d/index.html) of this.
+*
+* @see [Sample - Continuous size](../sample-code/visualization-vv-size/index.html)
+* @see [Sample - Visualize features thematically with extrusion](../sample-code/visualization-vv-extrusion/index.html)
+* @see [Sample - Scale feature sizes based on real world sizes (2D)](../sample-code/visualization-trees-2d/index.html)
+* @see [Sample - Visualize features with realistic 3D symbols](../sample-code/visualization-trees-realistic/index.html)
+* @see [Sample - Extrude building footprints based on real world heights](../sample-code/visualization-buildings-3d/index.html)
+*
+* @example
+* // thematic size defined with min and max data values
+* var sizeVisVar = {
+*   // The type must be set to size
+*   type: "size",
+*   // Assign the field name to visualize with size
+*   field: "POPULATION",
+*   // features with this value or lower will be assigned the size defined in minSize
+*   minDataValue: 5000,
+*   // features with this value or higher will be assigned the size defined in maxSize
+*   maxDataValue: 1000000,
+*   // When sizing thematically, set the unit to "unknown"
+*   valueUnit: "unknown",
+*   minSize: "6px",  // size of the marker in pixels
+*   maxSize: "80px"  // size of the marker in pixels
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*
+* @example
+* // thematic size defined with stops
+* var sizeVisVar = {
+*   // The type must be set to size
+*   type: "size",
+*   // Assign the field name to visualize with size
+*   field: "POPULATION",
+*   // When sizing thematically, set the unit to "unknown"
+*   valueUnit: "unknown",
+*   // maps data values to pixel sizes
+*   stops: [{ value: 5000, size: "6px" },
+*           { value: 1000000, size: "80px" }]
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*
+* @example
+* // real-world size for 3D buildings
+* var sizeVisVar = {
+*   // The type must be set to size
+*   type: "size",
+*   // Assign the field name to visualize with size
+*   field: "HEIGHT",
+*   valueUnit: "feet"
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*
+* @example
+* // real-world size for 2D tree canopies
+* var sizeVisVar = {
+*   // The type must be set to size
+*   type: "size",
+*   // Assign the field name to visualize with size
+*   field: "CANOPY",
+*   valueUnit: "feet",
+*   valueRepresentation: "diameter"
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*
+* @example
+* // 3D thematic extrusion
+* var sizeVisVar = {
+*   // The type must be set to size
+*   type: "size",
+*   // Assign the field name to visualize with size
+*   field: "POP_POVERTY",
+*   normalizationField: "TOTPOP_CY",
+*   minDataValue: 0.10,  // 10% of population in poverty
+*   maxDataValue: 0.35,  // 35% of population in poverty
+*   minSize: 10000,  // extruded by 10,0000 meters
+*   maxSize: 500000,  // extruded by 500,000 meters
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*
+* @example
+* // scale-dependant size
+* var sizeVisVar = {
+*   type: "size",
+*   field: "pop2000",
+*   minDataValue: 500000,
+*   maxDataValue: 33000000,
+*   valueUnit: "unknown",
+*   // minimum size to render minDataVal at specified view scales
+*   minSize: {
+*     type: "size",
+*     expression: "view.scale",
+*     stops: [
+*      { value: 1128,      size: 12 },  // smallest marker will be 12pt at 1:1128 scale
+*      { value: 288895,    size: 12 },
+*      { value: 73957191,  size: 7 },
+*      { value: 591657528, size: 1.5 }  // smallest marker will be 1.5pt at 1:591657528 scale
+*    ]
+*  },
+*  // maximum size to render maxDataVal at specified view scales
+*  maxSize: {
+*    type: "size",
+*    expression: "view.scale",
+*    stops: [
+*      { value: 1128,      size: 60 },  // largest marker will be 60pt at 1:1128 scale
+*      { value: 288895,    size: 60 },
+*      { value: 73957191,  size: 37 },
+*      { value: 591657528, size: 19 }  // largest marker will be 19pt at 1:591657528 scale
+*    ]
+*  }
+* };
+* renderer.visualVariables.push(sizeVisVar);
+*/
+
+
+////////////////////////////////////////////////////////////
+//
+// opacity
+//
+////////////////////////////////////////////////////////////
+
+
+/**
+* The **opacity** visual variable defines the opacity of each feature's symbol based on a numeric
+* attribute field value. The minimum and maximum values of the data should be indicated
+* along with their respective opacity values. The specification for this object is provided below.
+* You must specify either `opacityValues` or `stops` to construct the opacity ramp.
+*
+* [![renderer-vv-opacity](../assets/img/samples/12-vv-transparency.png)](../sample-code/visualization-vv-opacity/index.html)
+*
+* @typedef {Object} opacity
+* @memberof module:esri/renderers/VisualVariablesMixin
+*
+* @property {string} type - **Required.** Value must be `opacity`.
+* @property {string | Function} field - **Required.** Indicates the name of the numeric attribute field
+* that contains the data values used to determine the opacity of each feature.
+* @property {string} normalizationField - Name of the attribute field by which to normalize the data.
+* If this field is used, then the values in `maxDataValue`, `minDataValue`, or `stops` should be normalized
+* as percentages or ratios.
+* @property {number} maxDataValue - The maximum data value of the opacity ramp.
+* Features with this value or higher will be rendered with the last opacity value defined in `opacityValues`.
+* This property is required if `stops` is not defined.
+* @property {number} minDataValue - The minimum data value of the opacity ramp.
+* Features with this value or lower will be rendered with the first opacity value defined in `opacityValues`.
+* This property is required if `stops` is not defined.
+* @property {number[]} opacityValues - An array of opacity values. Each value must be a number ranging from
+* `0.0` to `1.0`. The first value in the array is applied to symbols of features with the `minDataValue` or lower.
+* The last value is applied to symbols of features with the `maxDataValue` or higher. At least two values are
+* required. If this array contains three or more values, opacity values are applied proportionally to features
+* containing intermediate data values between the first and last values.
+* This property is required if `stops` is not defined.
+* @property {Object[]} stops - An array of objects that defines the thematic opacity ramp in a
+* sequence of stops. At least two stops are required. This property is
+* required if `minDataValue`, `maxDataValue`, and `opacityValues` are not defined.
+* Each stop object has the following specification:
+* @property {number} stops.value - **Required**. Specifies the data value to map with the given `opacity`.
+* @property {number} stops.opacity - **Required**. The opacity value used to render features containing the
+* specified `value`.
+* @property {string} stops.label - A string value used to label the stop in the legend.
+*
+* @see [Sample - Add transparency to features based on field values](../sample-code/visualization-vv-opacity/index.html)
+*
+* @example
+* // opacity with minDataVal and maxDataVal defined
+* var opacVisVar = {
+*   // The type must be opacity
+*   type: "opacity",
+*   // Assign the field name to visualize with opacity
+*   field: "PERCENTAGE",
+*   minDataValue: 0,
+*   maxDataValue: 100,
+*   // Set the low and high alpha values in that order
+*   opacityValues: [ 0, 1 ]
+* }
+* renderer.visualVariables.push(opacVisVar);
+*
+* @example
+* // opacity with stops defined
+* var opacVisVar = {
+*   // The type must be opacity
+*   type: "opacity",
+*   // Assign the field name to visualize with opacity
+*   field: "PERCENTAGE",
+*   // maps data values to opacity values
+*   stops: [{ value: 0, opacity: 0.1 },
+*           { value: 100, opacity: 1 }]
+* }
+* renderer.visualVariables.push(opacVisVar);
+*/
+
+
+////////////////////////////////////////////////////////////
+//
+// rotation
+//
+////////////////////////////////////////////////////////////
+
+
+/**
+ * The **rotation** visual variable defines how features rendered with
+ * {@link module:esri/symbols/MarkerSymbol marker symbols} or
+ * {@link module:esri/symbols/IconSymbol3DLayer icon symbol layers}
+ * are rotated. The rotation value is determined by mapping the values to data
+ * in a field, or by other arithmetic means with a function.
+ *
+ * This object may be used to depict variables such as wind direction, vehicle heading, etc.
+ *
+ * [![renderer-vv-rotation](../assets/img/apiref/renderers/renderer-vv-rotation.png)](../sample-code/visualization-vv-rotation/index.html)
+ *
+ * ::: esri-md class="panel trailer-1"
+ * **Known Limitations**
+ *
+ * Rotation visual variables are not supported in {@link module:esri/views/SceneView}.
+ * :::
+ *
+ * @typedef {Object} rotation
+ * @memberof module:esri/renderers/VisualVariablesMixin
+ *
+ * @property {string} type - **Required.** Value must be `rotation`.
+ * @property {string | Function} field - **Required.** Indicates the name of the
+ * feature attribute field that contains the rotation angle. A function is useful in
+ * cases where the angle of rotation is not available in an attribute field but can be
+ * computed using a mathematical expression or formula.
+ * @property {number} rotationType - Defines the origin and direction of rotation depending
+ * on how the angle of rotation was measured. See the table below for a list of possible values.
+ * Value | Description
+ * ------|------------
+ * geographic | rotates the symbol from the north in a clockwise direction.
+ * arithmetic | rotates the symbol from the east in a counter-clockwise direction.
+ *
+ * **Default Value:** geographic
+ *
+ * @see [Sample - Visualize data with rotation](../sample-code/visualization-vv-rotation/index.html)
+ */
+
+
+
+////////////////////////////////////////////////////////////
+//
+// Public methods
+//
+////////////////////////////////////////////////////////////
+
+
+
+/**
+* Indicates if the renderer has defined [visualVariables](#visualVariables).
+*
+* @method hasVisualVariables
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param   {string} type - can be one of: size, color, opacity, rotation (optional)
+* @param   {(Object|boolean)} target - can be: false or "outline" (optional)
+* @return {boolean} If `true`, then the renderer has at least one visual variable.
+*/
+
+
+
+
+
+
+
+/**
+* Returns the visual variables of the specified type.
+*
+* @method getVisualVariablesForType
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {string} type - The type of visual variables desired.
+*                        <br><br>**Known Values:** color | size | opacity | rotation
+* @return {Object[]} Returns the visual variables associated with the input `type`.
+*
+* @see [visualVariables](#visualVariables)
+* @example
+* var colorVisVars = renderer.getVisualVariablesForType("color");
+*/
+
+
+
+
+
+
+/**
+* Returns the symbol size (in pixels) for the input graphic.
+*
+* @method getSize
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {module:esri/Graphic} graphic - The graphic for which you want
+* to calculate the symbol size.
+*
+* @return {number} The size of the input graphic's symbol in pixels.
+*/
+
+
+
+
+
+
+/**
+* Returns the color of the symbol used to render the input Graphic.
+*
+* @method getColor
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {module:esri/Graphic} graphic - The graphic from which to get the symbol's color.
+*
+* @return {module:esri/Color} The color used in rendering the input graphic.
+*/
+
+
+
+
+
+/**
+* Returns the opacity value for the specified graphic.
+*
+* @method getOpacity
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {module:esri/Graphic} graphic - The graphic from which to get an opacity value.
+*
+* @return {number} The opacity value of the input graphic.
+*/
+
+
+
+
+
+
+/**
+* Returns the rotation angle used in rendering the input graphic.
+*
+* @method getRotationAngle
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {module:esri/Graphic} graphic - The graphic from which to get a rotation value.
+*
+* @return {number} The rotation angle of the symbol used to render the input graphic.
+*/
+
+
+
+
+
+/**
+* Returns the symbol used by the input graphic.
+*
+* @method getSymbol
+* @memberof module:esri/renderers/VisualVariablesMixin
+* @ignore
+*
+* @param {module:esri/Graphic} graphic - A graphic from which to get a symbol.
+*
+* @return {module:esri/symbols/Symbol} Returns the symbol used to render the input graphic.
+*/

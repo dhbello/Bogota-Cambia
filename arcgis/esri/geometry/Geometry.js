@@ -1,19 +1,5 @@
-/*
- COPYRIGHT 2009 ESRI
-
- TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
- Unpublished material - all rights reserved under the
- Copyright Laws of the United States and applicable international
- laws, treaties, and conventions.
-
- For additional information, contact:
- Environmental Systems Research Institute, Inc.
- Attn: Contracts and Legal Services Department
- 380 New York Street
- Redlands, California, 92373
- USA
-
- email: contracts@esri.com
- */
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
 //>>built
-define("esri/geometry/Geometry",["dojo/_base/declare","dojo/_base/lang","dojo/has","esri/kernel","esri/SpatialReference"],function(_1,_2,_3,_4,_5){var _6=_1(null,{declaredClass:"esri.geometry.Geometry",spatialReference:null,type:null,setSpatialReference:function(sr){this.spatialReference=sr;return this;},verifySR:function(){if(!this.spatialReference){this.setSpatialReference(new _5(4326));}},getExtent:function(){return null;}});if(_3("extend-esri")){_2.setObject("geometry.Geometry",_6,_4);}return _6;});
+define(["../core/JSONSupport","./SpatialReference"],function(b,c){return b.createSubclass({declaredClass:"esri.geometry.Geometry",type:null,properties:{cache:{value:null,readOnly:!0,dependsOn:["spatialReference"],get:function(){return{}}},extent:{value:null,readOnly:!0,dependsOn:["spatialReference"]},hasM:!1,hasZ:!1,spatialReference:c.WGS84},isSR:function(a){return a&&("esri.SpatialReference"===a.declaredClass||null!=a.wkid)},clone:function(){console.warn(".clone() is not implemented for "+this.declaredClass);
+return null},toJSON:function(){console.warn(".toJSON() is not implemented for "+this.declaredClass);return null},clearCache:function(){this.notifyChange("cache")},getCacheValue:function(a){return this.cache[a]},setCacheValue:function(a,b){this.cache[a]=b}})});

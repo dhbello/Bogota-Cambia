@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"La couche ${name} ne comporte aucun champ pouvant \u00eatre utilis\u00e9 pour le filtrage.",addToViewer:"Ajouter la couche \u00e0 la carte",noItemsToDisplay:"Aucun \u00e9l\u00e9ment \u00e0 afficher actuellement.",searchFor:"Rechercher",searching:"Recherche",items:{organizationLabel:"Organisation",onlineLabel:"ArcGIS Online",contentLabel:"Mon contenu",favoritesLabel:"Mes favoris"},title:"S\u00e9lectionner une carte Web",searchTitle:"Rechercher",ok:"OK",cancel:"Annuler",placeholder:"Saisir un terme de recherche",
+instructionsLeft:"Que souhaitez-vous faire ?",instructionsRight:"S\u00e9lectionnez une application configurable.",go:"OK",selectDetails:"SELECT",configure:"Cr\u00e9er",close:"Fermer",learnMoreConfigurableApps:"En savoir plus sur les applications configurables"});

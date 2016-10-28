@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define({noFilterFields:"Sloj ${name} nema polja koja se mogu upotrijebiti za filtriranje.",addToViewer:"Dodaj sloj na kartu",noItemsToDisplay:"Trenuta\u010dno nema dostupnih stavki za prikaz.",searchFor:"Pretra\u017ei",searching:"Tra\u017eenje",items:{organizationLabel:"Moja organizacija",onlineLabel:"ArcGIS Online",contentLabel:"Moj sadr\u017eaj",favoritesLabel:"Moji favoriti"},title:"Odaberite web-kartu",searchTitle:"Pretra\u017ei",ok:"U redu",cancel:"Odustani",placeholder:"Unesite termin za pretra\u017eivanje",
+instructionsLeft:"\u0160to \u017eelite napraviti?",instructionsRight:"Odaberite konfigurabilni app.",go:"Idi",selectDetails:"ODABERI",configure:"Stvori",close:"Zatvori",learnMoreConfigurableApps:"Saznajte vi\u0161e o konfigurabilnim appovima"});

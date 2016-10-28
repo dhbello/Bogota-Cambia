@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define(["../../../core/Collection"],function(h){return h.createSubclass({constructor:function(){this._itemById={};this._itemToKeys={};this._keyToItem={}},add:function(a,b){var e=this.hash(a),c=this.hash(b),d=this._itemToKeys[c];b=this._itemById[c]?this._itemById[c]:b;this._keyToItem[e]=b;d||(this._itemById[c]=b,this._itemToKeys[c]=d=[],this.getInherited(arguments).call(this,b));d.push(e)},remove:function(a){return this.removeMany([a])},removeMany:function(a){if(!a||!a.length)return null;var b,e,c,
+d,f,g=[];for(b=a.length-1;0<=b;b--)if(e=this.hash(a[b]),c=this.getItem(e))delete this._keyToItem[e],d=this.hash(c),f=this._itemToKeys[d],f.splice(f.indexOf(e),1),f.length||(delete this._itemToKeys[d],delete this._itemById[d],g.push(c));this.getInherited(arguments).call(this,g);return g},getItem:function(a){return this._keyToItem[this.hash(a)]},contains:function(a){return null!=this.getItem(a)},hash:function(a){return a&&a.id?a.id:a}})});

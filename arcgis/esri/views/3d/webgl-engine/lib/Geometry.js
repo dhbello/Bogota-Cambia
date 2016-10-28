@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./IdGen","./Util","./BoundingInfo"],function(p,q,m,g,n){return function(){function a(h,c,d){this.singleUse=!1;this.originalColors=null;this.id=a.__idGen.gen(c);this.data=h;this.boundingInfos=d||[];g.assert(1<=h.faces.length)}a.prototype.getId=function(){return this.id};a.prototype.getData=function(){return this.data};Object.defineProperty(a.prototype,"numGroups",{get:function(){return this.data.faces.length},enumerable:!0,configurable:!0});a.prototype.getNumGroups=function(){return this.numGroups};
+a.prototype.calculateBoundingInfo=function(a,c){var d=this.data.faces[a],e="triangle"===d.type?3:1,f=d.indices[d.positionKey];if(0===f.length)for(var f=new Uint32Array(e),b=0;b<e;++b)f[b]=b;b=f.length;g.assert(0===b%e);for(var k=b/e,l=new Uint32Array(k),b=0;b<k;++b)l[b]=b;return new n(l,e,f,this.data.vertexAttributes[d.positionKey],c)};a.prototype.getBoundingInfo=function(a){var c=this.boundingInfos[a];null==c&&(c=this.calculateBoundingInfo(a),this.boundingInfos[a]=c);return c};a.prototype.invalidateBoundingInfo=
+function(){this.boundingInfos=[]};a.__idGen=new m;return a}()});
