@@ -5,6 +5,7 @@ var map;
 var view;
 var mapLayer;
 var glPoint;
+var glPointG;
 var currentPoint;
 
 var modeManual = false;
@@ -104,6 +105,9 @@ function initMap() {
             setLocationPoint(evt);
         });
         initLocationGPS();
+        if (!(map.loaderror == null)){
+            alert(JSON.stringify(map.loadError));
+        }
     });
     
 }
@@ -113,11 +117,12 @@ function initLocationGPS() {
 
         navigator.geolocation.getCurrentPosition(function (position) {
             currentPoint = new Point(position.coords.longitude, position.coords.latitude);
-            glPoint.removeAll();
-            glPoint.add(new Graphic(currentPoint,
+            glPointG.remove();
+            glPointG = new Graphic(currentPoint,
                     new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                    new Color("#FF0000"))));
+                    new Color("#FF0000")));
+            glPoint.graphic.add(glPointG);
             view.center = [currentPoint.x, currentPoint.y];
 
         },
@@ -140,20 +145,21 @@ function updateSize() {
 
 function setLocation() {
     modeManual = true;
-    glPoint.removeAll();
+    glPointG.remove();
 };
 
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-        var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
-        currentPoint = new Point(cTemp[0], cTemp[1]);
-        glPoint.removeAll();
-        glPoint.add(new Graphic(currentPoint,
+        //var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
+        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y);
+        glPointG.remove();
+        glPointG = new Graphic(currentPoint,
                 new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                 new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                new Color("#FF0000"))));
-        //view.center = currentPoint;
+                new Color("#FF0000")));
+        glPoint.graphics.add(glPointG);
+        view.center = [currentPoint.x, currentPoint.y];
     }
 }
 
