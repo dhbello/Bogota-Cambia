@@ -117,7 +117,9 @@ function initLocationGPS() {
 
         navigator.geolocation.getCurrentPosition(function (position) {
             currentPoint = new Point(position.coords.longitude, position.coords.latitude);
-            glPointG.remove();
+            if (glPointG != null) {
+                glPointG.remove();
+            };
             glPointG = new Graphic(currentPoint,
                     new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
@@ -145,7 +147,9 @@ function updateSize() {
 
 function setLocation() {
     modeManual = true;
-    glPointG.remove();
+    if (glPointG != null) {
+        glPointG.remove();
+    }
 };
 
 function setLocationPoint(evt) {
@@ -153,7 +157,9 @@ function setLocationPoint(evt) {
         modeManual = false;
         //var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
         currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y);
-        glPointG.remove();
+        if (glPointG != null) {
+            glPointG.remove();
+        };
         glPointG = new Graphic(currentPoint,
                 new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                 new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
