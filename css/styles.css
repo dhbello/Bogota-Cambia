@@ -33,3 +33,7 @@
   height: auto;
   margin: 10px;
 }
+
+.esri-zoom {
+    display: none !important;
+}
