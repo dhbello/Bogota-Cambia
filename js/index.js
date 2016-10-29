@@ -117,8 +117,7 @@ function initLocationGPS() {
             glPoint.add(new Graphic(currentPoint,
                     new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                    new Color("#FF0000")),
-                    null, null));
+                    new Color("#FF0000"))));
             view.center = [currentPoint.x, currentPoint.y];
 
         },
@@ -153,8 +152,7 @@ function setLocationPoint(evt) {
         glPoint.add(new Graphic(currentPoint,
                 new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                 new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                new Color("#FF0000"),
-                null, null)));
+                new Color("#FF0000"))));
         //view.center = currentPoint;
     }
 }
