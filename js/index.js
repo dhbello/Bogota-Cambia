@@ -44,7 +44,7 @@ function init() {
     initMap();
 }
 
-function initMap() {   
+function initMap() {
     require([
       "esri/Map",
       "esri/views/MapView",
@@ -109,14 +109,14 @@ function initMap() {
             alert(JSON.stringify(map.loadError));
         }
     });
-    
+
 }
 
 function initLocationGPS() {
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
-            currentPoint = new Point(position.coords.longitude, position.coords.latitude);
+            currentPoint = new Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
             if (glPointG != null) {
                 map.graphics.remove(glPointG);
             };
@@ -156,7 +156,7 @@ function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
         //var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
-        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y);
+        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
         if (glPointG != null) {
             map.graphics.remove(glPointG);
         };
@@ -294,9 +294,9 @@ function submitReport() {
     $.ajax({
         url: msgURL,
         type: 'GET',
-        success: function () {                
+        success: function () {
             myApp.hidePreloader();
-            myApp.alert('Reporte enviado exitosamente.', msgtitle);    
+            myApp.alert('Reporte enviado exitosamente.', msgtitle);
         },
         error: function () {
             myApp.hidePreloader();
