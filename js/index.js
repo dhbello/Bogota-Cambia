@@ -14,8 +14,8 @@ var modeManual = false;
 var photoURLS = new Array();
 var msgtitle = "Dinamica Urbana";
 var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
-var _url_photo = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Imagen';
-var _url_msg = 'https://20161028t112846-dot-dinamica-147714.appspot.com/Registro?';
+var _url_photo = 'https://dinamica-147714.appspot.com/Imagen';
+var _url_msg = 'https://dinamica-147714.appspot.com/Registro?';
 
 gotoMain();
 
@@ -219,7 +219,7 @@ function uploadSuccessFT(response) {
 
 function uploadFail(error) {
     myApp.hidePreloader();
-    myAppmyApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde." + JSON.stringify(error), null, msgtitle);
+    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde." + JSON.stringify(error), null, msgtitle);
 };
 
 function clearPhotos() {
