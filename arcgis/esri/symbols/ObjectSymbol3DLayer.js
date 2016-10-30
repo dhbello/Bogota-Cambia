@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define("require exports ../core/tsSupport/declareExtendsHelper ../core/tsSupport/decorateHelper ./Symbol3DLayer ./support/Symbol3DResource ../core/accessorSupport/decorators".split(" "),function(h,k,e,c,f,g,b){return function(d){function a(a){d.call(this);this.resource=this.material=null;this.type="Object";this.heading=this.anchor=this.depth=this.height=this.width=void 0}e(a,d);a.prototype.clone=function(){return new a({heading:this.heading,anchor:this.anchor,depth:this.depth,enabled:this.enabled,
-height:this.height,material:this.material&&this.material.clone(),resource:this.resource&&this.resource.clone(),width:this.width})};c([b.property()],a.prototype,"material",void 0);c([b.property({type:g.default,json:{writable:!0}})],a.prototype,"resource",void 0);c([b.property()],a.prototype,"type",void 0);c([b.property({json:{writable:!0}})],a.prototype,"width",void 0);c([b.property({json:{writable:!0}})],a.prototype,"height",void 0);c([b.property({json:{writable:!0}})],a.prototype,"depth",void 0);
-c([b.property({json:{writable:!0}})],a.prototype,"anchor",void 0);c([b.property({json:{writable:!0}})],a.prototype,"heading",void 0);return a=c([b.subclass("esri.symbols.ObjectSymbol3DLayer")],a)}(b.declared(f))});

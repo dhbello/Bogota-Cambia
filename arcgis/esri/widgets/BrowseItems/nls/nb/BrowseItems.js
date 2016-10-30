@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"Laget ${name} har ingen felter som kan brukes til filtrering.",addToViewer:"Legg til lag i kart",noItemsToDisplay:"Det er for tiden ingen tilgjengelige elementer \u00e5 vise.",searchFor:"S\u00f8k etter",searching:"S\u00f8ker",items:{organizationLabel:"Min organisasjon",onlineLabel:"ArcGIS Online",contentLabel:"Mitt innhold.",favoritesLabel:"Mine favoritter"},title:"Velg webkart",searchTitle:"S\u00f8k",ok:"Ok",cancel:"Avbryt",placeholder:"Angi s\u00f8keord",instructionsLeft:"Hva vil du gj\u00f8re?",
-instructionsRight:"Velg en konfigurerbar app.",go:"Kj\u00f8r",selectDetails:"VELG",configure:"Opprette",close:"Lukk",learnMoreConfigurableApps:"F\u00e5 mer informasjon om konfigurerbare apper"});

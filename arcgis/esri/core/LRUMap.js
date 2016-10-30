@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define(["require","exports"],function(d,e){return function(){function c(a,b){void 0===a&&(a=0);this.disposeFunction=b;this._cache=new Map;this._queue=[];if(0>=a)throw Error("LRU cache size must be bigger than zero!");this._maxSize=a}c.prototype.clear=function(){var a=this;this._queue.length=0;this.disposeFunction&&this._cache.forEach(function(b,c){a.disposeFunction(c,b)});this._cache.clear()};c.prototype.delete=function(a){var b=this._cache.get(a);return this._cache.delete(a)?(this.disposeFunction&&
-this.disposeFunction(a,b),this._queue.splice(this._queue.indexOf(a),1),!0):!1};c.prototype.forEach=function(a,b){this._cache.forEach(a,b)};c.prototype.get=function(a){var b=this._cache.get(a);if(b)return this._queue.splice(this._queue.indexOf(a),1),this._queue.unshift(a),b};c.prototype.has=function(a){return this._cache.has(a)};c.prototype.set=function(a,b){if(null!==this.get(a))this._cache.set(a,b);else return this._collect(),this._cache.set(a,b),this._queue.unshift(a),this};c.prototype._collect=
-function(){if(this._queue.length&&!(this._queue.length<this._maxSize)){var a=this._queue.pop(),b=this._cache.get(a);this._cache.delete(a)&&this.disposeFunction&&this.disposeFunction(a,b)}};return c}()});

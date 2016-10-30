@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/lang ../../core/JSONSupport ../../Color ../../core/screenUtils ../../core/accessorSupport/decorators".split(" "),function(c,e,h,d,f,k,g,l,b){c=function(c){function a(){c.apply(this,arguments);this.color=new g([0,0,0,1]);this.size=1}h(a,c);a.prototype.readColor=function(a,b){var c=null!=b.transparency?1-0.01*b.transparency:1;if(a&&f.isDefined(a[0]))return[a[0],a[1],a[2],c]};a.prototype.writeColor=
-function(a,b){b.color=[a.r,a.g,a.b];1!==a.a&&(b.transparency=100*(1-a.a))};a.prototype.clone=function(){return new a({color:f.clone(this.color),size:this.size})};d([b.property({type:g})],a.prototype,"color",void 0);d([b.read("color",["color","transparency"])],a.prototype,"readColor",null);d([b.write("color")],a.prototype,"writeColor",null);d([b.property({json:{writable:!0}}),b.cast(l.toPt)],a.prototype,"size",void 0);return a=d([b.subclass("esri.symbols.support.Symbol3DOutline")],a)}(b.declared(k));
-e.Symbol3DOutline=c;Object.defineProperty(e,"__esModule",{value:!0});e.default=c});

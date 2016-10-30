@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define(["../../core/Accessor","../../core/declare"],function(g,h){return h([g],{declaredClass:"esri.views.layers.GraphicsView",graphics:null,renderer:null,view:null,getRenderer:function(a){if(!a||a.symbol)return null;var b=this._rndForScale||this.renderer;a&&(b&&b.getObservationRenderer)&&(b=b.getObservationRenderer(a));return b},getSymbol:function(a){if(a.symbol)return a.symbol;var b=this.getRenderer(a);return b&&b.getSymbol(a)},getRenderingInfo:function(a){var b=this.getRenderer(a),d=this.getSymbol(a);
-if(!d)return null;d={renderer:b,symbol:d};if(b&&b.visualVariables){var f=this.view.view.state,b=b.getVisualVariableValues(a,{resolution:f.resolution,scale:f.scale});a=["proportional","proportional","proportional"];for(f=0;f<b.length;f++){var c=b[f],e=c.variable.type;"color"===e?d.color=c.value:"size"===e?c.variable.target?d.outlineSize=c.value:(e=c.variable.axis,c=c.variable.useSymbolValue?"symbolValue":c.value,"width"===e?a[0]=c:"depth"===e?a[1]=c:"height"===e?a[2]=c:a[0]="width-and-depth"===e?a[1]=
-c:a[1]=a[2]=c):"opacity"===e?d.opacity=c.value:"rotation"===e&&(d.rotationAngle=c.value)}if(isFinite(a[0])||isFinite(a[1])||isFinite(a[2]))d.size=a}return d},_evalSDRenderer:function(a){}})});

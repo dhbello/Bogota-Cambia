@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define("require exports ../../renderers/support/layerTemplates ../../core/promiseUtils ../../core/accessorSupport/utils ../../core/Logger".split(" "),function(m,f,d,g,h,k){var l=k.getLogger("esri.renderers");f.read=function(e,a,c){var b=(a=a&&a.layerDefinition&&a.layerDefinition.drawingInfo)&&a.renderer;if(!b||!d.isByReferenceRendererJSON(b))return g.resolve();delete a.renderer;return d.createRenderer(b,c).then(function(a){var b=h.getProperties(e);b.setDefaultOrigin(c.origin);b.set("renderer",a);
-b.setDefaultOrigin("user")}).otherwise(function(a){l.error("Failed to create by reference renderer",{error:a.toString?a.toString():a,layer:e,context:c})})}});

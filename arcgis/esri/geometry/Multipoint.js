@@ -1,8 +1,19 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+/*
+ COPYRIGHT 2009 ESRI
+
+ TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+ Unpublished material - all rights reserved under the
+ Copyright Laws of the United States and applicable international
+ laws, treaties, and conventions.
+
+ For additional information, contact:
+ Environmental Systems Research Institute, Inc.
+ Attn: Contracts and Legal Services Department
+ 380 New York Street
+ Redlands, California, 92373
+ USA
+
+ email: contracts@esri.com
+ */
 //>>built
-define("dojo/_base/lang ./SpatialReference ./Geometry ./Point ./Extent ./support/zmUtils".split(" "),function(k,z,A,l,B,g){var y=A.createSubclass({declaredClass:"esri.geometry.Multipoint",type:"multipoint",getDefaults:function(a){return{points:[]}},normalizeCtorArgs:function(a,b){var c=null,e,f,d=null;a&&!Array.isArray(a)?(c=a.points?a.points:null,b=b||(c?a.spatialReference:a),e=a.hasZ,f=a.hasM):c=a;c=c||[];b=b||z.WGS84;if(d=c[0])void 0===e&&void 0===f?(e=2<d.length,f=!1):void 0===e?e=3<d.length:
-void 0===f&&(f=3<d.length);return{points:c,spatialReference:b,hasZ:e,hasM:f}},properties:{cache:{dependsOn:["points","hasZ","hasM"]},extent:{dependsOn:["cache"],get:function(a){function b(a){return function(b,c){return null==b?c:null==c?b:a(b,c)}}if(!this.points.length)return null;a=a||new B;var c=this.points,e=this.hasZ,f=this.hasM,d=c[0],m=b(Math.min),n=b(Math.max),g=p=d[0],s=q=d[1],t,u,p,q,v,w,h,x,r,k,l=e?3:2;r=0;for(k=c.length;r<k;r++)d=c[r],h=d[0],x=d[1],g=m(g,h),s=m(s,x),p=n(p,h),q=n(q,x),e&&
-2<d.length&&(h=d[2],t=m(t,h),v=n(v,h)),f&&d.length>l&&(d=d[l],u=m(u,d),w=n(w,d));a.xmin=g;a.ymin=s;a.xmax=p;a.ymax=q;a.spatialReference=this.spatialReference;e?(a.zmin=t,a.zmax=v):(a.zmin=null,a.zmax=null);f?(a.mmin=u,a.mmax=w):(a.mmin=null,a.mmax=null);return a}},points:null},addPoint:function(a){this.clearCache();g.updateSupportFromPoint(this,a);Array.isArray(a)?this.points.push(a):this.points.push(a.toArray());return this},clone:function(){var a={points:k.clone(this.points),spatialReference:this.spatialReference};
-this.hasZ&&(a.hasZ=!0);this.hasM&&(a.hasM=!0);return new y(a)},getPoint:function(a){if(this._validateInputs(a)){a=this.points[a];var b,c,e=2;this.hasZ&&(b=a[2],e=3);this.hasM&&(c=a[e]);return new l({x:a[0],y:a[1],z:b,m:c,spatialReference:this.spatialReference})}},removePoint:function(a){if(this._validateInputs(a))return this.clearCache(),new l(this.points.splice(a,1)[0],this.spatialReference)},setPoint:function(a,b){if(this._validateInputs(a))return this.clearCache(),g.updateSupportFromPoint(b),this.points[a]=
-b.toArray(),this},toJSON:function(){var a=this.spatialReference,a={points:k.clone(this.points),spatialReference:a&&a.toJSON()};this.hasZ&&(a.hasZ=!0);this.hasM&&(a.hasM=!0);return a},_pointsToArrays:function(a){for(var b=0;b<a.points.length;b++){var c=a.points[b];g.updateSupportFromPoint(a,c,!0);Array.isArray(c)||(a.spatialReference||(a.spatialReference=c.spatialReference),a.points[b]=c.toArray())}return a},_validateInputs:function(a){return null!=a&&0<=a&&a<this.points.length}});return y});
+define("esri/geometry/Multipoint",["dojo/_base/declare","dojo/_base/lang","dojo/has","esri/kernel","esri/SpatialReference","esri/geometry/Geometry","esri/geometry/Point","esri/geometry/Extent"],function(_1,_2,_3,_4,_5,_6,_7,_8){var _9={type:"multipoint",points:null};var _a=_1(_6,{declaredClass:"esri.geometry.Multipoint",constructor:function(_b){_2.mixin(this,_9);this.points=[];if(_b){if(_b.points){_2.mixin(this,_b);}else{this.spatialReference=_b;}if(this.spatialReference){this.spatialReference=new _5(this.spatialReference);}}this.verifySR();},_extent:null,addPoint:function(_c){this._extent=null;if(_2.isArray(_c)){this.points.push(_c);}else{this.points.push([_c.x,_c.y]);}return this;},removePoint:function(_d){if(this._validateInputs(_d)){this._extent=null;return new _7(this.points.splice(_d,1)[0],this.spatialReference);}},getExtent:function(){if(this._extent){return new _8(this._extent);}var _e=this.points,il=_e.length;if(!il){return;}var _f=_e[0],_10,_11,_12=(_10=_f[0]),_13=(_11=_f[1]),min=Math.min,max=Math.max,sr=this.spatialReference,x,y,i;for(i=0;i<il;i++){_f=_e[i];x=_f[0];y=_f[1];_12=min(_12,x);_13=min(_13,y);_10=max(_10,x);_11=max(_11,y);}this._extent={xmin:_12,ymin:_13,xmax:_10,ymax:_11,spatialReference:sr?sr.toJson():null};return new _8(this._extent);},_validateInputs:function(_14){if(_14===null||_14<0||_14>=this.points.length){return false;}return true;},getPoint:function(_15){if(this._validateInputs(_15)){var _16=this.points[_15];return new _7(_16[0],_16[1],this.spatialReference);}},setPoint:function(_17,_18){if(this._validateInputs(_17)){this._extent=null;this.points[_17]=[_18.x,_18.y];return this;}},toJson:function(){var _19={points:_2.clone(this.points)},sr=this.spatialReference;if(sr){_19.spatialReference=sr.toJson();}return _19;}});_a.defaultProps=_9;if(_3("extend-esri")){_2.setObject("geometry.Multipoint",_a,_4);_4.geometry.defaultMultipoint=_9;}return _a;});

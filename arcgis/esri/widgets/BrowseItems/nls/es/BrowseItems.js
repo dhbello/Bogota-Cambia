@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"La capa ${name} no tiene ning\u00fan campo que se pueda usar para filtrar.",addToViewer:"Agregar capa a mapa",noItemsToDisplay:"No existen elementos disponibles para mostrar.",searchFor:"Buscar",searching:"Buscando",items:{organizationLabel:"Mi organizaci\u00f3n",onlineLabel:"ArcGIS Online",contentLabel:"Mi contenido",favoritesLabel:"Mis favoritos"},title:"Seleccionar mapa web",searchTitle:"Buscar",ok:"Aceptar",cancel:"Cancelar",placeholder:"Introducir t\u00e9rmino de b\u00fasqueda",
-instructionsLeft:"\u00bfQu\u00e9 deseas hacer?",instructionsRight:"Selecciona una aplicaci\u00f3n configurable.",go:"Ir",selectDetails:"SELECCIONAR",configure:"Crear",close:"Cerrar",learnMoreConfigurableApps:"M\u00e1s informaci\u00f3n sobre las aplicaciones configurables"});

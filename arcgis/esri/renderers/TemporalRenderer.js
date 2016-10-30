@@ -1,5 +1,19 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+/*
+ COPYRIGHT 2009 ESRI
+
+ TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+ Unpublished material - all rights reserved under the
+ Copyright Laws of the United States and applicable international
+ laws, treaties, and conventions.
+
+ For additional information, contact:
+ Environmental Systems Research Institute, Inc.
+ Attn: Contracts and Legal Services Department
+ 380 New York Street
+ Redlands, California, 92373
+ USA
+
+ email: contracts@esri.com
+ */
 //>>built
-define(["../core/declare","./Renderer"],function(f,g){return f(g,{declaredClass:"esri.renderer.TemporalRenderer",constructor:function(a,d,c,b){this.observationRenderer=a;this.latestObservationRenderer=d;this.trackRenderer=c;this.observationAger=b},getSymbol:function(a){var d=a.getLayer(),c=this.getObservationRenderer(a),b=c&&c.getSymbol(a),e=this.observationAger;d.timeInfo&&(d._map.timeExtent&&c===this.observationRenderer&&e&&b)&&(b=e.getAgedSymbol(b,a));return b},getObservationRenderer:function(a){return 0===
-a.getLayer()._getKind(a)?this.observationRenderer:this.latestObservationRenderer||this.observationRenderer},toJSON:function(){var a={type:"temporal"};a.observationRenderer=this.observationRenderer.toJSON();this.latestObservationRenderer&&(a.latestObservationRenderer=this.latestObservationRenderer.toJSON());this.trackRenderer&&(a.trackRenderer=this.trackRenderer.toJSON());this.observationAger&&(a.observationAger=this.observationAger.toJSON());return a}})});
+define("esri/renderers/TemporalRenderer",["dojo/_base/declare","dojo/_base/lang","dojo/has","esri/kernel","esri/renderers/Renderer"],function(_1,_2,_3,_4,_5){var _6=_1(_5,{declaredClass:"esri.renderer.TemporalRenderer",constructor:function(_7,_8,_9,_a){this.observationRenderer=_7;this.latestObservationRenderer=_8;this.trackRenderer=_9;this.observationAger=_a;},getSymbol:function(_b){var _c=_b.getLayer();var _d=_c._getKind(_b);var _e=(_d===0)?this.observationRenderer:(this.latestObservationRenderer||this.observationRenderer);var _f=(_e&&_e.getSymbol(_b));var _10=this.observationAger;if(_c.timeInfo&&_c._map.timeExtent&&(_e===this.observationRenderer)&&_10&&_f){_f=_10.getAgedSymbol(_f,_b);}return _f;}});if(_3("extend-esri")){_2.setObject("renderer.TemporalRenderer",_6,_4);}return _6;});

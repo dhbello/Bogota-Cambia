@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/urlUtils ../../core/JSONSupport ../../core/accessorSupport/decorators".split(" "),function(c,e,g,d,f,h,b){c=function(c){function a(){c.apply(this,arguments)}g(a,c);a.prototype.readHref=function(a,c,b){return f.read(a,b)};a.prototype.writeHref=function(a,b,c){a&&(b.href=f.write(a,c))};a.prototype.clone=function(){return new a({href:this.href,primitive:this.primitive})};d([b.property({json:{writable:!0}})],
-a.prototype,"href",void 0);d([b.read("href")],a.prototype,"readHref",null);d([b.write("href")],a.prototype,"writeHref",null);d([b.property({json:{writable:!0}})],a.prototype,"primitive",void 0);return a=d([b.subclass("esri.symbols.support.Symbol3DResource")],a)}(b.declared(h));e.Symbol3DResource=c;Object.defineProperty(e,"__esModule",{value:!0});e.default=c});

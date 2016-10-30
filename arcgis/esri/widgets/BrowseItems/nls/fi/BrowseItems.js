@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"Karttatasolla ${name} ei ole suodatukseen soveltuvia kentti\u00e4.",addToViewer:"Lis\u00e4\u00e4 karttataso karttaan",noItemsToDisplay:"T\u00e4ll\u00e4 hetkell\u00e4 n\u00e4ytett\u00e4viss\u00e4 olevia kohteita ei ole.",searchFor:"Etsi",searching:"Etsit\u00e4\u00e4n\u2026",items:{organizationLabel:"Oma organisaatio",onlineLabel:"ArcGIS Online",contentLabel:"Oma sis\u00e4lt\u00f6",favoritesLabel:"Omat suosikit"},title:"Valitse Web-kartta",searchTitle:"Etsi",ok:"OK",cancel:"Peruuta",
-placeholder:"Anna hakuehto",instructionsLeft:"Mit\u00e4 haluat tehd\u00e4?",instructionsRight:"Valitse muunneltavissa oleva sovellus.",go:"Siirry",selectDetails:"VALITSE",configure:"Luo",close:"Sulje",learnMoreConfigurableApps:"Lis\u00e4tietoja muunneltavissa olevista sovelluksista"});

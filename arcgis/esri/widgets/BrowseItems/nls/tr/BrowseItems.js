@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"${name} katman\u0131n\u0131n filtreleme i\u00e7in kullan\u0131labilecek hi\u00e7bir alan\u0131 yok.",addToViewer:"Haritaya katman ekle",noItemsToDisplay:"\u015eu anda g\u00f6sterilebilecek herhangi bir \u00f6\u011fe bulunmuyor.",searchFor:"Ara",searching:"Ara\u015ft\u0131r\u0131l\u0131yor",items:{organizationLabel:"Kurulu\u015fum",onlineLabel:"ArcGIS Online",contentLabel:"\u0130\u00e7eriklerim",favoritesLabel:"Favorilerim"},title:"Web Haritas\u0131 Se\u00e7",searchTitle:"Ara",
-ok:"Tamam",cancel:"\u0130ptal",placeholder:"Arama terimini gir",instructionsLeft:"Ne yapmak istiyorsunuz?",instructionsRight:"Yap\u0131land\u0131r\u0131labilir bir uygulama se\u00e7in.",go:"Git",selectDetails:"SE\u00c7",configure:"Olu\u015ftur",close:"Kapat",learnMoreConfigurableApps:"Yap\u0131land\u0131r\u0131labilir uygulamalar hakk\u0131nda daha fazla bilgi edinin"});

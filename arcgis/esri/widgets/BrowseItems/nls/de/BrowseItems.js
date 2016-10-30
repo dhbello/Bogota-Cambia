@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"Der Layer ${name} verf\u00fcgt \u00fcber keine Felder, die gefiltert werden k\u00f6nnen.",addToViewer:"Layer zur Karte hinzuf\u00fcgen",noItemsToDisplay:"Zurzeit stehen keine Elemente zur Anzeige zur Verf\u00fcgung.",searchFor:"Suchen nach",searching:"Suchen",items:{organizationLabel:"Meine Organisation",onlineLabel:"ArcGIS Online",contentLabel:"Eigene Inhalte",favoritesLabel:"Eigene Favoriten"},title:"Webkarte ausw\u00e4hlen",searchTitle:"Suchen",ok:"OK",cancel:"Abbrechen",
-placeholder:"Suchbegriff eingeben",instructionsLeft:"Was m\u00f6chten Sie tun?",instructionsRight:"W\u00e4hlen Sie eine konfigurierbare App aus.",go:"Los",selectDetails:"AUSW\u00c4HLEN",configure:"Erstellen",close:"Schlie\u00dfen",learnMoreConfigurableApps:"Weitere Informationen zu konfigurierbaren Apps"});

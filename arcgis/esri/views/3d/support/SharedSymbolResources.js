@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define("require exports dojo/io-query ./TextureCollection ./ResourceController ../../../core/urlUtils ../../../identity/IdentityManager".split(" "),function(m,n,f,h,k,g,l){return function(){function e(a,b){var d=this;this.streamDataSupplier=this.textures=null;this.canUseXhr={};this.tokens={};this.streamDataSupplier=b.registerClient(this,k.ClientType.SYMBOLOGY,function(a){return d.addUrlToken(a)});this.textures=new h(this.streamDataSupplier,a,{wrapClamp:!0})}e.prototype.destroy=function(){this.streamDataSupplier=
-this.textures=null};e.prototype.addUrlToken=function(a){if(0===a.indexOf("data:"))return a;var b=a.match(/^(((?:https?:)?\/\/[^\/]+).*?)(?:\?(.*))?$/);if(!b)return a;var d=b[1],c=b[2],b=f.queryToObject(b[3]||"");"token"in b||(null==this.tokens[c]&&(a=l.findCredential(a),this.tokens[c]=a&&a.token||""),this.tokens[c]&&(b.token=this.tokens[c]));a=(a=f.objectToQuery(b))?d+"?"+a:d;null==this.canUseXhr[c]&&(this.canUseXhr[c]=g.canUseXhr(a));return!this.canUseXhr[c]?g.addProxy(a):a};return e}()});

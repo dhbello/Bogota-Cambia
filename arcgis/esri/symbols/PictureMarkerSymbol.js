@@ -1,7 +1,19 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
+/*
+ COPYRIGHT 2009 ESRI
+
+ TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+ Unpublished material - all rights reserved under the
+ Copyright Laws of the United States and applicable international
+ laws, treaties, and conventions.
+
+ For additional information, contact:
+ Environmental Systems Research Institute, Inc.
+ Attn: Contracts and Legal Services Department
+ 380 New York Street
+ Redlands, California, 92373
+ USA
+
+ email: contracts@esri.com
+ */
 //>>built
-define("../core/declare dojo/_base/lang ../core/lang ../core/screenUtils ../core/urlUtils ./MarkerSymbol".split(" "),function(k,l,m,d,g,n){var h={width:12,height:12,angle:0,xoffset:0,yoffset:0},f=k(n,{declaredClass:"esri.symbols.PictureMarkerSymbol",properties:{color:{json:{writable:!1}},type:"picture-marker-symbol",url:{dependsOn:["source"],json:{readable:!1},get:function(){return this.source?this.source.url:void 0},set:function(a){var b;a&&0===a.indexOf("data:")?(b=a.substring(5,a.indexOf(";")),
-this.source={url:a,contentType:b,imageData:a.substring(13+b.length)}):this.source={url:a}}},source:{json:{readFrom:["imageData","url"],read:function(a,b,c){a=g.read(b.url,c);return b.imageData?{url:a,contentType:b.contentType,imageData:b.imageData}:{url:a}},write:function(a,b,c){a.imageData&&(b.imageData=a.imageData);a.contentType&&(b.contentType=a.contentType);a.url&&(b.url=g.write(a.url,c))}}},height:{json:{readFrom:["height","size"],read:function(a,b){return b.size||a},writable:!0},cast:d.toPt},
-width:{json:{readFrom:["width","size"],read:function(a,b){return b.size||a},writable:!0},cast:d.toPt},size:{json:{writable:!1}}},getDefaults:function(){return l.mixin(this.inherited(arguments),h)},normalizeCtorArgs:function(a,b,c){if(a&&"string"!==typeof a&&null==a.imageData)return a;var e={};a&&(e.url=a);null!=b&&(e.width=d.toPt(b));null!=c&&(e.height=d.toPt(c));return e},clone:function(){return new f({angle:this.angle,height:this.height,source:m.clone(this.source),width:this.width,xoffset:this.xoffset,
-yoffset:this.yoffset})}});f.defaultProps=h;return f});
+define("esri/symbols/PictureMarkerSymbol",["dojo/_base/declare","dojo/_base/lang","dojo/sniff","dojox/gfx/_base","esri/kernel","esri/lang","esri/urlUtils","esri/symbols/MarkerSymbol"],function(_1,_2,_3,_4,_5,_6,_7,_8){var _9={url:"",width:12,height:12,angle:0,xoffset:0,yoffset:0};var _a=_1(_8,{declaredClass:"esri.symbol.PictureMarkerSymbol",type:"picturemarkersymbol",constructor:function(_b,_c,_d){if(_b){if(_2.isString(_b)){this.url=_b;if(_c){this.width=_c;}if(_d){this.height=_d;}}else{this.width=_4.pt2px(_b.width);this.height=_4.pt2px(_b.height);var _e=_b.imageData;if((!(_3("ie")<9))&&_e){var _f=this.url;this.url="data:"+(_b.contentType||"image")+";base64,"+_e;this.imageData=_f;}}}else{_2.mixin(this,_9);this.width=_4.pt2px(this.width);this.height=_4.pt2px(this.height);}},getStroke:function(){return null;},getFill:function(){return null;},setWidth:function(_10){this.width=_10;return this;},setHeight:function(_11){this.height=_11;return this;},setUrl:function(url){if(url!==this.url){delete this.imageData;delete this.contentType;}this.url=url;return this;},getShapeDescriptors:function(){var _12={type:"image",x:-Math.round(this.width/2),y:-Math.round(this.height/2),width:this.width,height:this.height,src:this.url||""};return {defaultShape:_12,fill:null,stroke:null};},toJson:function(){var url=this.url,_13=this.imageData;if(url.indexOf("data:")===0){var _14=url;url=_13;var _15=_14.indexOf(";base64,")+8;_13=_14.substr(_15);}url=_7.getAbsoluteUrl(url);var _16=_4.px2pt(this.width);_16=isNaN(_16)?undefined:_16;var _17=_4.px2pt(this.height);_17=isNaN(_17)?undefined:_17;var _18=_6.fixJson(_2.mixin(this.inherited("toJson",arguments),{type:"esriPMS",url:url,imageData:_13,contentType:this.contentType,width:_16,height:_17}));delete _18.color;delete _18.size;if(!_18.imageData){delete _18.imageData;}return _18;}});_a.defaultProps=_9;if(_3("extend-esri")){_2.setObject("symbol.PictureMarkerSymbol",_a,_5);_5.symbol.defaultPictureMarkerSymbol=_9;}return _a;});

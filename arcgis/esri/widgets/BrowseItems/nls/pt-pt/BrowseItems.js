@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/4.1/esri/copyright.txt for details.
-//>>built
-define({noFilterFields:"A camada ${name} n\u00e3o tem campos que possam ser utilizados para filtragem.",addToViewer:"Adicionar camada a mapa",noItemsToDisplay:"N\u00e3o h\u00e1 itens atualmente dispon\u00edveis para exibir.",searchFor:"Pesquisar por",searching:"Pesquisando",items:{organizationLabel:"A Organiza\u00e7\u00e3o",onlineLabel:"ArcGIS Online",contentLabel:"O Meu Conte\u00fado",favoritesLabel:"Os Meus Favoritos"},title:"Seleccionar Mapa Web",searchTitle:"Pesquisar",ok:"Ok",cancel:"Cancelar",
-placeholder:"Introduzir termo de pesquisa",instructionsLeft:"O que quer fazer?",instructionsRight:"Seleccione uma aplica\u00e7\u00e3o configur\u00e1vel.",go:"Ir para",selectDetails:"SELECCIONAR",configure:"Criar",close:"Fechar",learnMoreConfigurableApps:"Saiba mais sobre aplica\u00e7\u00f5es configur\u00e1veis"});
