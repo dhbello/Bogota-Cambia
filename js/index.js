@@ -118,13 +118,13 @@ function initLocationGPS() {
         navigator.geolocation.getCurrentPosition(function (position) {
             currentPoint = new Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
             if (glPointG != null) {
-                map.graphics.remove(glPointG);
+                view.graphics.remove(glPointG);
             };
             glPointG = new Graphic(currentPoint,
                     new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                     new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
                     new Color("#FF0000")));
-            map.graphics.add(glPointG);
+            view.graphics.add(glPointG);
             view.center = [currentPoint.x, currentPoint.y];
 
         },
@@ -158,13 +158,13 @@ function setLocationPoint(evt) {
         //var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
         currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
         if (glPointG != null) {
-            map.graphics.remove(glPointG);
+            view.graphics.remove(glPointG);
         };
         glPointG = new Graphic(currentPoint,
                 new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
                 new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
                 new Color("#FF0000")));
-        map.graphics.add(glPointG);
+        view.graphics.add(glPointG);
         view.center = [currentPoint.x, currentPoint.y];
     }
 }
