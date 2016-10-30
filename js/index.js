@@ -44,7 +44,6 @@ function init() {
 }
 
 function initMap() {
-<<<<<<< HEAD
     try {
         dojo.require("esri.map");
         dojo.require("esri.layers.MapImageLayer");
@@ -78,80 +77,12 @@ function initMap2() {
     map.addLayer(glPoint, 0);
     updateSize();
     //initLocationGPS();
-=======
-    require([
-      "esri/Map",
-      "esri/views/MapView",
-      "esri/layers/TileLayer",
-      "esri/layers/GraphicsLayer",
-      "esri/geometry/Point",
-      "esri/Graphic",
-      "esri/symbols/SimpleMarkerSymbol",
-      "esri/symbols/SimpleLineSymbol",
-      "esri/Color",
-      "esri/geometry/support/webMercatorUtils",
-      "dojo/dom",
-      "dojo/domReady!"
-    ], function (
-      _Map,
-      _MapView,
-      _TileLayer,
-      _GraphicsLayer,
-      _Point,
-      _Graphic,
-      _SimpleMarkerSymbol,
-      _SimpleLineSymbol,
-      _Color,
-      _webMercatorUtils,
-      _dom
-    ) {
-
-        __Map = _Map;
-        MapView = _MapView;
-        TileLayer = _TileLayer;
-        GraphicsLayer = _GraphicsLayer;
-        Point = _Point;
-        Graphic = _Graphic;
-        SimpleMarkerSymbol = _SimpleMarkerSymbol;
-        SimpleLineSymbol = _SimpleLineSymbol;
-        Color = _Color;
-        WebMercatorUtils = _webMercatorUtils;
-        dom = _dom;
-
-        mapLayer = new TileLayer({
-            url: baseMapUrl
-        });
-        glPoint = new GraphicsLayer();
-        updateSize();
-
-        currentPoint = new Point(-74.0668084, 4.600885262127369);
-        map = new __Map({
-            layers: [mapLayer]
-        });
-        view = new MapView({
-            container: "map",
-            center: [currentPoint.x, currentPoint.y],
-            map: map,
-            zoom: 15
-        });
-
-        view.on("click", function (evt) {
-            setLocationPoint(evt);
-        });
-        initLocationGPS();
-        if (!(map.loaderror == null)){
-            alert(JSON.stringify(map.loadError));
-        }
-    });
-
->>>>>>> origin/master
 }
 
 function initLocationGPS() {
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
-<<<<<<< HEAD
             currentPointX = position.coords.longitude;
             currentPointY = position.coords.latitude;
             var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
@@ -162,19 +93,6 @@ function initLocationGPS() {
                     new dojo.Color("#FF0000")),
                     null, null));
             map.centerAt(currentPoint);
-=======
-            currentPoint = new Point(position.coords.longitude, position.coords.latitude, { wkid: 4686 });
-            if (glPointG != null) {
-                view.graphics.remove(glPointG);
-            };
-            glPointG = new Graphic(currentPoint,
-                    new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
-                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                    new Color("#FF0000")));
-            view.graphics.add(glPointG);
-            view.center = [currentPoint.x, currentPoint.y];
-
->>>>>>> origin/master
         },
             function (error) {
 
@@ -202,7 +120,6 @@ function setLocation() {
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-<<<<<<< HEAD
         currentPointX = evt.mapPoint.x;
         currentPointY = evt.mapPoint.y;
         var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
@@ -213,19 +130,6 @@ function setLocationPoint(evt) {
                 new dojo.Color("#FF0000")),
                 null, null));
         map.centerAt(currentPoint);
-=======
-        //var cTemp = WebMercatorUtils.xyToLngLat(evt.mapPoint.x, evt.mapPoint.y);
-        currentPoint = new Point(evt.mapPoint.x, evt.mapPoint.y, { wkid: 4686 });
-        if (glPointG != null) {
-            view.graphics.remove(glPointG);
-        };
-        glPointG = new Graphic(currentPoint,
-                new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
-                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color("#FF0000"), 2),
-                new Color("#FF0000")));
-        view.graphics.add(glPointG);
-        view.center = [currentPoint.x, currentPoint.y];
->>>>>>> origin/master
     }
 }
 
@@ -354,9 +258,9 @@ function submitReport() {
     $.ajax({
         url: msgURL,
         type: 'GET',
-        success: function () {
+        success: function () {                
             myApp.hidePreloader();
-            myApp.alert('Reporte enviado exitosamente.', msgtitle);
+            myApp.alert('Reporte enviado exitosamente.', msgtitle);    
         },
         error: function () {
             myApp.hidePreloader();
