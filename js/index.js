@@ -1,4 +1,6 @@
-var myApp = new Framework7();
+var myApp = new Framework7({
+    fastClicks: false
+});
 var $$ = Dom7;
 
 var map;
@@ -19,6 +21,7 @@ gotoMain();
 
 if (isPhoneGapExclusive()) {
     document.addEventListener("deviceready", onDeviceReady, false);
+    window.addEventListener('resize', updateSize);
 } else {
     $(document).ready(function () {
         init();
@@ -74,7 +77,7 @@ function initMap2() {
             new dojo.Color([255, 0, 0, 0.75]))));
     map.addLayer(glPoint, 0);
     updateSize();
-    //initLocationGPS();
+    initLocationGPS();
 }
 
 function initLocationGPS() {
@@ -252,7 +255,7 @@ function submitReport() {
     };
     var msgURL = _url_msg + "nombre=" + $('#fnombre')[0].value + "&email=" + $('#fcorreo')[0].value
                           + "&tipoRegistro=" + $('#ftipo')[0].value + "&descripcion=" + $('#fdescripcion')[0].value
-                          + "&latitud=" + currentPoint.x + "&longitud=" + currentPoint.y + photoMSG;
+                          + "&latitud=" + currentPointX + "&longitud=" + currentPointY + photoMSG;
     $.ajax({
         url: msgURL,
         type: 'GET',
