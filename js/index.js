@@ -37,7 +37,7 @@ function onDeviceReady() {
 function init() {
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
-            navigator.notification.alert('Esta aplicación requiere conexión a internet.', null, msgtitle);
+            myApp.alert('Esta aplicación requiere conexión a internet.', msgtitle);
             $("#bienvenida-toolbar").hide();
         }
     }
@@ -204,7 +204,7 @@ function captureSuccess(imageURI) {
 }
 
 function captureFail(imageURI) {
-    navigator.notification.alert("Error en la captura de la imagen", null, msgtitle);
+    myApp.alert("Error en la captura de la imagen", msgtitle);
 }
 
 function uploadSuccessFT(response) {
@@ -212,14 +212,14 @@ function uploadSuccessFT(response) {
 
     var objResponse;
     objResponse = response.response;
-    navigator.notification.alert("Foto cargada exitosamente.", null, msgtitle);
+    myApp.alert("Foto cargada exitosamente.", msgtitle);
     photoURLS.push(objResponse);
     $('#photolist').append('<img class="image_thumb" src="' + imageCache + '" />');
 };
 
 function uploadFail(error) {
     myApp.hidePreloader();
-    myAppnavigator.notification.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde." + JSON.stringify(error), null, msgtitle);
+    myAppmyApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde." + JSON.stringify(error), null, msgtitle);
 };
 
 function clearPhotos() {
@@ -234,14 +234,14 @@ function submitReport() {
     $("#ftipo").require();
     $("#fdescripcion").require();
     if ($.validity.end().errors > 0) {
-        navigator.notification.alert('Debe completar todos los campos para enviar un reporte.', null, msgtitle);
+        myApp.alert('Debe completar todos los campos para enviar un reporte.', msgtitle);
         return;
     };
 
     $.validity.start();
     $("#fcorreo").match("email");
     if ($.validity.end().errors > 0) {
-        navigator.notification.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.', null, msgtitle);
+        myApp.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.', msgtitle);
         return;
     };
 
@@ -261,11 +261,11 @@ function submitReport() {
         type: 'GET',
         success: function () {                
             myApp.hidePreloader();
-            navigator.notification.alert('Reporte enviado exitosamente.', null, msgtitle);
+            myApp.alert('Reporte enviado exitosamente.', msgtitle);
         },
         error: function () {
             myApp.hidePreloader();
-            navigator.notification.alert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.', null, msgtitle);
+            myApp.alert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.', msgtitle);
         }
     });
 
