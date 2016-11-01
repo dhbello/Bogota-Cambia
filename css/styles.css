@@ -34,6 +34,15 @@
   margin: 10px;
 }
 
-.esri-zoom {
-    display: none !important;
+.esriControlsBR {
+    left: 5px !important;
+}
+
+.chip-media2 {
+    width: 64px !important;
+    border-radius: 0px !important;
+}
+
+.chip2 {
+    border-radius: 0px !important;
 }
