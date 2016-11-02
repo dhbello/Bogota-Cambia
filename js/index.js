@@ -14,7 +14,7 @@ var currentUser;
 var imageCache;
 
 var modeManual = false;
-var initRegistro = true;
+var initRegistro;
 var photoURLS = new Array();
 var msgtitle = "Bogot&aacute; Cambia";
 var cambioStr = "Cambio de Uso"
@@ -291,6 +291,14 @@ function gotoRegistro() {
     $("#empty-header").show();
 }
 
+function gotoRegistroAgain() {
+    hideAll();
+    $("#registroDiv").show();
+    $("#registro-toolbar").show();
+    $("#footer").show();
+    $("#empty-header").show();
+}
+
 function gotoTerminos() {
     hideAll();
     $("#terminosDiv").show();
@@ -434,6 +442,13 @@ function updateUser() {
 
         }
     });
+};
+
+function logout() {
+    myApp.closePanel('right');
+    currentUser = null;
+    window.localStorage.removeItem("user");
+    gotoMain();
 };
 
 function isPhoneGapExclusive() {

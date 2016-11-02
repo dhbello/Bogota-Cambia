@@ -6,13 +6,13 @@
         id        = "gov.ideca.DinamicaUrbana"
         version   = "1.0.1">
 
-    <name>Dinamica Urbana</name>
+    <name>Bogotá Cambia</name>
 
     <description>
-        Dinamica Urbana.
+      Bogotá Cambia
     </description>
 
-    <author href="http://" email="dh.bello28@uniandes.edu.co">
+    <author href="http://www.catastrobogota.gov.co" email="dbello@catastrobogota.gov.co">
         David Bello
     </author>
 
@@ -38,13 +38,13 @@
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
     <preference name="SplashShowOnlyFirstTime"    value="false" />
-  
-    <!--
+
+  <!--
         Define a specific version of PhoneGap to build into your app.
         <preference name="phonegap-version"       value="3.5.0" />
     -->
     <preference name="phonegap-version" value="cli-6.3.0" />
-
+  
     <!-- Plugins -->
 
     <!-- Core plugins -->
@@ -82,10 +82,10 @@
     <icon src="res/icon/windows-phone/icon-173.png" platform="winphone"   role="background" />
 
     <!-- Define app splash screen for each platform. -->
-    <splash src="res/screen/android/screen-ldpi-portrait.png"       platform="android" qualifier="port-ldpi" />
-    <splash src="res/screen/android/screen-mdpi-portrait.png"       platform="android" qualifier="port-mdpi" />
-    <splash src="res/screen/android/screen-hdpi-portrait.png"       platform="android" qualifier="port-hdpi" />
-    <splash src="res/screen/android/screen-xhdpi-portrait.png"      platform="android" qualifier="port-xhdpi" />
+    <splash src="res/screen/android/screen-ldpi-portrait.png"       platform="android" density="port-ldpi" />
+    <splash src="res/screen/android/screen-mdpi-portrait.png"       platform="android" density="port-mdpi" />
+    <splash src="res/screen/android/screen-hdpi-portrait.png"       platform="android" density="port-hdpi" />
+    <splash src="res/screen/android/screen-xhdpi-portrait.png"      platform="android" density="port-xhdpi" />
     <splash src="res/screen/ios/screen-iphone-portrait.png"         platform="ios"     width="320" height="480" />
     <splash src="res/screen/ios/screen-iphone-portrait-2x.png"      platform="ios"     width="640" height="960" />
     <splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" platform="ios"     width="640" height="1136" />
