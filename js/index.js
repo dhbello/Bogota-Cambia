@@ -20,9 +20,9 @@ var msgtitle = "Bogot&aacute; Cambia";
 var cambioStr = "Cambio de Uso"
 var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
 var _url_photo = 'https://dinamica-147714.appspot.com/Imagen';
-var _url_msg = 'https://20161101t163928-dot-dinamica-147714.appspot.com/Registro?';
-var _url_user = 'https://20161101t163928-dot-dinamica-147714.appspot.com/UsuarioRegistro?';
-var _url_balance = 'https://20161101t163928-dot-dinamica-147714.appspot.com/UsuarioBalance?';
+var _url_msg = 'https://20161105t160625-dot-dinamica-147714.appspot.com/Registro?';
+var _url_user = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioRegistro?';
+var _url_balance = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioBalance?';
 
 gotoMain();
 
@@ -45,7 +45,7 @@ function init() {
     currentUser = window.localStorage.getItem("user");
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
-            myApp.alert('Esta aplicación requiere conexión a internet.', msgtitle);
+            sendAlert('Esta aplicación requiere conexión a internet.');
             $("#bienvenida-toolbar").hide();
         }
     }
@@ -115,7 +115,7 @@ function initLocationGPS() {
 }
 
 function updateSize() {
-    var the_height = window.innerHeight - $("#header").height() - $("#footer").height();
+    var the_height = window.innerHeight - $("#header").height();
     $("#map").height(the_height);
     if (map) {
         map.resize();
@@ -143,11 +143,9 @@ function setLocationPoint(evt) {
 function hideAll() {
     $("#mapDiv").css("left", "-2000px");
     $("#mapDiv").css("position", "absolute");
-    $("#map-header1").hide();
-    $("#map-header2").hide();
+    $("#map-toolbar").hide();
     $("#speed-dial").hide();
 
-    $("#footer").hide();
     $("#reporteDiv").hide();
     $("#reporte-toolbar").hide();
     $("#bienvenidaDiv").hide();
@@ -158,7 +156,6 @@ function hideAll() {
     $("#terminos-toolbar").hide();
     $("#catalogoDiv").hide();
     $("#catalogo-toolbar").hide();
-    $("#empty-header").hide();
 };
 
 function gotoNext() {
@@ -176,14 +173,14 @@ function submitRegistro() {
         $.validity.start();
         $("#fcorreo").require();
         if ($.validity.end().errors > 0) {
-            myApp.alert('Debe ingresar su direcci&oacute;n de correo.', msgtitle);
+            sendAlert('Debe ingresar su direcci&oacute;n de correo.');
             return;
         };
 
         $.validity.start();
         $("#fcorreo").match("email");
         if ($.validity.end().errors > 0) {
-            myApp.alert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.', msgtitle);
+            sendAlert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
             return;
         };
 
@@ -206,24 +203,26 @@ function submitRegistro() {
             },
             error: function () {
                 myApp.hidePreloader();
-                myApp.alert('No se pudo validar el usuario, por favor, intente m&aacute;s tarde.', msgtitle);
+                setTimeout(function () {
+                    sendAlert('No se pudo validar el usuario, por favor, intente m&aacute;s tarde.');
+                }, 2000);
             }
         });
     } else {
         $.validity.start();
         $("#fnombres").require();
         if ($.validity.end().errors > 0) {
-            myApp.alert('Debe ingresar su nombre.', msgtitle);
+            sendAlert('Debe ingresar su nombre.');
             return;
         };
         $.validity.start();
         $("#fapellidos").require();
         if ($.validity.end().errors > 0) {
-            myApp.alert('Debe ingresar su apellido.', msgtitle);
+            sendAlert('Debe ingresar su apellido.');
             return;
         };
         if ($("#terminosCheck").prop('checked') == false) {
-            myApp.alert('Debe aceptar los terminos de uso.', msgtitle);
+            sendAlert('Debe aceptar los terminos de uso.');
             return;
         }
         $.ajax({
@@ -239,12 +238,17 @@ function submitRegistro() {
                     gotoMap();
                     updateUser();
                 } else {
-                    myApp.alert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.', msgtitle);
+                    setTimeout(function () {
+                        sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
+                    }, 2000);
                 };
             },
             error: function () {
                 myApp.hidePreloader();
-                myApp.alert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.', msgtitle);
+                setTimeout(function () {
+                    sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
+                }, 2000);
+
             }
         });
     };
@@ -254,16 +258,13 @@ function gotoMain() {
     hideAll();
     $("#bienvenidaDiv").show();
     $("#bienvenida-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 }
 
 function gotoMap() {
     hideAll();
     $("#mapDiv").css("left", "0px");
     $("#mapDiv").css("position", "");
-    $("#map-header1").show();
-    $("#map-header2").show();
+    $("#map-toolbar").show();
     $("#speed-dial").show();
     updateSize();
 };
@@ -272,11 +273,8 @@ function gotoReporte() {
     hideAll();
     $("#reporteDiv").show();
     $("#reporte-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 
     photoURLS = new Array();
-    $('#fdescripcion')[0].value = "";
     $('#photolist').html("");
     $('#ftipo').val("");
     $("#detalleTipo").hide();
@@ -287,24 +285,18 @@ function gotoRegistro() {
     hideAll();
     $("#registroDiv").show();
     $("#registro-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 }
 
 function gotoRegistroAgain() {
     hideAll();
     $("#registroDiv").show();
     $("#registro-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 }
 
 function gotoTerminos() {
     hideAll();
     $("#terminosDiv").show();
     $("#terminos-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 }
 
 function gotoCatalogo() {
@@ -312,8 +304,6 @@ function gotoCatalogo() {
     myApp.closePanel('right');
     $("#catalogoDiv").show();
     $("#catalogo-toolbar").show();
-    $("#footer").show();
-    $("#empty-header").show();
 }
 
 function dial() {
@@ -326,7 +316,7 @@ function dial() {
 
 function addPhotos(sourceType) {
     if (photoURLS.length == 3) {
-        myApp.alert("Solo puede cargar hasta tres fotos por reporte.", msgtitle);
+        sendAlert("Solo puede cargar hasta tres fotos por reporte.");
         return;
     };
 
@@ -350,22 +340,25 @@ function captureSuccess(imageURI) {
 }
 
 function captureFail(imageURI) {
-    myApp.alert("Error en la captura de la imagen", msgtitle);
+    sendAlert("Error en la captura de la imagen");
 }
 
 function uploadSuccessFT(response) {
     myApp.hidePreloader();
-
+    setTimeout(function () {
+        sendAlert("Foto cargada exitosamente.");
+    }, 2000);
     var objResponse;
     objResponse = response.response;
-    myApp.alert("Foto cargada exitosamente.", msgtitle);
     photoURLS.push(objResponse);
     $('#photolist').append('<img class="image_thumb" src="' + imageCache + '" />');
 };
 
 function uploadFail(error) {
     myApp.hidePreloader();
-    myApp.alert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.", null, msgtitle);
+    setTimeout(function () {
+        sendAlert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.");
+    }, 2000);
 };
 
 function clearPhotos() {
@@ -374,18 +367,15 @@ function clearPhotos() {
 };
 
 function submitReport() {
-    if ($("#ftipo").val() == null) {
-        myApp.alert('Debe seleccionar un tipo de reporte.', msgtitle);
+    if (photoURLS.length == 0) {
+        sendAlert('Debe incluir por lo menos una foto.');
         return;
     }
 
-    $.validity.start();
-    $("#ftipo").require();
-    $("#fdescripcion").require();
-    if ($.validity.end().errors > 0) {
-        myApp.alert('Debe completar todos los campos para enviar un reporte.', msgtitle);
+    if ($("#ftipo").val() == null) {
+        sendAlert('Debe seleccionar un tipo de reporte.');
         return;
-    };
+    }
 
     myApp.showPreloader("Enviando reporte, por favor, espere.");
 
@@ -404,19 +394,22 @@ function submitReport() {
     }
 
     var msgURL = _url_msg + "email=" + encodeURIComponent(currentUser)
-                          + "&tipoRegistro=" + tipoText + "&descripcion=" + encodeURIComponent($('#fdescripcion')[0].value)
-                          + "&latitud=" + currentPointX + "&longitud=" + currentPointY + photoMSG;
+                          + "&tipoRegistro=" + tipoText + "&latitud=" + currentPointX + "&longitud=" + currentPointY + photoMSG;
     $.ajax({
         url: msgURL,
         type: 'GET',
         success: function () {                
             myApp.hidePreloader();
-            myApp.alert('Reporte enviado exitosamente.', msgtitle);
+            setTimeout(function () {
+                sendAlert('Reporte enviado exitosamente.');
+            }, 2000);
             updateUser();
         },
         error: function () {
             myApp.hidePreloader();
-            myApp.alert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.', msgtitle);
+            setTimeout(function () {
+                sendAlert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.');
+            }, 2000);
         }
     });
 
@@ -430,12 +423,9 @@ function updateUser() {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
-            myApp.hidePreloader();
             if (response.status == "true") {
                 $("#user_name").html(response.nombres + " " + response.apellidos);
-                $("#ptTotales").html(response.ptTotales);
-                $("#ptPosibles").html(response.ptPosibles);
-                $("#ptPendientes").html(response.ptPendientes);
+                $("#ptTotales").html(response.puntos);
             };
         },
         error: function () {
@@ -450,6 +440,11 @@ function logout() {
     window.localStorage.removeItem("user");
     gotoMain();
 };
+
+function sendAlert(text) {
+    myApp.alert(text, msgtitle);
+}
+
 
 function isPhoneGapExclusive() {
     try {

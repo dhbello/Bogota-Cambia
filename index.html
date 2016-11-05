@@ -29,23 +29,15 @@
 <body>
     <div class="panel-overlay"></div>
     <div class="panel panel-right panel-cover">
-        <div style="text-align: right;background: #fff;" class="content-block">
+        <a href="#" onclick="myApp.closePanel('right');" class="button active" style="margin: 0px;padding: 0px;float: right;">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </a>
+        <div style="background: #fff;" class="content-block">
             <h1 id="user_name" style="margin-bottom: 0em;"></h1>
             <p id="user_email" style="margin-top: 0;"></p>
-            <br />
             <div class="chip chip2" style="width: 100%;">
                 <div id="ptTotales" class="chip-media chip-media2 bg-blue"></div>
-                <div class="chip-label">Puntos actuales</div>
-            </div>
-            <br />
-            <div class="chip chip2" style="width: 100%;">
-                <div id="ptPosibles" class="chip-media chip-media2 bg-green"></div>
-                <div class="chip-label">Puntos posibles</div>
-            </div>
-            <br />
-            <div class="chip chip2" style="width: 100%;">
-                <div id="ptPendientes" class="chip-media chip-media2 bg-orange"></div>
-                <div class="chip-label">Puntos por validar</div>
+                <div class="chip-label">Puntos</div>
             </div>
             <br />
             <p class="buttons-row">
@@ -59,16 +51,58 @@
     <div class="views">
         <div class="view view-main">
             <div class="navbar">
-                <div class="navbar-inner">
-                    <div class="left" id="empty-header">
-                        <a href="#"></a>
-                    </div>
-                    <div class="left" id="map-header1">
+                <div class="navbar-inner" id="map-toolbar" style="display: none;">
+                    <div class="left">
                         <a href="#" onclick="gotoMain();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                     </div>
-                    <div id="titleBar" class="center">Bogotá Cambia</div>
-                    <div class="right" id="map-header2">
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
                         <a href="#" onclick="myApp.openPanel('right');" class="link"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="bienvenida-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" class="link"></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" onclick="gotoNext();" class="link"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="registro-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoMain();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" onclick="submitRegistro();" class="link">Continuar</a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="terminos-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoRegistroAgain();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" class="link"></a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="reporte-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoMap();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" onclick="submitReport();" class="link">Enviar</a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="catalogo-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoMap();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" class="link"></a>
                     </div>
                 </div>
             </div>
@@ -88,8 +122,12 @@
                     <div class="page-content">
                         <div id="bienvenidaDiv" style="display: none;">
                             <div class="content-block">
-                                <h1>Titulo</h1>
-                                <p>Texto de bienvenida</p>
+                                <p>Bogotá Cambia es una aplicación de dinámica urbana con la que puedes capturar y reportar transformaciones de la ciudad con fotos georeferenciadas por GPS y su ubicación en el Mapa de Bogotá. ¡Cada nuevo registro es un valioso dato que contribuirá a construir y mejorar la ciudad!</p>
+                                <p>Esta aplicación ofrece tres opciones que podrás señalar en el Mapa de Bogotá al momento de reportar un cambio: Nueva construcción, Demolición, y Cambio de uso.</p>
+                                - Si vas por la ciudad y descubres un predio con una obra reciente ó en obra, entras a la aplicación, capturas la imagen, la ubicas en el Mapa, y señalas <b>Nueva Construcción</b>.<br />
+                                - Si por el contrario lo que ves es el derribo de una construcción, indicas <b>Demolición</b>.<br />
+                                - Pero si observas que un terreno que antes era residencial y ahora es comercial, ó viceversa, ó incluso cualquier otra variación del predio en cuanto a su uso, entras a Bogotá Cambia, señalas <b>Cambio de uso</b> y especificas cuál.<br />
+                                <p>¡Bogotá Cambia te motiva a buscar y descubrir nuevas e interesantes variaciones urbanas, donde quiera que te encuentres en la ciudad!</p>
                             </div>
                         </div>
                         <div id="registroDiv" style="display: none;">
@@ -110,7 +148,7 @@
                                         </ul>
                                     </div>
                                     <div id="registroNuevo" style="display: none;">
-                                        <p>Para registrarte, inicia la siguiente informaci&oacute;n:</p>
+                                        <p>Para registrarte, ingresa tus datos b&aacute;sicos:</p>
                                         <div class="list-block">
                                             <ul>
                                                 <li>
@@ -163,7 +201,7 @@
                                 <div class="list-block">
                                     <ul>
                                         <li>
-                                            <div class="item-content">
+                                            <div class="item-content item-link">
                                                 <div class="item-inner">
                                                     <div class="item-input">
                                                         <select id="ftipo">
@@ -182,7 +220,7 @@
                                     <div class="list-block">
                                         <ul>
                                             <li>
-                                                <div class="item-content">
+                                                <div class="item-content item-link">
                                                     <div class="item-inner">
                                                         <div class="item-input">
                                                             <select id="ftipodetalle">
@@ -196,20 +234,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="content-block-title">DESCRIPCI&Oacute;N</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-inner">
-                                                    <div class="item-input">
-                                                        <textarea id="fdescripcion"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="content-block-title">FOTOS</div>
                                 <div class="list-block">
@@ -241,36 +265,43 @@
                         </div>
                         <div id="catalogoDiv" style="display: none;">
                             <div class="content-block">
-                                <p>Catalogo de premios</p>
+
+                                <h1>Beneficios Nivel 1</h1>
+                                <div class="card demo-card-header-pic">
+                                    <div valign="bottom" class="card-header color-white no-border" style="background-image:url(http://www.okeybrand.com/ok/wp-content/uploads/2009/09/exito.jpg);height: 30vw;background-size: cover;background-position: center;">Titulo</div>
+                                    <div class="card-content">
+                                        <div class="card-content-inner">
+                                            <p class="color-gray">Alternativa: XXXXX puntos</p>
+                                            <p>Descripcion del premio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec pharetra nisl. Donec rhoncus tortor rutrum orci luctus auctor. Maecenas lacinia fringilla risus et ullamcorper. Pellentesque id elementum risus. </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="link"></a>
+                                        <a href="#" class="link">Redimir</a>
+                                    </div>
+                                </div>
+
+                                <h1>Beneficios Nivel 2</h1>
+                                <div class="card demo-card-header-pic">
+                                    <div valign="bottom" class="card-header color-white no-border" style="background-image:url(http://www.integracionsocial.gov.co/images/firma_logo.png);height: 30vw;background-size: cover;background-position: center;">Titulo</div>
+                                    <div class="card-content">
+                                        <div class="card-content-inner">
+                                            <p class="color-gray">Alternativa: XXXXX puntos</p>
+                                            <p>Descripcion del premio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec pharetra nisl. Donec rhoncus tortor rutrum orci luctus auctor. Maecenas lacinia fringilla risus et ullamcorper. Pellentesque id elementum risus. </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="link"></a>
+                                        <a href="#" class="link">Redimir</a>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="toolbar" id="footer" style="display: none;">
-                <div id="bienvenida-toolbar" class="toolbar-inner">
-                    <a href="#" class="link"></a>
-                    <a href="#" onclick="gotoNext();" class="link">Continuar</a>
-                </div>
-                <div id="registro-toolbar" class="toolbar-inner">
-                    <a href="#" class="link"></a>
-                    <a href="#" onclick="submitRegistro();" class="link">Continuar</a>
-                </div>
-                <div id="terminos-toolbar" class="toolbar-inner">
-                    <a href="#" class="link"></a>
-                    <a href="#" onclick="gotoRegistroAgain();" class="link">Volver</a>
-                </div>
-                <div id="reporte-toolbar" class="toolbar-inner">
-                    <a href="#" onclick="submitReport();" class="link">Enviar</a>
-                    <a href="#" onclick="gotoMap();" class="link">Cancelar</a>
-                </div>
-                <div id="catalogo-toolbar" class="toolbar-inner">
-                    <a href="#" class="link"></a>
-                    <a href="#" onclick="gotoMap();" class="link">Volver</a>
-                </div>
-            </div>
-
         </div>
     </div>
 

@@ -46,3 +46,8 @@
 .chip2 {
     border-radius: 0px !important;
 }
+
+.navcenter {
+    width: 100% !important;
+    text-align: center !important;
+}
