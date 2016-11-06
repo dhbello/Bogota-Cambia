@@ -95,6 +95,8 @@ function initMap2() {
 }
 
 function initLocationGPS() {
+    $("#buttonLocation").css("background-color", "");
+    modeManual = false;
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -124,6 +126,7 @@ function updateSize() {
 };
 
 function setLocation() {
+    $("#buttonLocation").css("background-color", "grey");
     modeManual = true;
     glPoint.clear();
 };
@@ -131,6 +134,7 @@ function setLocation() {
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
+        $("#buttonLocation").css("background-color", "");
         currentPointX = evt.mapPoint.x;
         currentPointY = evt.mapPoint.y;
         var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
@@ -267,6 +271,9 @@ function gotoMap() {
     $("#map-toolbar").show();
     $("#speed-dial").show();
     updateSize();
+
+    modeManual = false;
+    $("#buttonLocation").css("background-color", "");
 };
 
 function gotoReporte() {

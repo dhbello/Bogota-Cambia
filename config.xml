@@ -93,7 +93,7 @@
     <splash src="res/screen/windows-phone/screen-portrait.jpg"      platform="winphone" />
 
     <config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>100</string>
+    <string>102</string>
     </config-file>
 
     <!--
