@@ -50,9 +50,10 @@ function init() {
         }
     }
     initMap();
-    $('#ftipo').on('change', function () {
-        if (this.value == cambioStr) {
+    $('input[type=radio][name=ftipo]').on('change', function () {
+        if ($(this).val() == cambioStr) {
             $("#detalleTipo").show();
+            $("input:radio[name ='ftipodetalle']").removeAttr("checked");
         } else {
             $("#detalleTipo").hide();
         }
@@ -74,7 +75,7 @@ function initMap() {
 
 function initMap2() {
     map = new esri.Map("map", {
-        zoom: 10,
+        zoom: 7,
         center: new esri.geometry.Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
         autoresize: false
     });
@@ -95,7 +96,7 @@ function initMap2() {
 }
 
 function initLocationGPS() {
-    $("#buttonLocation").css("background-color", "");
+    $("#buttonLocation").css("background-color", "#004167");
     modeManual = false;
     try {
 
@@ -126,15 +127,19 @@ function updateSize() {
 };
 
 function setLocation() {
-    $("#buttonLocation").css("background-color", "grey");
-    modeManual = true;
-    glPoint.clear();
+    if (modeManual) {
+        $("#buttonLocation").css("background-color", "#004167");
+        modeManual = false;
+    } else {
+        $("#buttonLocation").css("background-color", "grey");
+        modeManual = true;
+    }
 };
 
 function setLocationPoint(evt) {
     if (modeManual) {
         modeManual = false;
-        $("#buttonLocation").css("background-color", "");
+        $("#buttonLocation").css("background-color", "#004167");
         currentPointX = evt.mapPoint.x;
         currentPointY = evt.mapPoint.y;
         var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
@@ -160,6 +165,8 @@ function hideAll() {
     $("#terminos-toolbar").hide();
     $("#catalogoDiv").hide();
     $("#catalogo-toolbar").hide();
+    $("#catalogoDetailDiv").hide();
+    $("#catalogo-detail-toolbar").hide();
 };
 
 function gotoNext() {
@@ -209,7 +216,7 @@ function submitRegistro() {
                 myApp.hidePreloader();
                 setTimeout(function () {
                     sendAlert('No se pudo validar el usuario, por favor, intente m&aacute;s tarde.');
-                }, 2000);
+                }, 1500);
             }
         });
     } else {
@@ -244,14 +251,14 @@ function submitRegistro() {
                 } else {
                     setTimeout(function () {
                         sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
-                    }, 2000);
+                    }, 1500);
                 };
             },
             error: function () {
                 myApp.hidePreloader();
                 setTimeout(function () {
                     sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
-                }, 2000);
+                }, 1500);
 
             }
         });
@@ -273,7 +280,7 @@ function gotoMap() {
     updateSize();
 
     modeManual = false;
-    $("#buttonLocation").css("background-color", "");
+    $("#buttonLocation").css("background-color", "#004167");
 };
 
 function gotoReporte() {
@@ -283,8 +290,9 @@ function gotoReporte() {
 
     photoURLS = new Array();
     $('#photolist').html("");
-    $('#ftipo').val("");
     $("#detalleTipo").hide();
+    $("input:radio[name ='ftipo']").removeAttr("checked");
+    $("input:radio[name ='ftipodetalle']").removeAttr("checked");
 };
 
 function gotoRegistro() {
@@ -311,6 +319,12 @@ function gotoCatalogo() {
     myApp.closePanel('right');
     $("#catalogoDiv").show();
     $("#catalogo-toolbar").show();
+}
+
+function gotoCatalogoDetail() {
+    hideAll();
+    $("#catalogoDetailDiv").show();
+    $("#catalogo-detail-toolbar").show();
 }
 
 function dial() {
@@ -354,7 +368,7 @@ function uploadSuccessFT(response) {
     myApp.hidePreloader();
     setTimeout(function () {
         sendAlert("Foto cargada exitosamente.");
-    }, 2000);
+    }, 1500);
     var objResponse;
     objResponse = response.response;
     photoURLS.push(objResponse);
@@ -365,7 +379,7 @@ function uploadFail(error) {
     myApp.hidePreloader();
     setTimeout(function () {
         sendAlert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.");
-    }, 2000);
+    }, 1500);
 };
 
 function clearPhotos() {
@@ -379,11 +393,18 @@ function submitReport() {
         return;
     }
 
-    if ($("#ftipo").val() == null) {
+    if ($("input:radio[name ='ftipo']:checked").length == 0) {
         sendAlert('Debe seleccionar un tipo de reporte.');
         return;
     }
 
+    if ($("input:radio[name ='ftipo']:checked")[0].value == cambioStr) {
+        if ($("input:radio[name ='ftipodetalle']:checked").length == 0) {
+            sendAlert('Debe seleccionar un tipo de cambio.');
+            return;
+        }
+    }
+    
     myApp.showPreloader("Enviando reporte, por favor, espere.");
 
     var photoMSG = '';
@@ -394,10 +415,10 @@ function submitReport() {
     };
 
     var tipoText;
-    if ($('#ftipo')[0].value == cambioStr) {
-        tipoText = $('#ftipo')[0].value + " - " + $('#ftipodetalle')[0].value;
+    if ($("input:radio[name ='ftipo']:checked")[0].value == cambioStr) {
+        tipoText = $("input:radio[name ='ftipo']:checked")[0].value + " - " + $("input:radio[name ='ftipodetalle']:checked")[0].value;
     } else {
-        tipoText = $('#ftipo')[0].value;
+        tipoText = $("input:radio[name ='ftipo']:checked")[0].value;
     }
 
     var msgURL = _url_msg + "email=" + encodeURIComponent(currentUser)
@@ -409,14 +430,14 @@ function submitReport() {
             myApp.hidePreloader();
             setTimeout(function () {
                 sendAlert('Reporte enviado exitosamente.');
-            }, 2000);
+            }, 1500);
             updateUser();
         },
         error: function () {
             myApp.hidePreloader();
             setTimeout(function () {
                 sendAlert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.');
-            }, 2000);
+            }, 1500);
         }
     });
 

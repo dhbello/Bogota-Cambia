@@ -29,19 +29,19 @@
 <body>
     <div class="panel-overlay"></div>
     <div class="panel panel-right panel-cover">
-        <a href="#" onclick="myApp.closePanel('right');" class="button active" style="margin: 0px;padding: 0px;float: right;">
+        <a href="#" onclick="myApp.closePanel('right');" class="button color-gray" style="margin: 0px;padding: 0px;float: right;">
             <i class="fa fa-times-circle" aria-hidden="true"></i>
         </a>
         <div style="background: #fff;" class="content-block">
             <h1 id="user_name" style="margin-bottom: 0em;"></h1>
             <p id="user_email" style="margin-top: 0;"></p>
             <div class="chip chip2" style="width: 100%;">
-                <div id="ptTotales" class="chip-media chip-media2 bg-blue"></div>
+                <div id="ptTotales" class="chip-media chip-media2" style="background-color: #004167;"></div>
                 <div class="chip-label">Puntos</div>
             </div>
             <br />
             <p class="buttons-row">
-                <a href="#" class="button button-fill button-raised" onclick="gotoCatalogo();">VER CATALOGO DE PREMIOS</a>
+                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoCatalogo();">VER CAT&Aacute;LOGO DE PUNTOS</a>
             </p>
             <p class="buttons-row">
                 <a href="#" class="button button-fill button-raised color-red" onclick="logout();">CERRAR SESSION</a>
@@ -50,7 +50,7 @@
     </div>
     <div class="views">
         <div class="view view-main">
-            <div class="navbar">
+            <div id="header" class="navbar">
                 <div class="navbar-inner" id="map-toolbar" style="display: none;">
                     <div class="left">
                         <a href="#" onclick="gotoMain();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
@@ -105,20 +105,29 @@
                         <a href="#" class="link"></a>
                     </div>
                 </div>
+                <div class="navbar-inner" id="catalogo-detail-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoCatalogo();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" class="link"></a>
+                    </div>
+                </div>
             </div>
             <div class="speed-dial"  id="speed-dial" style="display: none;">
-                <a href="#" class="floating-button" onclick="dial();">
+                <a href="#" class="floating-button" style="background-color: #004167;">
                     <i class="fa fa-arrow-up" aria-hidden="true"></i>
                     <i class="fa fa-arrow-down" aria-hidden="true"></i>
                 </a>
                 <div class="speed-dial-buttons">
-                    <a id="buttonLocation" href="#" onclick="setLocation();" class="link"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                    <a href="#" onclick="initLocationGPS();" class="link"><i class="fa fa-dot-circle-o" aria-hidden="true"></i></a>
-                    <a href="#" onclick="gotoReporte();" class="link"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <a id="buttonLocation" href="#" onclick="setLocation();" class="link" style="background-color: #004167;"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    <a href="#" onclick="initLocationGPS();" class="link" style="background-color: #004167;"><i class="fa fa-dot-circle-o" aria-hidden="true"></i></a>
+                    <a href="#" onclick="gotoReporte();" class="link" style="background-color: #004167;"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </div>
             <div class="pages">
-                <div data-page="index" class="page">
+                <div data-page="index" class="page navbar-fixed">
                     <div class="page-content">
                         <div id="bienvenidaDiv" style="display: none;">
                             <div class="content-block">
@@ -203,18 +212,32 @@
                                 <div class="list-block">
                                     <ul>
                                         <li>
-                                            <div class="item-content item-link">
+                                            <label class="label-radio item-content">
+                                                <input type="radio" name="ftipo" value="Demolición">
+                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-input">
-                                                        <select id="ftipo">
-                                                            <option>Demolición</option>
-                                                            <option>Nueva construcción</option>
-                                                            <option>Cambio de Uso</option>
-                                                        </select>
-                                                    </div>
+                                                    <div class="item-title">Demolici&oacute;n</div>
                                                 </div>
-                                            </div>
+                                            </label>
                                         </li>
+                                        <li>
+                                            <label class="label-radio item-content">
+                                                <input type="radio" name="ftipo" value="Nueva construcción">
+                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title">Nueva construcci&oacute;n</div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="label-radio item-content">
+                                                <input type="radio" name="ftipo" value="Cambio de Uso">
+                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title">Cambio de Uso</div>
+                                                </div>
+                                            </label>
+                                        </li>                                        
                                     </ul>
                                 </div>
                                 <div id="detalleTipo" style="display: none;">
@@ -222,18 +245,32 @@
                                     <div class="list-block">
                                         <ul>
                                             <li>
-                                                <div class="item-content item-link">
+                                                <label class="label-radio item-content">
+                                                    <input type="radio" name="ftipodetalle" value="Residencial a Comercial">
+                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
                                                     <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <select id="ftipodetalle">
-                                                                <option>Residencial a Comercial</option>
-                                                                <option>Comercial a Residencial</option>
-                                                                <option>Residencial a Dotacional</option>
-                                                            </select>
-                                                        </div>
+                                                        <div class="item-title">Residencial a Comercial</div>
                                                     </div>
-                                                </div>
+                                                </label>
                                             </li>
+                                            <li>
+                                                <label class="label-radio item-content">
+                                                    <input type="radio" name="ftipodetalle" value="Comercial a Residencial">
+                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title">Comercial a Residencial</div>
+                                                    </div>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="label-radio item-content">
+                                                    <input type="radio" name="ftipodetalle" value="Residencial a Institucional">
+                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title">Residencial a Institucional</div>
+                                                    </div>
+                                                </label>
+                                            </li>                                              
                                         </ul>
                                     </div>
                                 </div>
@@ -249,8 +286,8 @@
                                                         </div>
                                                         <br />
                                                         <p class="buttons-row" style="float: right;">
-                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="width: 50px;" class="button color-white bg-green"><i class="fa fa-camera" aria-hidden="true"></i></a>
-                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="width: 50px;" class="button color-white bg-green"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="width: 50px;background-color: #004167;" class="button color-white"><i class="fa fa-camera" aria-hidden="true"></i></a>
+                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="width: 50px;background-color: #004167;" class="button color-white"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
                                                             <a href="#" onclick="clearPhotos();" style="width: 50px;" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                         </p>
 
@@ -271,7 +308,7 @@
                                 <div class="list-block media-list">
                                     <ul>
                                         <li>
-                                            <a href="#" class="item-link item-content">
+                                            <a href="#" class="item-link item-content" onclick="gotoCatalogoDetail();">
                                                 <div class="item-media">
                                                     <i class="fa fa-star" aria-hidden="true" style="font-size: 60px;color: white;background: green;border-radius: 50%;width: 80px;height: 80px;text-align: center;line-height: 80px;"></i>
                                                 </div>
@@ -285,7 +322,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" class="item-link item-content">
+                                            <a href="#" class="item-link item-content" onclick="gotoCatalogoDetail();">
                                                 <div class="item-media">
                                                     <i class="fa fa-star" aria-hidden="true" style="font-size: 60px;color: white;background: yellow;border-radius: 50%;width: 80px;height: 80px;text-align: center;line-height: 80px;"></i>
                                                 </div>
@@ -299,7 +336,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" class="item-link item-content">
+                                            <a href="#" class="item-link item-content" onclick="gotoCatalogoDetail();">
                                                 <div class="item-media">
                                                     <i class="fa fa-star" aria-hidden="true" style="font-size: 60px;color: white;background: blue;border-radius: 50%;width: 80px;height: 80px;text-align: center;line-height: 80px;"></i>
                                                 </div>
@@ -314,6 +351,10 @@
                                         </li>                                                                                
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="catalogoDetailDiv" style="display: none;">
+                            <div class="content-block">
 
                                 <h1>Beneficios Nivel 1</h1>
                                 <div class="card demo-card-header-pic">
