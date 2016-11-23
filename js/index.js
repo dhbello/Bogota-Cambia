@@ -374,7 +374,7 @@ function addPhotos(sourceType) {
         sourceType: sourceType,
         quality: 50,
         targetHeight: 1024,
-        targetWidth: 768,
+        targetWidth: 1024,
         encodingType: Camera.EncodingType.JPEG
     });
 };
