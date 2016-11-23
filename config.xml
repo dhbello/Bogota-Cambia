@@ -82,8 +82,7 @@
     <icon src="res/icon/windows-phone/icon-173.png" platform="winphone"   role="background" />
 
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="10000" />
-  
+    
     <!-- Define app splash screen for each platform. -->
     <platform name="android">
       <splash src="res/screen/android/screen-ldpi-portrait.png"       platform="android" density="ldpi" />
