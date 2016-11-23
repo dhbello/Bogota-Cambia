@@ -372,7 +372,9 @@ function addPhotos(sourceType) {
     navigator.camera.getPicture(captureSuccess, captureFail, {
         destinationType: Camera.DestinationType.FILE_URI,
         sourceType: sourceType,
-        quality : 50,
+        quality: 50,
+        targetHeight: 1024,
+        targetWidth: 768,
         encodingType: Camera.EncodingType.JPEG
     });
 };
