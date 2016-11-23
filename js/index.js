@@ -77,7 +77,8 @@ function initMap2() {
     map = new esri.Map("map", {
         zoom: 7,
         center: new esri.geometry.Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
-        autoresize: false
+        autoresize: false,
+        slider: false
     });
     dojo.connect(map, "onClick", function (evt) {
         setLocationPoint(evt);
@@ -177,6 +178,29 @@ function gotoNext() {
         gotoMap();
         updateUser();
     };
+};
+
+function gotoTutorial() {
+    var modal = myApp.modal({
+        afterText: '<div class="swiper-container" style="width: auto; margin:15px -15px -15px">' +
+                      '<div class="swiper-pagination"></div>' +
+                      '<div class="swiper-wrapper">' +
+                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/1/" height="150" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/2/" height="150" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/1/" height="150" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/2/" height="150" style="display:block"></div>' +
+                      '</div>' +
+                    '</div>',
+        buttons: [
+          {
+              text: 'Aceptar',
+              onClick: function () {
+                  window.localStorage.setItem("tutorial", true);
+              }
+          }
+        ]
+    })
+    myApp.swiper($$(modal).find('.swiper-container'), { pagination: '.swiper-pagination' });
 };
 
 function submitRegistro() {
@@ -281,6 +305,10 @@ function gotoMap() {
 
     modeManual = false;
     $("#buttonLocation").css("background-color", "#004167");
+
+    if (window.localStorage.getItem("tutorial") == null) {
+        gotoTutorial();
+    };
 };
 
 function gotoReporte() {
@@ -344,6 +372,7 @@ function addPhotos(sourceType) {
     navigator.camera.getPicture(captureSuccess, captureFail, {
         destinationType: Camera.DestinationType.FILE_URI,
         sourceType: sourceType,
+        quality : 50,
         encodingType: Camera.EncodingType.JPEG
     });
 };
@@ -466,6 +495,7 @@ function logout() {
     myApp.closePanel('right');
     currentUser = null;
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("tutorial");
     gotoMain();
 };
 
