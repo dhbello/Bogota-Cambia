@@ -181,7 +181,6 @@ function gotoNext() {
 };
 
 function gotoTutorial() {
-    myApp.closePanel('right');
     var modal = myApp.modal({
         afterText: '<div class="swiper-container" style="width: auto; margin:15px -15px -15px">' +
                       '<div class="swiper-pagination"></div>' +
