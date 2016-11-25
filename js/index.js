@@ -181,14 +181,14 @@ function gotoNext() {
 };
 
 function gotoTutorial() {
+    myApp.closePanel('right');
     var modal = myApp.modal({
         afterText: '<div class="swiper-container" style="width: auto; margin:15px -15px -15px">' +
                       '<div class="swiper-pagination"></div>' +
                       '<div class="swiper-wrapper">' +
-                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/1/" height="150" style="display:block"></div>' +
-                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/2/" height="150" style="display:block"></div>' +
-                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/1/" height="150" style="display:block"></div>' +
-                            '<div class="swiper-slide"><img src="http://lorempixel.com/270/150/nature/2/" height="150" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones1.png" height="270" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones2.png" height="270" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones3.png" height="270" style="display:block"></div>' +
                       '</div>' +
                     '</div>',
         buttons: [
@@ -351,6 +351,7 @@ function gotoCatalogo() {
 
 function gotoCatalogoDetail() {
     hideAll();
+    myApp.closePanel('right');
     $("#catalogoDetailDiv").show();
     $("#catalogo-detail-toolbar").show();
 }
@@ -460,7 +461,7 @@ function submitReport() {
         success: function () {                
             myApp.hidePreloader();
             setTimeout(function () {
-                sendAlert('Reporte enviado exitosamente.');
+                sendAlert('¡Muchas gracias por reportar un nuevo cambio en Bogotá! Tu participación nos aporta valiosa información para construir ciudad.');
             }, 1500);
             updateUser();
         },
