@@ -45,7 +45,7 @@ function init() {
     currentUser = window.localStorage.getItem("user");
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
-            sendAlert('Esta aplicación requiere conexión a internet.');
+            sendAlert('Esta aplicaci&oacute;n requiere conexi&oacute;n a internet.');
             $("#bienvenida-toolbar").hide();
         }
     }
@@ -460,7 +460,7 @@ function submitReport() {
         success: function () {                
             myApp.hidePreloader();
             setTimeout(function () {
-                sendAlert('¡Muchas gracias por reportar un nuevo cambio en Bogotá! Tu participación nos aporta valiosa información para construir ciudad.');
+                sendAlert('&#161;Muchas gracias por reportar un nuevo cambio en Bogot&aacute;&#33; Tu participaci&oacute;n nos aporta valiosa informaci&oacute;n para construir ciudad.');
             }, 1500);
             updateUser();
         },
