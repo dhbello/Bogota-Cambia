@@ -151,7 +151,7 @@ function setLocationPoint(evt) {
 }
 
 function hideAll() {
-    $("#mapDiv").css("left", "-2000px");
+    $("#mapDiv").css("left", "-6000px");
     $("#mapDiv").css("position", "absolute");
     $("#map-toolbar").hide();
     $("#speed-dial").hide();
