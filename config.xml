@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "gov.ideca.DinamicaUrbana"
-        version   = "1.0.9">
+        version   = "1.1.0">
 
     <name>Bogotá Cambia</name>
 
@@ -48,7 +48,6 @@
 
     <!-- Core plugins -->
     <plugin name="cordova-plugin-camera" />
-    <plugin name="cordova-plugin-media-capture" />
     <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-file" />
@@ -58,7 +57,11 @@
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-splashscreen" />
-
+    <plugin name="cordova-plugin-media-capture">
+      <variable name="CAMERA_USAGE_DESCRIPTION" value="Se puede requerir fotos de la camara." />
+      <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Se puede requerir fotos de la libreria de fotos." />
+    </plugin>
+  
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <!--
@@ -107,7 +110,7 @@
     <config-file platform="ios" parent="CFBundleShortVersionString">
       <string>103</string>
     </config-file>
-
+  
     <!--
         Define access to external domains.
 
