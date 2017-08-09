@@ -18,7 +18,7 @@ var initRegistro;
 var photoURLS = new Array();
 var msgtitle = "Bogot&aacute; Cambia";
 var cambioStr = "Cambio de Uso"
-var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer";
+var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer";
 var _url_photo = 'https://dinamica-147714.appspot.com/Imagen';
 var _url_msg = 'https://20161105t160625-dot-dinamica-147714.appspot.com/Registro?';
 var _url_user = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioRegistro?';
@@ -88,7 +88,7 @@ function initMap2() {
     marker.setWidth(28);
     marker.setUrl("css/Location_Icon.png");
 
-    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Base/MapServer/");
+    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer(baseMapUrl);
     map.addLayer(mapLayer);
     glPoint = new esri.layers.GraphicsLayer();
     map.addLayer(glPoint, 0);
