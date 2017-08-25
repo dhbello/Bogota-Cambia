@@ -50,7 +50,6 @@
       <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Se puede requerir fotos de la libreria de fotos." />
     </plugin>
   
-    <preference name="SplashScreen" value="screen" />
     
     <platform name="android">
         <icon   src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  density="ldpi" />
