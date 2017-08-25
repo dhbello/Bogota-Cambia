@@ -53,19 +53,19 @@
   
     
     <platform name="android">
-        <icon   src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  density="ldpi" />
-        <icon   src="res/icon/android/drawable-mdpi-icon.png"                  platform="android"  density="mdpi" />
-        <icon   src="res/icon/android/drawable-hdpi-icon.png"                  platform="android"  density="hdpi" />
-        <icon   src="res/icon/android/drawable-xhdpi-icon.png"                 platform="android"  density="xhdpi" />
-        <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                platform="android"  density="xxhdpi" />
-        <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               platform="android"  density="xxxhdpi" />
+        <icon   src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  qualifier="ldpi" />
+        <icon   src="res/icon/android/drawable-mdpi-icon.png"                  platform="android"  qualifier="mdpi" />
+        <icon   src="res/icon/android/drawable-hdpi-icon.png"                  platform="android"  qualifier="hdpi" />
+        <icon   src="res/icon/android/drawable-xhdpi-icon.png"                 platform="android"  qualifier="xhdpi" />
+        <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                platform="android"  qualifier="xxhdpi" />
+        <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               platform="android"  qualifier="xxxhdpi" />
         
-        <screen src="res/screen/android/drawable-port-ldpi-screen.png"         platform="android"  density="port-ldpi" />
-        <screen src="res/screen/android/drawable-port-mdpi-screen.png"         platform="android"  density="port-mdpi" />
-        <screen src="res/screen/android/drawable-port-hdpi-screen.png"         platform="android"  density="port-hdpi" />
-        <screen src="res/screen/android/drawable-port-xhdpi-screen.png"        platform="android"  density="port-xhdpi" />
-        <screen src="res/screen/android/drawable-port-xxhdpi-screen.png"       platform="android"  density="port-xxhdpi" />
-        <screen src="res/screen/android/drawable-port-xxxhdpi-screen.png"      platform="android"  density="port-xxxhdpi" />
+        <screen src="res/screen/android/drawable-port-ldpi-screen.png"         platform="android"  qualifier="port-ldpi" />
+        <screen src="res/screen/android/drawable-port-mdpi-screen.png"         platform="android"  qualifier="port-mdpi" />
+        <screen src="res/screen/android/drawable-port-hdpi-screen.png"         platform="android"  qualifier="port-hdpi" />
+        <screen src="res/screen/android/drawable-port-xhdpi-screen.png"        platform="android"  qualifier="port-xhdpi" />
+        <screen src="res/screen/android/drawable-port-xxhdpi-screen.png"       platform="android"  qualifier="port-xxhdpi" />
+        <screen src="res/screen/android/drawable-port-xxxhdpi-screen.png"      platform="android"  qualifier="port-xxxhdpi" />
       </platform>
     
       <platform name="ios">
