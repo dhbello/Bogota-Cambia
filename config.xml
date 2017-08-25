@@ -32,6 +32,7 @@
     <preference name="auto-hide-splash-screen"    value="true" />           <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
+    <preference name="SplashScreen" value="screen" />
 
     <preference name="phonegap-version" value="cli-6.5.0" />
   
@@ -59,12 +60,12 @@
         <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                platform="android"  density="xxhdpi" />
         <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               platform="android"  density="xxxhdpi" />
         
-        <splash src="res/screen/android/drawable-port-ldpi-screen.png"         platform="android"  density="port-ldpi" />
-        <splash src="res/screen/android/drawable-port-mdpi-screen.png"         platform="android"  density="port-mdpi" />
-        <splash src="res/screen/android/drawable-port-hdpi-screen.png"         platform="android"  density="port-hdpi" />
-        <splash src="res/screen/android/drawable-port-xhdpi-screen.png"        platform="android"  density="port-xhdpi" />
-        <splash src="res/screen/android/drawable-port-xxhdpi-screen.png"       platform="android"  density="port-xxhdpi" />
-        <splash src="res/screen/android/drawable-port-xxxhdpi-screen.png"      platform="android"  density="port-xxxhdpi" />
+        <screen src="res/screen/android/drawable-port-ldpi-screen.png"         platform="android"  density="port-ldpi" />
+        <screen src="res/screen/android/drawable-port-mdpi-screen.png"         platform="android"  density="port-mdpi" />
+        <screen src="res/screen/android/drawable-port-hdpi-screen.png"         platform="android"  density="port-hdpi" />
+        <screen src="res/screen/android/drawable-port-xhdpi-screen.png"        platform="android"  density="port-xhdpi" />
+        <screen src="res/screen/android/drawable-port-xxhdpi-screen.png"       platform="android"  density="port-xxhdpi" />
+        <screen src="res/screen/android/drawable-port-xxxhdpi-screen.png"      platform="android"  density="port-xxxhdpi" />
       </platform>
     
       <platform name="ios">
@@ -85,13 +86,13 @@
         <icon   src="res/icon/ios/icon-small@2x.png"                platform="ios" width="58"   height="58" />
         <icon   src="res/icon/ios/icon-small@3x.png"                platform="ios" width="87"   height="87" />
         
-        <splash src="res/screen/ios/Default-568h@2x~iphone.png"     platform="ios" width="640"  height="1136" />
-        <splash src="res/screen/ios/Default-667h.png"               platform="ios" width="750"  height="1334" />
-        <splash src="res/screen/ios/Default-736h.png"               platform="ios" width="1242" height="2208" />
-        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png"   platform="ios" width="1536" height="2048" />
-        <splash src="res/screen/ios/Default-Portrait~ipad.png"      platform="ios" width="768"  height="1024" />
-        <splash src="res/screen/ios/Default@2x~iphone.png"          platform="ios" width="640"  height="960" />
-        <splash src="res/screen/ios/Default~iphone.png"             platform="ios" width="320"  height="480" />           
+        <screen src="res/screen/ios/Default-568h@2x~iphone.png"     platform="ios" width="640"  height="1136" />
+        <screen src="res/screen/ios/Default-667h.png"               platform="ios" width="750"  height="1334" />
+        <screen src="res/screen/ios/Default-736h.png"               platform="ios" width="1242" height="2208" />
+        <screen src="res/screen/ios/Default-Portrait@2x~ipad.png"   platform="ios" width="1536" height="2048" />
+        <screen src="res/screen/ios/Default-Portrait~ipad.png"      platform="ios" width="768"  height="1024" />
+        <screen src="res/screen/ios/Default@2x~iphone.png"          platform="ios" width="640"  height="960" />
+        <screen src="res/screen/ios/Default~iphone.png"             platform="ios" width="320"  height="480" />           
   </platform>
 
     <config-file platform="ios" parent="CFBundleShortVersionString">
