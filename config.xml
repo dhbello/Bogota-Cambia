@@ -54,19 +54,19 @@
   
     
     <platform name="android">
-        <icon   src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  density="ldpi" />
-        <icon   src="res/icon/android/drawable-mdpi-icon.png"                  platform="android"  density="mdpi" />
-        <icon   src="res/icon/android/drawable-hdpi-icon.png"                  platform="android"  density="hdpi" />
-        <icon   src="res/icon/android/drawable-xhdpi-icon.png"                 platform="android"  density="xhdpi" />
-        <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                platform="android"  density="xxhdpi" />
-        <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               platform="android"  density="xxxhdpi" />
+        <icon   src="res/icon/android/drawable-ldpi-icon.png"                  density="ldpi" />
+        <icon   src="res/icon/android/drawable-mdpi-icon.png"                  density="mdpi" />
+        <icon   src="res/icon/android/drawable-hdpi-icon.png"                  density="hdpi" />
+        <icon   src="res/icon/android/drawable-xhdpi-icon.png"                 density="xhdpi" />
+        <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                density="xxhdpi" />
+        <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               density="xxxhdpi" />
         
-        <screen src="res/screen/android/drawable-port-ldpi-screen.png"         platform="android"  density="port-ldpi" />
-        <screen src="res/screen/android/drawable-port-mdpi-screen.png"         platform="android"  density="port-mdpi" />
-        <screen src="res/screen/android/drawable-port-hdpi-screen.png"         platform="android"  density="port-hdpi" />
-        <screen src="res/screen/android/drawable-port-xhdpi-screen.png"        platform="android"  density="port-xhdpi" />
-        <screen src="res/screen/android/drawable-port-xxhdpi-screen.png"       platform="android"  density="port-xxhdpi" />
-        <screen src="res/screen/android/drawable-port-xxxhdpi-screen.png"      platform="android"  density="port-xxxhdpi" />
+        <splash src="res/screen/android/drawable-port-ldpi-screen.png"         density="port-ldpi" />
+        <splash src="res/screen/android/drawable-port-mdpi-screen.png"         density="port-mdpi" />
+        <splash src="res/screen/android/drawable-port-hdpi-screen.png"         density="port-hdpi" />
+        <splash src="res/screen/android/drawable-port-xhdpi-screen.png"        density="port-xhdpi" />
+        <splash src="res/screen/android/drawable-port-xxhdpi-screen.png"       density="port-xxhdpi" />
+        <splash src="res/screen/android/drawable-port-xxxhdpi-screen.png"      density="port-xxxhdpi" />
       </platform>
     
       <platform name="ios">
@@ -87,13 +87,13 @@
         <icon   src="res/icon/ios/icon-small@2x.png"                platform="ios" width="58"   height="58" />
         <icon   src="res/icon/ios/icon-small@3x.png"                platform="ios" width="87"   height="87" />
         
-        <screen src="res/screen/ios/Default-568h@2x~iphone.png"     platform="ios" width="640"  height="1136" />
-        <screen src="res/screen/ios/Default-667h.png"               platform="ios" width="750"  height="1334" />
-        <screen src="res/screen/ios/Default-736h.png"               platform="ios" width="1242" height="2208" />
-        <screen src="res/screen/ios/Default-Portrait@2x~ipad.png"   platform="ios" width="1536" height="2048" />
-        <screen src="res/screen/ios/Default-Portrait~ipad.png"      platform="ios" width="768"  height="1024" />
-        <screen src="res/screen/ios/Default@2x~iphone.png"          platform="ios" width="640"  height="960" />
-        <screen src="res/screen/ios/Default~iphone.png"             platform="ios" width="320"  height="480" />           
+        <splash src="res/screen/ios/Default-568h@2x~iphone.png"     platform="ios" width="640"  height="1136" />
+        <splash src="res/screen/ios/Default-667h.png"               platform="ios" width="750"  height="1334" />
+        <splash src="res/screen/ios/Default-736h.png"               platform="ios" width="1242" height="2208" />
+        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png"   platform="ios" width="1536" height="2048" />
+        <splash src="res/screen/ios/Default-Portrait~ipad.png"      platform="ios" width="768"  height="1024" />
+        <splash src="res/screen/ios/Default@2x~iphone.png"          platform="ios" width="640"  height="960" />
+        <splash src="res/screen/ios/Default~iphone.png"             platform="ios" width="320"  height="480" />           
   </platform>
 
     <config-file platform="ios" parent="CFBundleShortVersionString">
