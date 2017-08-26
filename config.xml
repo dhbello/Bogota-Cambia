@@ -4,7 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "gov.ideca.DinamicaUrbana"
-        version   = "1.1.3">
+	version   = "105"
+        ios-CFBundleVersion="1.1.4"
+        android-versionCode="1.1.4">
 
     <name>Bogotá Cambia</name>
 
@@ -96,10 +98,6 @@
         <splash src="res/screen/ios/Default~iphone.png"             platform="ios" width="320"  height="480" />           
   </platform>
 
-    <config-file platform="ios" parent="CFBundleShortVersionString">
-      <string>105</string>
-    </config-file>
-  
     <!--
         Define access to external domains.
 
