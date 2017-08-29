@@ -37,7 +37,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="pgb-builder-version" value="2" />
  
-    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="phonegap-version" value="cli-7.0.1" />
   
     <plugin name="cordova-plugin-camera" />
     <plugin name="cordova-plugin-device" />
