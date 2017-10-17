@@ -105,8 +105,8 @@ function initLocationGPS() {
             currentPointX = position.coords.longitude;
             currentPointY = position.coords.latitude;
             var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
-            glPoint.clear();
-            glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
+            //glPoint.clear();
+            //glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
             map.centerAt(currentPoint);
         },
             function (error) {
@@ -147,6 +147,7 @@ function setLocationPoint(evt) {
         glPoint.clear();
         glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
         map.centerAt(currentPoint);
+        gotoReporte();
     }
 }
 
