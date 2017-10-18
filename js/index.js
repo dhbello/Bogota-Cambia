@@ -147,7 +147,9 @@ function setLocationPoint(evt) {
         glPoint.clear();
         glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
         map.centerAt(currentPoint);
-        gotoReporte();
+        setTimeout(function () {
+            gotoReporte();
+        }, 1500);        
     }
 }
 
@@ -186,9 +188,9 @@ function gotoTutorial() {
         afterText: '<div class="swiper-container" style="width: auto; margin:15px -15px -15px">' +
                       '<div class="swiper-pagination"></div>' +
                       '<div class="swiper-wrapper">' +
-                            '<div class="swiper-slide"><img src="images/Instrucciones1.png" height="270" style="display:block"></div>' +
-                            '<div class="swiper-slide"><img src="images/Instrucciones2.png" height="270" style="display:block"></div>' +
-                            '<div class="swiper-slide"><img src="images/Instrucciones3.png" height="270" style="display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones1.png" style="width: 100%;display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones2.png" style="width: 100%;display:block"></div>' +
+                            '<div class="swiper-slide"><img src="images/Instrucciones3.png" style="width: 100%;display:block"></div>' +
                       '</div>' +
                     '</div>',
         buttons: [
