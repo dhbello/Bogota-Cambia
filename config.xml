@@ -4,9 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "gov.ideca.DinamicaUrbana"
-	      version   = "108"
-        ios-CFBundleVersion="1.1.8"
-        android-versionCode="1.1.8">
+	      version   = "109"
+        ios-CFBundleVersion="1.1.9"
+        android-versionCode="1.1.9">
 
     <name>Bogotá Cambia</name>
 
@@ -37,7 +37,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="pgb-builder-version" value="2" />
  
-    <preference name="phonegap-version" value="cli-6.5.0" />
+    <preference name="phonegap-version" value="cli-7.0.1" />
   
     <plugin name="cordova-plugin-camera" />
     <plugin name="cordova-plugin-device" />
