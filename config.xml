@@ -57,13 +57,13 @@
     <platform name="android">
         <preference name="android-build-tool" value="gradle" />
 
-        <icon   src="res/icon/android/drawable-ldpi-icon.png"                  density="ldpi" />
-        <icon   src="res/icon/android/drawable-mdpi-icon.png"                  density="mdpi" />
-        <icon   src="res/icon/android/drawable-hdpi-icon.png"                  density="hdpi" />
-        <icon   src="res/icon/android/drawable-xhdpi-icon.png"                 density="xhdpi" />
-        <icon   src="res/icon/android/drawable-xxhdpi-icon.png"                density="xxhdpi" />
-        <icon   src="res/icon/android/drawable-xxxhdpi-icon.png"               density="xxxhdpi" />
-        
+        <icon src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  density="ldpi" />
+        <icon src="res/icon/android/drawable-mdpi-icon.png"                  platform="android"  density="mdpi" />
+        <icon src="res/icon/android/drawable-hdpi-icon.png"                  platform="android"  density="hdpi" />
+        <icon src="res/icon/android/drawable-xhdpi-icon.png"                 platform="android"  density="xhdpi" />
+        <icon src="res/icon/android/drawable-xxhdpi-icon.png"                platform="android"  density="xxhdpi" />
+        <icon src="res/icon/android/drawable-xxxhdpi-icon.png"               platform="android" density="xxxhdpi" />
+      
         <splash src="res/screen/android/drawable-port-ldpi-screen.png"         density="port-ldpi" />
         <splash src="res/screen/android/drawable-port-mdpi-screen.png"         density="port-mdpi" />
         <splash src="res/screen/android/drawable-port-hdpi-screen.png"         density="port-hdpi" />
