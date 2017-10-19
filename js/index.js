@@ -7,6 +7,7 @@ var map;
 var view;
 var mapLayer;
 var marker;
+var market2;
 var glPoint;
 var glPointG;
 var currentPoint;
@@ -75,7 +76,7 @@ function initMap() {
 
 function initMap2() {
     map = new esri.Map("map", {
-        zoom: 7,
+        zoom: 9,
         center: new esri.geometry.Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
         autoresize: false,
         slider: false
@@ -87,6 +88,10 @@ function initMap2() {
     marker.setHeight(44);
     marker.setWidth(28);
     marker.setUrl("css/Location_Icon.png");
+    marker2 = new esri.symbol.PictureMarkerSymbol();
+    marker2.setHeight(44);
+    marker2.setWidth(28);
+    marker2.setUrl("css/Location_Icon_2.png");
 
     mapLayer = new esri.layers.ArcGISTiledMapServiceLayer(baseMapUrl);
     map.addLayer(mapLayer);
@@ -105,8 +110,8 @@ function initLocationGPS() {
             currentPointX = position.coords.longitude;
             currentPointY = position.coords.latitude;
             var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
-            //glPoint.clear();
-            //glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
+            glPoint.clear();
+            glPoint.add(new esri.Graphic(currentPoint, marker2), null, null);
             map.centerAt(currentPoint);
         },
             function (error) {
@@ -134,6 +139,7 @@ function setLocation() {
     } else {
         $("#buttonLocation").css("background-color", "grey");
         modeManual = true;
+        glPoint.clear();
     }
 };
 
@@ -149,7 +155,7 @@ function setLocationPoint(evt) {
         map.centerAt(currentPoint);
         setTimeout(function () {
             gotoReporte();
-        }, 1500);        
+        }, 1500);    
     }
 }
 
@@ -310,6 +316,8 @@ function gotoMap() {
     if (window.localStorage.getItem("tutorial") == null) {
         gotoTutorial();
     };
+    glPoint.clear();
+
 };
 
 function gotoReporte() {
