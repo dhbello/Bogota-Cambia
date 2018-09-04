@@ -39,17 +39,32 @@
                 <div id="ptTotales" class="chip-media chip-media2" style="background-color: #004167;"></div>
                 <div class="chip-label">Puntos</div>
             </div>
+            <div class="chip chip2" style="width: 100%;">
+                <div id="rgTotales" class="chip-media chip-media2" style="background-color: #004167;"></div>
+                <div class="chip-label">Registros</div>
+            </div>
             <br />
             <p class="buttons-row">
-                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoCatalogoDetail();">Patrocinadores</a>
+                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoRegistrosDetail();">Ver puntos registrados</a>
+            </p>
+            <p class="buttons-row">
+                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoComentario();">Calificar la app</a>
             </p>
             <p class="buttons-row">
                 <a href="#" class="button button-fill button-raised color-red" onclick="logout();">Cerrar sesi&oacute;n</a>
             </p>
+            <img src="images/Logo_ideca_color.png" style="width: 100%;">
         </div>
     </div>
     <div class="views">
         <div class="view view-main">
+            <div id="map-footer-toolbar" class="toolbar" style="display: none;">
+                <div class="toolbar-inner">
+                    <a href="#" onclick="gotoSettings();" class="link"><i class="fa fa-cog" aria-hidden="true"></i></a>
+
+                    <a href="#" onclick="gotoTutorial();" class="link"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+                </div>
+            </div>
             <div id="header" class="navbar">
                 <div class="navbar-inner" id="map-toolbar" style="display: none;">
                     <div class="left">
@@ -64,7 +79,7 @@
                     <div class="left">
                         <a href="#" class="link"></a>
                     </div>
-                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="center navcenter"></div>
                     <div class="right">
                         <a href="#" onclick="gotoNext();" class="link"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
@@ -75,7 +90,16 @@
                     </div>
                     <div class="center navcenter">Bogotá Cambia</div>
                     <div class="right">
-                        <a href="#" onclick="submitRegistro();" class="link">Continuar</a>
+                        <a href="#" class="link"></a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="registro2-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" onclick="gotoRegistro();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" class="link"></a>
                     </div>
                 </div>
                 <div class="navbar-inner" id="terminos-toolbar" style="display: none;">
@@ -89,14 +113,23 @@
                 </div>
                 <div class="navbar-inner" id="reporte-toolbar" style="display: none;">
                     <div class="left">
+                        <a href="#" onclick="volverReporte();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" id="btnSubmitReport" onclick="submitReport();" class="link">Enviar</a>
+                    </div>
+                </div>
+                <div class="navbar-inner" id="catalogo-toolbar" style="display: none;">
+                    <div class="left">
                         <a href="#" onclick="gotoMap();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="center navcenter">Bogotá Cambia</div>
                     <div class="right">
-                        <a href="#" onclick="submitReport();" class="link">Enviar</a>
+                        <a href="#" class="link"></a>
                     </div>
                 </div>
-                <div class="navbar-inner" id="catalogo-toolbar" style="display: none;">
+                <div class="navbar-inner" id="registros-detail-toolbar" style="display: none;">
                     <div class="left">
                         <a href="#" onclick="gotoMap();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                     </div>
@@ -114,40 +147,114 @@
                         <a href="#" class="link"></a>
                     </div>
                 </div>
+                <div class="navbar-inner" id="tutorial-toolbar" style="display: none;">
+                    <div class="left">
+                        <a href="#" class="link"></a>
+                    </div>
+                    <div class="center navcenter">Bogotá Cambia</div>
+                    <div class="right">
+                        <a href="#" onclick="gotoNextTutorial();" class="link"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="speed-dial"  id="speed-dial" style="display: none;">
+            <a href="#" id="gpsBtn" style="left: 10px;top: 70px;" class="floating-button" onclick="initLocationGPS();">
+                <i class="fa fa-arrows"></i>
+            </a>
+            <div class="speed-dial" id="speed-dial" style="display: none;">
                 <a href="#" class="floating-button" style="background-color: #004167;">
                     <i class="fa fa-arrow-up" aria-hidden="true"></i>
                     <i class="fa fa-arrow-down" aria-hidden="true"></i>
                 </a>
-                <div class="speed-dial-buttons">
-                    <a href="#" onclick="gotoTutorial();" class="link" style="background-color: #004167;"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
-                    <!--<a href="#" onclick="gotoReporte();" class="link" style="background-color: #004167;"><i class="fa fa-camera" aria-hidden="true"></i></a>-->
-                    <a id="buttonLocation" href="#" onclick="setLocation();" class="link" style="background-color: #004167;"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                    <a href="#" onclick="initLocationGPS();" class="link" style="background-color: #004167;"><i class="fa fa-street-view" aria-hidden="true"></i></a>                    
-                </div>
             </div>
             <div class="pages">
                 <div data-page="index" class="page navbar-fixed">
                     <div class="page-content">
-                        <div id="bienvenidaDiv" style="display: none;">
+                        <div id="bienvenidaDiv" style="display: block;">
                             <div class="content-block">
-                                <p>Bogotá Cambia es una aplicación de dinámica urbana con la que puedes capturar y reportar transformaciones de la ciudad con fotos georeferenciadas por GPS y su ubicación en el Mapa de Bogotá. ¡Cada nuevo registro es un valioso dato que contribuirá a construir y mejorar la ciudad!</p>
-                                <p>Esta aplicación ofrece tres opciones que podrás señalar en el Mapa de Bogotá al momento de reportar un cambio: Nueva Construcción, Demolición, y Cambio de Uso.</p>
-                                - Si vas por la ciudad y descubres un predio con una obra reciente ó en obra, entras a la aplicación, capturas la imagen, la ubicas en el Mapa, y señalas <b>Nueva Construcción</b>.<br />
-                                - Si por el contrario lo que ves es el derribo de una construcción, indicas <b>Demolición</b>.<br />
-                                - Pero si observas que un terreno que antes era residencial y ahora es comercial, ó viceversa, ó incluso cualquier otra variación del predio en cuanto a su uso, entras a Bogotá Cambia, señalas <b>Cambio de uso</b> y especificas cuál.<br />
-                                <p>¡Bogotá Cambia te motiva a buscar y descubrir nuevas e interesantes variaciones urbanas, donde quiera que te encuentres en la ciudad!</p>
-                                <br />
-                                <br />
+                                <p style="text-align: center;font-size: 20vw;color: #102949;margin-bottom: 0px;margin-top: 0px;font-weight: bold;">¡HOLA!</p>
+                                <p style="color: #1888B8;padding-left: 10vw;padding-right: 10vw;text-align: justify;">Bogotá Cambia es una aplicación de dinámica urbana con la que puedes capturar y reportar transformaciones de la ciudad con fotos georeferenciadas por GPS y su ubicación en el Mapa de Bogotá. ¡Cada nuevo registro es un valioso dato que contribuirá a construir y mejorar la ciudad!</p>
+                                <p style="color: #1888B8;padding-left: 10vw;padding-right: 10vw;text-align: justify;">Esta aplicación ofrece tres opciones que podrás señalar en el Mapa de Bogotá al momento de reportar un cambio: Nueva Construcción, Demolición, y Cambio de Uso.</p>
+
+                                <br>
+                                <br>
                             </div>
                         </div>
                         <div id="registroDiv" style="display: none;">
                             <div class="content-block">
                                 <div class="content-block">
-                                    <p>Para iniciar ingresa tu correo:</p>
+                                    <p>Para iniciar ingresa tu correo y password:</p>
+                                    <div class="list-block inset">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input id="logincorreo" type="email" placeholder="E-mail">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input id="loginpassword" type="password" placeholder="Password">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <a href="#" class="button button-big button-green" style="background: #102949;color: white;" onclick="login();">Ingresar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p>O registra una nueva cuenta:</p>
+                                    <div class="list-block inset" style="margin-top: 0px;">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <a href="#" class="button button-big button-green" style="background: #102949;color: white;" onclick="gotoRegistro2();">Registro</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="registro2Div" style="display: none;">
+                            <div class="content-block">
+                                <div class="content-block">
+                                    <p>Para registrarte, ingresa tus datos b&aacute;sicos:</p>
                                     <div class="list-block">
                                         <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input id="fnombres" type="text" placeholder="Nombres">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input id="fapellidos" type="text" placeholder="Apellidos">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
                                             <li>
                                                 <div class="item-content">
                                                     <div class="item-inner">
@@ -157,43 +264,40 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input id="fpassword" type="password" placeholder="Password">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <label class="label-checkbox item-content">
+                                                    <input type="checkbox" id="terminosCheck" name="terminosCheck">
+                                                    <div class="item-media">
+                                                        <i class="icon icon-form-checkbox"></i>
+                                                    </div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title">Acepto <a href="#" onclick="gotoTerminos();">t&eacute;rminos de uso</a></div>
+                                                    </div>
+                                                </label>
+                                            </li>
                                         </ul>
                                     </div>
-                                    <div id="registroNuevo" style="display: none;">
-                                        <p>Para registrarte, ingresa tus datos b&aacute;sicos:</p>
-                                        <div class="list-block">
-                                            <ul>
-                                                <li>
-                                                    <div class="item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-input">
-                                                                <input id="fnombres" type="text" placeholder="Nombres">
-                                                            </div>
+                                    <div class="list-block inset" style="margin-top: 0px;">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <a href="#" class="button button-big button-green" style="background: #102949;color: white;" onclick="submitRegistro();">Registrarse</a>
                                                         </div>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-input">
-                                                                <input id="fapellidos" type="text" placeholder="Apellidos">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <label class="label-checkbox item-content">
-                                                        <input type="checkbox" id="terminosCheck" name="terminosCheck">
-                                                        <div class="item-media">
-                                                            <i class="icon icon-form-checkbox"></i>
-                                                        </div>
-                                                        <div class="item-inner">
-                                                            <div class="item-title">Acepto <a href="#" onclick="gotoTerminos();">t&eacute;rminos de uso</a></div>
-                                                        </div>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -260,79 +364,206 @@
                             </div>
                         </div>
                         <div id="mapDiv"
-                             style="padding: 0px; width: 100%; position: absolute; top: 0px;" >
+                             style="padding: 0px; width: 100%; position: absolute; top: 0px;">
+                            <div id="legendDiv" style="display: none; position: absolute; right: 5px; bottom: 53px; z-index: 1000000; background: white none repeat scroll 0% 0%; font-size: x-small;">
+                                <table id="alturaTable" style="display: none;">
+                                    <tbody>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgf+e3vxPiUFM0uqMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAxwYEli9ythQAAAAASUVORK5CYII=" alt="0 - 1">
+                                            </td>
+                                            <td>0 - 1</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgX/XTfhPiUHMQQWMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUA8xYFF+Oi8/4AAAAASUVORK5CYII=" alt="2 - 4">
+                                            </td>
+                                            <td>2 - 4</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADBJREFUOI1jYaAyYKGZgX8yvf9TZND0rYwoBlILjBo4auCogaMG0tlAWHlGNQOpBQAiqQWit3k0UQAAAABJRU5ErkJggg==" alt="5 - 6">
+                                            </td>
+                                            <td>5 - 6</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgffVVf5TYpDizTuMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAUK8GKBNLkXgAAAAASUVORK5CYII=" alt="7 - 12">
+                                            </td>
+                                            <td>7 - 12</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgUvZhf5TYlD0z3eMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAdfcGlIXttEIAAAAASUVORK5CYII=" alt="Más de 15 Pisos">
+                                            </td>
+                                            <td>Más de 15 Pisos</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table id="usosTable" style="display: none;">
+                                    <tbody>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgf/vPP5PiUGMKrKMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAxl8ElHIyqakAAAAASUVORK5CYII=" alt="BODEGAS">
+                                            </td>
+                                            <td>BODEGAS</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAC9JREFUOI1jYaAyYKGdgUf//6fIJGtGRlQDqQRGDRw1cNTAUQPpbSC0PKOegVQCABsfA45ok6wHAAAAAElFTkSuQmCC" alt="CLINICAS, HOSPITALES, CENTROS MEDICOS">
+                                            </td>
+                                            <td>SERVICIOS DE SALUD</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgf8ZGP5TYhAjAwMjioHUAqMGjho4auCogXQ2EFaeUc1AagEAYH8CU17tvfIAAAAASUVORK5CYII=" alt="COMERCIO">
+                                            </td>
+                                            <td>COMERCIO</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgefSZv2nxCCjWWmMKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAGNYFhAEDrvMAAAAASUVORK5CYII=" alt="HOTELES">
+                                            </td>
+                                            <td>HOTELES</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgf+X1/+nxCDGyEZGFAOpBUYNHDVw1MBRA+lsIKw8o5qB1AIA+pMFLXqCH28AAAAASUVORK5CYII=" alt="INDUSTRIA">
+                                            </td>
+                                            <td>INDUSTRIA</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgSvMGf5TYlDESQZGFAOpBUYNHDVw1MBRA+lsIKw8o5qB1AIAbDAEc5OJwi8AAAAASUVORK5CYII=" alt="OFICINAS">
+                                            </td>
+                                            <td>OFICINAS</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgZs3b/5PiUG+vr6MKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUA/zMFOSXeKtcAAAAASUVORK5CYII=" alt="OTROS">
+                                            </td>
+                                            <td>OTROS</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUOI1jYaAyYKGZgf//7/tPiUGMjE6MKAZSC4waOGrgqIGjBtLZQFh5RjUDqQUAxuoElsWJpuwAAAAASUVORK5CYII=" alt="RESIDENCIAL">
+                                            </td>
+                                            <td>RESIDENCIAL</td>
+                                        </tr>
+                                        <tr valign="middle">
+                                            <td>
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAC9JREFUOI1jYaAyYKGdgfn//1Nk0kRGRlQDqQRGDRw1cNTAUQPpbSC0PKOegVQCADivA+RJ7K+pAAAAAElFTkSuQmCC" alt="UNIVERSIDADES Y COLEGIOS">
+                                            </td>
+                                            <td>UNIVERSIDADES Y COLEGIOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div id="map" style="padding: 0px; width: 100%; height: 100%;"></div>
                         </div>
                         <div id="reporteDiv" style="display: none;">
+                            <a href="#" id="btnReporteLike" class="floating-button floating-button-to-popover open-popover" style="left: 16px; position: fixed;" onclick="registroLike('-');">
+                                <i class="fa fa-thumbs-o-down"></i>
+                            </a>
+                            <a href="#" id="btnReporteDislike" class="floating-button floating-button-to-popover open-popover" style="position: fixed;" onclick="registroLike('+');">
+                                <i class="fa fa-thumbs-o-up"></i>
+                            </a>
                             <div class="content-block">
-                                <div class="content-block-title">CATEGORIAS</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <label class="label-radio item-content">
-                                                <input type="radio" name="ftipo" value="Demolición">
-                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Demolici&oacute;n</div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="label-radio item-content">
-                                                <input type="radio" name="ftipo" value="Nueva Construcción">
-                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Nueva Construcci&oacute;n</div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="label-radio item-content">
-                                                <input type="radio" name="ftipo" value="Cambio de Uso">
-                                                <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Cambio de Uso</div>
-                                                </div>
-                                            </label>
-                                        </li>                                        
-                                    </ul>
-                                </div>
-                                <div id="detalleTipo" style="display: none;">
-                                    <div class="content-block-title">TIPO DE CAMBIO</div>
-                                    <div class="list-block">
-                                        <ul>
-                                            <li>
-                                                <label class="label-radio item-content">
-                                                    <input type="radio" name="ftipodetalle" value="Residencial a Comercial">
-                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                    <div class="item-inner">
-                                                        <div class="item-title">Residencial a Comercial</div>
-                                                    </div>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="label-radio item-content">
-                                                    <input type="radio" name="ftipodetalle" value="Comercial a Residencial">
-                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                    <div class="item-inner">
-                                                        <div class="item-title">Comercial a Residencial</div>
-                                                    </div>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="label-radio item-content">
-                                                    <input type="radio" name="ftipodetalle" value="Residencial a Institucional">
-                                                    <div class="item-media"><i class="icon icon-form-radio"></i></div>
-                                                    <div class="item-inner">
-                                                        <div class="item-title">Residencial a Institucional</div>
-                                                    </div>
-                                                </label>
-                                            </li>                                              
-                                        </ul>
+                                <div class="card">
+                                    <div class="card-content card-footer" style="display: block;">
+                                        <div class="card-content-inner">
+                                            <div id="mapDetalle" style="height: 400px; width: 100%;">
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="content-block-title">FOTOS</div>
                                 <div class="list-block">
+                                    <div class="item-content" style="background: lightgray;">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Codigo de<br />Lote</div>
+                                            <div class="item-input">
+                                                <div id="codigoLote" style="font-size: initial;color: gray;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content" style="background: lightgray;">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Nomenclatura</div>
+                                            <div class="item-input">
+                                                <div id="placaLote" style="font-size: initial;color: gray;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content" style="background: lightgray;">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Uso</div>
+                                            <div class="item-input">
+                                                <div id="usoLote" style="font-size: initial;color: gray;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content" style="background: lightgray;">
+                                        <div class="item-inner">
+                                            <div class="item-title label">M&aacute;ximo<br />n&uacute;mero<br />de pisos</div>
+                                            <div class="item-input">
+                                                <div id="alturaLote" style="font-size: initial;color: gray;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Tipo de<br />cambio</div>
+                                            <div class="item-input">
+                                                <select id="pointChangeType">
+                                                    <option value="Demolicion">Demolici&oacute;n</option>
+                                                    <option value="Nueva construccion">Nueva Construcci&oacute;n</option>
+                                                    <option value="Cambio de uso">Cambio de Uso</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title label">Uso</div>
+                                            <div class="item-input">
+                                                <select id="pointCurrentUse">
+                                                    <option>Comercial</option>
+                                                    <option>Industrial</option>
+                                                    <option>Dotacional</option>
+                                                    <option>Residencial</option>
+                                                    <option>Recreacional</option>
+                                                    <option>Otro</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title label">N&uacute;mero<br />de pisos</div>
+                                            <div class="item-input">
+                                                <select id="pointStoreyNumber">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>M&aacute;s de 6</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="TextAreaReporte" class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-input">
+                                                <textarea id="pointNotes" placeholder="Observaciones"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="photoAreaTitleReporte" class="content-block-title">FOTOS</div>
+                                <div id="photoAreaReporte" class="list-block">
                                     <ul>
                                         <li>
                                             <div class="item-content">
@@ -343,9 +574,9 @@
                                                         </div>
                                                         <br />
                                                         <p class="buttons-row" style="float: right;">
-                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="background-color: #004167;width: 100px;" class="button color-white"><i class="fa fa-camera" aria-hidden="true"></i>&nbsp;Camara</a>
-                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="background-color: #004167;width: 100px;" class="button color-white"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Galer&iacute;a</a>
-                                                            <a href="#" onclick="clearPhotos();" style="width: 50px;" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="background-color: #004167;" class="button color-white"><i class="fa fa-camera" aria-hidden="true"></i></a>
+                                                            <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="background-color: #004167;" class="button color-white"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                                                            <a href="#" onclick="clearPhotos();" style="" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                         </p>
 
                                                     </div>
@@ -354,8 +585,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <br />
-                                <br />
                                 <br />
                             </div>
                         </div>
@@ -405,8 +634,48 @@
                                                     <div class="item-text">Lorem ipsum dolor sit amet...</div>
                                                 </div>
                                             </a>
-                                        </li>                                                                                
+                                        </li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="registrosDetailDiv" style="display: none;">
+                            <div class="content-block">
+                                <div class="list-block media-list">
+                                    <ul id="registrosList">
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tutorialDiv" style="display: none;height: 100%;overflow: hidden;">
+                            <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;background: #00ADEE;"></div>
+                            <div class="content-block" style="height: 100%;">
+                                <div class="swiper-container" style="width: auto; height: 100%;">
+                                    <div class="swiper-pagination" style="bottom: 56px;"></div>
+                                    <div class="swiper-wrapper" style="height: 100%;">
+                                        <div class="swiper-slide" style="color: white;font-weight: bold;">
+                                            <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;color: #1888B8;text-align: center;font-size: 90vw;vertical-align: bottom;z-index: -5;">1</div>
+                                            <p style="text-align: center;vertical-align: middle;height: 100%;margin-top: 30vw;padding-right: 10vw;padding-left: 10vw;z-index: 10;">
+                                                <img src="./images/1.png" style="height: 35vw;width: 35vw;text-align: center;"><br />
+                                                Si vas por la ciudad y descubres un predio con una obra reciente ó en obra, entras a la aplicación, capturas la imagen, la ubicas en el Mapa, y señalas Nueva Construcción.
+                                            </p>
+                                        </div>
+                                        <div class="swiper-slide" style="color: white;font-weight: bold;">
+                                            <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;color: #1888B8;text-align: center;font-size: 90vw;vertical-align: bottom;z-index: -5;">2</div>
+                                            <p style="text-align: center;vertical-align: middle;height: 100%;margin-top: 30vw;padding-right: 10vw;padding-left: 10vw;z-index: 10;">
+                                                <img src="./images/2.png" style="height: 35vw;width: 35vw;text-align: center;"><br />
+                                                Si por el contrario lo que ves es el derribo de una construcción, indicas Demolición.
+                                            </p>
+                                        </div>
+                                        <div class="swiper-slide" style="color: white;font-weight: bold;">
+                                            <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;color: #1888B8;text-align: center;font-size: 90vw;vertical-align: bottom;z-index: -5;">3</div>
+                                            <p style="text-align: center;vertical-align: middle;height: 100%;margin-top: 30vw;padding-right: 10vw;padding-left: 10vw;z-index: 10;">
+                                                <img src="./images/3.png" style="height: 35vw;width: 35vw;text-align: center;"><br />
+                                                Pero si observas que un terreno que antes era residencial y ahora es comercial, ó viceversa, ó incluso cualquier otra variación del predio en cuanto a su uso, entras a Bogotá Cambia, señalas Cambio de uso y especificas cuál.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -438,12 +707,33 @@
             </div>
         </div>
     </div>
-
+    <div id="comentariosDiv" class="popup" style="display: block;background: #00ADEE;color: #102949;">
+        <div class="content-block">
+            <h2>Como calificas esta aplicación</h2>
+            <div style="font-size: xx-large;text-align: center;">
+                <i data-value="1" class="fa fa-star star" aria-hidden="true" onclick="starClick(1);"></i>
+                <i data-value="2" class="fa fa-star star" aria-hidden="true" onclick="starClick(2);"></i>
+                <i data-value="3" class="fa fa-star star" aria-hidden="true" onclick="starClick(3);"></i>
+                <i data-value="4" class="fa fa-star star" aria-hidden="true" onclick="starClick(4);"></i>
+                <i data-value="5" class="fa fa-star star" aria-hidden="true" onclick="starClick(5);"></i>
+            </div>
+            <br><b>Comentarios:</b><br><textarea id="txtComentario" style="width: 100%;"></textarea><br><br>
+            <div class="row">
+                <div class="col-50">
+                    <a href="#" class="button button-big button-red" style="background: #102949;color: white;" onclick="enviarComentario();">Enviar</a>
+                </div>
+                <div class="col-50">
+                    <a href="#" class="button button-big button-green" style="background: #102949;color: white;" onclick="cancelarComentario();">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.validity.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/usos.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="arcgis/init.js"></script>
+    <script type="text/javascript" src="arcgis/dojo/dojo.js"></script>
 
 </body>
 </html>

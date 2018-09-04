@@ -4,26 +4,62 @@ var myApp = new Framework7({
 var $$ = Dom7;
 
 var map;
-var view;
+var popup;
+var popup_init = false;
 var mapLayer;
+var placaLayer;
+var loteLayer;
+var glPoint;
+
+var mapDetalle;
+var mapLayer2;
+var loteLayer2;
+var glPoint2;
+var renderer;
+
+var alturasLayer;
+var usosLayer;
+
+var view;
+var previousScreen;
+
+var currentPointId;
+var currentLote;
+var currentLoteId;
+var currentLoteX;
+var currentLoteY;
+
 var marker;
 var market2;
-var glPoint;
-var glPointG;
 var currentPoint;
 var currentUser;
-var imageCache;
+var currentToken;
+var cacheReportes = {};
 
-var modeManual = false;
-var initRegistro;
 var photoURLS = new Array();
 var msgtitle = "Bogot&aacute; Cambia";
 var cambioStr = "Cambio de Uso"
-var baseMapUrl = "http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer";
+
+var baseMapUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer";
+var baseMapUrl2 = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer";
+
+var placaLayerUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/34";
+var loteLayerUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/38";
+var alturasLayerUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/estadisticas/Altura/MapServer/6";
+var usosLayerUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/estadisticas/Uso/MapServer/6";
+
+var queryConstruccionUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/39";
+var queryUsoUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/52";
+var queryPlacaUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/34";
+
+/*
 var _url_photo = 'https://dinamica-147714.appspot.com/Imagen';
 var _url_msg = 'https://20161105t160625-dot-dinamica-147714.appspot.com/Registro?';
 var _url_user = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioRegistro?';
 var _url_balance = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioBalance?';
+*/
+
+var _url = 'http://54.152.110.2:8080/bogotaCambia';
 
 gotoMain();
 
@@ -44,6 +80,7 @@ function onDeviceReady() {
 
 function init() {
     currentUser = window.localStorage.getItem("user");
+    currentToken = window.localStorage.getItem("token");
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
             sendAlert('Esta aplicaci&oacute;n requiere conexi&oacute;n a internet.');
@@ -63,55 +100,242 @@ function init() {
 
 function initMap() {
     try {
-        dojo.require("esri.map");
-        dojo.require("esri.layers.MapImageLayer");
-        dojo.require("esri.layers.MapImage");
-        dojo.require("esri.graphic");
-        dojo.require("esri.symbols.PictureMarkerSymbol");
-        dojo.addOnLoad(initMap2);
+        require(
+            [
+                "esri/map",
+                "esri/basemaps",
+                "esri/layers/ArcGISTiledMapServiceLayer",
+                "esri/layers/ArcGISDynamicMapServiceLayer",
+                "esri/layers/FeatureLayer",
+                "esri/layers/GraphicsLayer",
+                "esri/symbols/PictureMarkerSymbol",
+                "esri/geometry/geometryEngine",
+                "esri/geometry/Point",
+                "esri/geometry/Polyline",
+                "esri/graphic",
+                "esri/geometry/scaleUtils",
+                "esri/geometry/webMercatorUtils",
+                "esri/Color",
+                "esri/renderers/SimpleRenderer",
+                "esri/renderers/UniqueValueRenderer",
+                "esri/symbols/SimpleMarkerSymbol",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/symbols/SimpleFillSymbol",
+                "esri/symbols/TextSymbol",
+                "esri/symbols/Font",
+                "esri/InfoTemplate",
+                "esri/dijit/PopupMobile",
+                "dojo/dom-construct",
+                "esri/tasks/query",
+                "esri/tasks/QueryTask",
+                "esri/dijit/Legend"
+            ], function (
+                __Map,
+                __esriBasemaps,
+                __ArcGISTiledMapServiceLayer,
+                __ArcGISDynamicMapServiceLayer,
+                __FeatureLayer,
+                __GraphicsLayer,
+                __PictureMarkerSymbol,
+                __geometryEngine,
+                __Point,
+                __Polyline,
+                __Graphic,
+                __scaleUtils,
+                __webMercatorUtils,
+                __Color,
+                __SimpleRenderer,
+                __UniqueValueRenderer,
+                __SimpleMarkerSymbol,
+                __SimpleLineSymbol,
+                __SimpleFillSymbol, 
+                __TextSymbol,
+                __Font,
+                __InfoTemplate,
+                __PopupMobile,
+                __dom_construct,
+                __query,
+                __QueryTask,
+                __Legend) {
+                _Map = __Map;
+                _esriBasemaps = __esriBasemaps;
+                _ArcGISTiledMapServiceLayer = __ArcGISTiledMapServiceLayer;
+                _ArcGISDynamicMapServiceLayer = __ArcGISDynamicMapServiceLayer;
+                _FeatureLayer = __FeatureLayer;
+                _GraphicsLayer = __GraphicsLayer;
+                _PictureMarkerSymbol = __PictureMarkerSymbol;
+                _geometryEngine = __geometryEngine;
+                _Point = __Point;
+                _Polyline = __Polyline;
+                _Graphic = __Graphic;
+                _scaleUtils = __scaleUtils;
+                _webMercatorUtils = __webMercatorUtils;
+                _Color = __Color;
+                _SimpleRenderer = __SimpleRenderer;
+                _UniqueValueRenderer = __UniqueValueRenderer;
+                _SimpleMarkerSymbol = __SimpleMarkerSymbol;
+                _SimpleLineSymbol = __SimpleLineSymbol;
+                _SimpleFillSymbol = __SimpleFillSymbol;
+                _TextSymbol = __TextSymbol;
+                _Font = __Font;
+                _InfoTemplate = __InfoTemplate;
+                _PopupMobile = __PopupMobile;
+                _dom_construct = __dom_construct;
+                _query = __query;
+                _QueryTask = __QueryTask;
+                _Legend = __Legend;
+                initMap2();
+            });
     } catch (err) {
 
     };
 }
 
 function initMap2() {
-    map = new esri.Map("map", {
+    _esriBasemaps.referencia = {
+        baseMapLayers: [
+            {url: baseMapUrl}
+        ],
+        title: "referencia"
+    };
+
+    _esriBasemaps.hibrido = {
+        baseMapLayers: [
+            {url: baseMapUrl2}
+        ],
+        title: "hibrido"
+    };
+
+
+    popup = new _PopupMobile(null, _dom_construct.create("div"));
+    popup.on("show", function () {
+        if (popup_init == false) {
+            popup_init = true;
+            $(".arrow").click(function () {
+                if (popup.getSelectedFeature() != null) {
+                    currentLote = popup.getSelectedFeature().attributes["LOTCODIGO"];                    
+                    currentLoteId = popup.getSelectedFeature().attributes["OBJECTID"];
+                    currentLoteX = popup.getSelectedFeature().geometry.getCentroid().x;
+                    currentLoteY = popup.getSelectedFeature().geometry.getCentroid().y;
+                    currentPointId = cacheReportes[currentLote];
+                    if (currentPointId == null) {
+                        gotoReporte(false);
+                    } else {
+                        gotoReporte(true);
+                    }
+                }
+            });
+        }
+    });
+    map = new _Map("map", {
         zoom: 9,
-        center: new esri.geometry.Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
+        basemap: "referencia",
+        spatialReference: { wkid: 4686  },
+        center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
         autoresize: false,
-        slider: false
+        slider: false,
+        showLabels: true,
+        infoWindow: popup
     });
-    dojo.connect(map, "onClick", function (evt) {
-        setLocationPoint(evt);
+    mapDetalle = new _Map("mapDetalle", {
+        zoom: 9,
+        basemap: "referencia",
+        spatialReference: { wkid: 4686 },
+        center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
+        autoresize: false,
+        slider: false,
+        showLabels: true
     });
-    marker = new esri.symbol.PictureMarkerSymbol();
+    mapDetalle.on("update-end", function (evt) {
+        if (currentPoint != null) {
+            mapDetalle.centerAt(currentPoint);
+        }
+    });
+    map.on("extent-change", function (evt) {
+        updatePoints();
+    });
+
+    marker = new _PictureMarkerSymbol();
     marker.setHeight(44);
     marker.setWidth(28);
     marker.setUrl("css/Location_Icon.png");
-    marker2 = new esri.symbol.PictureMarkerSymbol();
+    marker2 = new _PictureMarkerSymbol();
     marker2.setHeight(44);
     marker2.setWidth(28);
     marker2.setUrl("css/Location_Icon_2.png");
 
-    mapLayer = new esri.layers.ArcGISTiledMapServiceLayer(baseMapUrl);
-    map.addLayer(mapLayer);
-    glPoint = new esri.layers.GraphicsLayer();
-    map.addLayer(glPoint, 0);
+    var defaultSymbol = new _SimpleFillSymbol(_SimpleFillSymbol.STYLE_SOLID,
+        new _SimpleLineSymbol(_SimpleLineSymbol.STYLE_SOLID,
+        new _Color([0, 173, 238]), 2), new _Color([0, 173, 238, 0])
+        );
+
+
+    loteLayer2 = new _FeatureLayer(loteLayerUrl, {
+        mode: _FeatureLayer.MODE_AUTO,
+        outFields: ["*"],
+        symbol: defaultSymbol
+    });
+    renderer = new _UniqueValueRenderer(defaultSymbol, "LOTCODIGO");
+    loteLayer2.setRenderer(renderer);
+
+    glPoint2 = new _GraphicsLayer();
+    mapDetalle.addLayers([loteLayer2, glPoint2]);
+
+    var infoTemplate = new _InfoTemplate();
+    infoTemplate.setTitle(getTextContent);
+
+    loteLayer = new _FeatureLayer(loteLayerUrl, {
+        mode: _FeatureLayer.MODE_AUTO,
+        outFields: ["*"],
+        symbol: defaultSymbol,
+        infoTemplate: infoTemplate
+    });
+    loteLayer.setRenderer(renderer);
+
+    alturasLayer = new _FeatureLayer(alturasLayerUrl, {
+        id: "Alturas",
+        mode: _FeatureLayer.MODE_AUTO,
+        outFields: ["*"],
+        opacity: 0
+    });
+    usosLayer = new _FeatureLayer(usosLayerUrl, {
+        id: "Usos",
+        mode: _FeatureLayer.MODE_AUTO,
+        outFields: ["*"],
+        opacity: 0
+    });
+
+    placaLayer = new _FeatureLayer(placaLayerUrl, {
+        mode: _FeatureLayer.MODE_AUTO,
+        outFields: ["PDoTexto"]
+    });
+    placaLayer2 = new _ArcGISDynamicMapServiceLayer("http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/");
+
+    glPoint = new _GraphicsLayer();
+    //map.addLayers([placaLayer, placaLayer2, loteLayer, glPoint]);
+    map.addLayers([placaLayer, alturasLayer, usosLayer, loteLayer, glPoint]);
+
     updateSize();
     initLocationGPS();
 }
 
+function getTextContent(graphic) {
+    return "Lote: " + graphic.attributes["LOTCODIGO"];
+}
+
 function initLocationGPS() {
-    $("#buttonLocation").css("background-color", "#004167");
-    modeManual = false;
+    myApp.addNotification({
+        message: 'Obteniendo ubicaci&oacute;n por GPS',
+        hold: 1000
+    });
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
             currentPointX = position.coords.longitude;
             currentPointY = position.coords.latitude;
-            var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
+            currentPoint = new _Point(currentPointX, currentPointY, { wkid: 4686 });
             glPoint.clear();
-            glPoint.add(new esri.Graphic(currentPoint, marker2), null, null);
+            glPoint.add(new _Graphic(currentPoint, marker2), null, null);
             map.centerAt(currentPoint);
         },
             function (error) {
@@ -132,38 +356,73 @@ function updateSize() {
     };
 };
 
-function setLocation() {
-    if (modeManual) {
-        $("#buttonLocation").css("background-color", "#004167");
-        modeManual = false;
-    } else {
-        $("#buttonLocation").css("background-color", "grey");
-        modeManual = true;
-        glPoint.clear();
-    }
+function gotoSettings() {
+    myApp.actions([[
+         {
+             text: 'Mapa Base',
+             label: true
+         },
+        {
+            text: 'Referencia',
+            onClick: function () {
+                map.setBasemap("referencia");
+                mapDetalle.setBasemap("referencia");
+            }
+        },
+        {
+            text: 'Hibrido',
+            onClick: function () {
+                map.setBasemap("hibrido");
+                mapDetalle.setBasemap("hibrido");
+            }
+        }
+    ], [
+        {
+            text: 'Informacion adicional',
+            label: true
+        },
+        {
+            text: 'Alturas',
+            onClick: function () {
+                alturasLayer.setOpacity(0.5);
+                usosLayer.setOpacity(0);
+                $("#legendDiv").show();
+                $("#alturaTable").show();
+                $("#usosTable").hide();
+            }
+        },
+        {
+            text: 'Usos',
+            onClick: function () {
+                alturasLayer.setOpacity(0);
+                usosLayer.setOpacity(0.5);
+                $("#legendDiv").show();
+                $("#alturaTable").hide();
+                $("#usosTable").show();
+            }
+        },
+        {
+            text: 'No mostrar',
+            onClick: function () {
+                alturasLayer.setOpacity(0);
+                usosLayer.setOpacity(0);
+                $("#legendDiv").hide();
+            }
+        }
+    ], [
+        {
+            text: 'Cerrar',
+            color: 'red'
+        }
+    ]]);
 };
-
-function setLocationPoint(evt) {
-    if (modeManual) {
-        modeManual = false;
-        $("#buttonLocation").css("background-color", "#004167");
-        currentPointX = evt.mapPoint.x;
-        currentPointY = evt.mapPoint.y;
-        var currentPoint = new esri.geometry.Point(currentPointX, currentPointY, { wkid: 4686 });
-        glPoint.clear();
-        glPoint.add(new esri.Graphic(currentPoint, marker), null, null);
-        map.centerAt(currentPoint);
-        setTimeout(function () {
-            gotoReporte();
-        }, 1500);    
-    }
-}
 
 function hideAll() {
     $("#mapDiv").css("left", "-6000px");
     $("#mapDiv").css("position", "absolute");
     $("#map-toolbar").hide();
-    $("#speed-dial").hide();
+    $("#map-footer-toolbar").hide();
+    $("#gpsBtn").hide();
 
     $("#reporteDiv").hide();
     $("#reporte-toolbar").hide();
@@ -171,130 +430,206 @@ function hideAll() {
     $("#bienvenida-toolbar").hide();
     $("#registroDiv").hide();
     $("#registro-toolbar").hide();
+    $("#registro2Div").hide();
+    $("#registro2-toolbar").hide();
     $("#terminosDiv").hide();
     $("#terminos-toolbar").hide();
     $("#catalogoDiv").hide();
     $("#catalogo-toolbar").hide();
+    $("#tutorialDiv").hide();
+    $("#tutorial-toolbar").hide();
     $("#catalogoDetailDiv").hide();
     $("#catalogo-detail-toolbar").hide();
+    $("#registrosDetailDiv").hide();
+    $("#registros-detail-toolbar").hide();
 };
 
 function gotoNext() {
     hideAll();
+    if (window.localStorage.getItem("first") == null) {
+        gotoTutorial();
+    } else {
+        if (currentUser == null) {
+            gotoRegistro();
+        } else {
+            gotoMap();
+            updateUser();
+            updatePoints();
+        };
+    };
+};
+
+function gotoNextTutorial() {
+    hideAll();
+    if (window.localStorage.getItem("first") == null) {
+        window.localStorage.setItem("first", true);
+    };
     if (currentUser == null) {
         gotoRegistro();
     } else {
         gotoMap();
         updateUser();
+        updatePoints();
     };
 };
 
 function gotoTutorial() {
-    var modal = myApp.modal({
-        afterText: '<div class="swiper-container" style="width: auto; margin:15px -15px -15px">' +
-                      '<div class="swiper-pagination"></div>' +
-                      '<div class="swiper-wrapper">' +
-                           '<div class="swiper-slide"><img src="images/Instrucciones1.png" height="270" style="display:block"></div>' +
-                           '<div class="swiper-slide"><img src="images/Instrucciones2.png" height="270" style="display:block"></div>' +
-                      '</div>' +
-                    '</div>',
-        buttons: [
-          {
-              text: 'Aceptar',
-              onClick: function () {
-                  window.localStorage.setItem("tutorial", true);
-              }
-          }
-        ]
-    })
-    myApp.swiper($$(modal).find('.swiper-container'), { pagination: '.swiper-pagination' });
+    hideAll();
+    $("#tutorialDiv").show();
+    $("#tutorial-toolbar").show();
+    myApp.swiper($('.swiper-container'), { pagination: '.swiper-pagination' });
+    window.localStorage.setItem("tutorial", true);
 };
 
+function gotoRegistro2() {
+    $("#fnombres").val("");
+    $("#fapellidos").val("");
+    $("#fcorreo").val("");
+    $("#fpassword").val("");
+    hideAll();
+    $("#registro2Div").show();
+    $("#registro2-toolbar").show();
+}
+
 function submitRegistro() {
-    if (initRegistro) {
-        $.validity.start();
-        $("#fcorreo").require();
-        if ($.validity.end().errors > 0) {
-            sendAlert('Debe ingresar su direcci&oacute;n de correo.');
-            return;
-        };
 
-        $.validity.start();
-        $("#fcorreo").match("email");
-        if ($.validity.end().errors > 0) {
-            sendAlert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
-            return;
-        };
+    $.validity.start();
+    $("#fcorreo").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar su direcci&oacute;n de correo.');
+        return;
+    };
 
-        myApp.showPreloader("Validando usuario, por favor, espere.");
-        $.ajax({
-            url: _url_user + "email=" + encodeURIComponent($("#fcorreo").val().toLowerCase()),
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                myApp.hidePreloader();
-                if (response.status == "true") {
-                    currentUser = $("#fcorreo").val().toLowerCase();
-                    window.localStorage.setItem("user", currentUser);
-                    gotoMap();
-                    updateUser();
-                } else {
-                    initRegistro = false;
-                    $("#registroNuevo").show();
-                };
-            },
-            error: function () {
-                myApp.hidePreloader();
+    $.validity.start();
+    $("#fcorreo").match("email");
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
+        return;
+    };
+
+    $.validity.start();
+    $("#fpassword").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar una contrase&ntilde;a.');
+        return;
+    };
+
+    if ($("#fpassword").val().length < 6) {
+        sendAlert('La contrase&ntilde;a debe tener 6 o m&aacute;s caracteres.');
+        return;
+    }
+
+    $.validity.start();
+    $("#fnombres").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar su nombre.');
+        return;
+    };
+
+    $.validity.start();
+    $("#fapellidos").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar su apellido.');
+        return;
+    };
+
+    if ($("#terminosCheck").prop('checked') == false) {
+        sendAlert('Debe aceptar los terminos de uso.');
+        return;
+    }
+
+    myApp.showPreloader("Por favor, espere.");
+    $.ajax({
+        url: _url, 
+        type: 'POST',
+        data: {
+            action: "registerUser",
+            user: $("#fcorreo").val().toLowerCase(),
+            password: $("#fpassword").val(),
+            name: $("#fnombres").val(),
+            surname: $("#fapellidos").val()
+        },
+        dataType: 'json',
+        success: function (response) {
+            myApp.hidePreloader();
+            if (response.status == "OK") {
                 setTimeout(function () {
-                    sendAlert('No se pudo validar el usuario, por favor, intente m&aacute;s tarde.');
+                    sendAlert('Registro exitoso.');
                 }, 1500);
-            }
-        });
-    } else {
-        $.validity.start();
-        $("#fnombres").require();
-        if ($.validity.end().errors > 0) {
-            sendAlert('Debe ingresar su nombre.');
-            return;
-        };
-        $.validity.start();
-        $("#fapellidos").require();
-        if ($.validity.end().errors > 0) {
-            sendAlert('Debe ingresar su apellido.');
-            return;
-        };
-        if ($("#terminosCheck").prop('checked') == false) {
-            sendAlert('Debe aceptar los terminos de uso.');
-            return;
-        }
-        $.ajax({
-            url: _url_user + "email=" + encodeURIComponent($("#fcorreo").val().toLowerCase()) +
-                "&nombres=" + encodeURIComponent($("#fnombres").val()) + "&apellidos=" + encodeURIComponent($("#fapellidos").val()),
-            type: 'POST',
-            dataType: 'json',
-            success: function (response) {
-                myApp.hidePreloader();
-                if (response.status == "true") {
-                    currentUser = $("#fcorreo").val().toLowerCase();
-                    window.localStorage.setItem("user", currentUser);
-                    gotoMap();
-                    updateUser();
-                } else {
-                    setTimeout(function () {
-                        sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
-                    }, 1500);
-                };
-            },
-            error: function () {
-                myApp.hidePreloader();
+                gotoRegistro();
+            } else {
                 setTimeout(function () {
                     sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
                 }, 1500);
+            };
+        },
+        error: function () {
+            myApp.hidePreloader();
+            setTimeout(function () {
+                sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
+            }, 1500);
 
-            }
-        });
-    };
+        }
+    });
 };
+
+function login() {
+    $.validity.start();
+    $("#logincorreo").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar su direcci&oacute;n de correo.');
+        return;
+    };
+
+    $.validity.start();
+    $("#logincorreo").match("email");
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar un correo electr&oacute;nico v&aacute;lido.');
+        return;
+    };
+
+    $.validity.start();
+    $("#loginpassword").require();
+    if ($.validity.end().errors > 0) {
+        sendAlert('Debe ingresar una contrase&ntilde;a.');
+        return;
+    };
+    
+    myApp.showPreloader("Por favor, espere.");
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "authUser",
+            user: $("#logincorreo").val().toLowerCase(),
+            password: $("#loginpassword").val()
+        },
+        dataType: 'json',
+        success: function (response) {
+            myApp.hidePreloader();
+            if (response.status == "OK") {
+                currentUser = $("#logincorreo").val().toLowerCase();
+                window.localStorage.setItem("user", currentUser);
+                currentToken = response.token;
+                window.localStorage.setItem("token", currentToken);
+                gotoMap();
+                updateUser();
+                updatePoints();
+            } else {
+                setTimeout(function () {
+                    sendAlert('Usuario o contrase&ntilde;a invalido.');
+                }, 1500);
+            };
+        },
+        error: function () {
+            myApp.hidePreloader();
+            setTimeout(function () {
+                sendAlert('No se pudo iniciar sesion, por favor, intente m&aacute;s tarde.');
+            }, 1500);
+
+        }
+    });
+}
 
 function gotoMain() {
     hideAll();
@@ -303,15 +638,14 @@ function gotoMain() {
 }
 
 function gotoMap() {
+    previousScreen = "mapa";
     hideAll();
     $("#mapDiv").css("left", "0px");
     $("#mapDiv").css("position", "");
     $("#map-toolbar").show();
-    $("#speed-dial").show();
+    $("#gpsBtn").show();
+    $("#map-footer-toolbar").show();
     updateSize();
-
-    modeManual = false;
-    $("#buttonLocation").css("background-color", "#004167");
 
     if (window.localStorage.getItem("tutorial") == null) {
         gotoTutorial();
@@ -320,20 +654,232 @@ function gotoMap() {
 
 };
 
-function gotoReporte() {
-    hideAll();
-    $("#reporteDiv").show();
-    $("#reporte-toolbar").show();
-
-    photoURLS = new Array();
-    $('#photolist').html("");
-    $("#detalleTipo").hide();
-    $("input:radio[name ='ftipo']").removeAttr("checked");
-    $("input:radio[name ='ftipodetalle']").removeAttr("checked");
+function gotoReporteListado(pointId) {    
+    currentPointId = pointId;
+    currentLote = null;
+    gotoReporte(true);
 };
 
+function volverReporte() {
+    if (previousScreen == "mapa") {
+        gotoMap();
+    }
+    if (previousScreen == "listado") {
+        gotoRegistrosDetail();
+    }
+}
+
+function gotoReporte(readOnly) {
+    $("#btnReporteLike").hide();
+    $("#btnReporteDislike").hide();
+
+    if (currentPointId == null) {
+        cargarDatos();
+        hideAll();
+        currentPoint = new _Point(currentLoteX, currentLoteY, { wkid: 4686 });
+        $("#reporteDiv").show();
+        $("#reporte-toolbar").show();
+
+        glPoint2.clear();
+        glPoint2.add(new _Graphic(currentPoint, marker), null, null);
+        mapDetalle.centerAt(currentPoint);
+
+        $("#photoAreaTitleReporte").show();
+        $("#photoAreaReporte").show();
+        $("#TextAreaReporte").show();
+        photoURLS = new Array();
+        $('#photolist').html("");
+        $("#btnSubmitReport").show();
+        $("#pointChangeType").prop("disabled", false);
+        $("#pointCurrentUse").prop("disabled", false);
+        $("#pointStoreyNumber").prop("disabled", false);
+    } else {
+        cargarPunto();
+    }
+};
+
+function cargarPunto() {
+    myApp.showPreloader("Por favor, espere.");
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "getPointDetails",
+            user: currentUser,
+            token: currentToken,
+            pointID: currentPointId
+        },
+        dataType: 'json',
+        success: function (response) {
+            myApp.hidePreloader();
+            if (response.status == "OK") {
+                
+                hideAll();
+                $("#pointChangeType").val(response.changeType);
+                $("#pointCurrentUse").val(response.currentUse);
+                $("#pointStoreyNumber").val(response.storeyNumber);
+                $("#pointChangeType").prop("disabled", true);
+                $("#pointCurrentUse").prop("disabled", true);
+                $("#pointStoreyNumber").prop("disabled", true);
+
+                $("#btnReporteLike").show();
+                $("#btnReporteDislike").show();
+
+                currentLoteY = response.lat;
+                currentLoteX = response.lon;
+                currentLote = response.lotID;
+                currentPoint = new _Point(currentLoteX, currentLoteY, { wkid: 4686 });
+
+                $("#reporteDiv").show();
+                $("#reporte-toolbar").show();
+                $("#photoAreaTitleReporte").hide();
+                $("#photoAreaReporte").hide();
+                $("#TextAreaReporte").hide();
+                $('#photolist').html("");
+                $("#btnSubmitReport").hide();
+
+                glPoint2.clear();
+                glPoint2.add(new _Graphic(currentPoint, marker), null, null);
+                mapDetalle.centerAt(currentPoint);
+                cargarDatos();
+            } else {
+               
+            };
+        },
+        error: function () {
+            myApp.hidePreloader();            
+
+        }
+    });
+}
+
+function cargarDatos() {
+    $("#codigoLote").html(currentLote);
+    $("#placaLote").html("");
+    $("#usoLote").html("");
+    $("#alturaLote").html("");
+
+    var queryConstruccion = new _QueryTask(queryConstruccionUrl);
+    var _queryConstruccion = new _query();
+    _queryConstruccion.outFields = ["*"];
+    _queryConstruccion.returnGeometry = false;
+    _queryConstruccion.where = "LOTECODIGO = '" + currentLote + "'";
+    queryConstruccion.execute(_queryConstruccion, function (relatedRecords) {
+        var fset = relatedRecords.features;
+        var valor = 0;
+        var sHTML = "";
+        for (var i = 0; i < fset.length; i++) {
+            try {
+                if (parseInt(fset[i].attributes["CONNPISOS"]) > valor) {
+                    valor = parseInt(fset[i].attributes["CONNPISOS"]);
+                };
+            } catch (err) {
+
+            }
+        }
+        if (valor == 0) {
+            sHTML = "No disponible";
+        } else {
+            sHTML = valor;
+        }
+        $("#alturaLote").html(sHTML);
+    });
+
+    var queryUso = new _QueryTask(queryUsoUrl);
+    var _queryUso = new _query();
+    _queryUso.outFields = ["*"];
+    _queryUso.returnGeometry = false;
+    _queryUso.where = "USOCLOTE = '" + currentLote + "'";
+    queryUso.execute(_queryUso, function (relatedRecords) {
+        var fset = relatedRecords.features;
+        var usosConsolidados = [];
+        for (var i = 0; i < fset.length; i++) {
+            try {
+                var temp = translate_usos(fset[i].attributes["USOTUSO"]);
+                if (usosConsolidados.indexOf(temp) == -1) {
+                    usosConsolidados.push(temp);
+                }
+            } catch (err) {
+
+            }
+        }
+
+        var sHTML = "";
+        for (var i = 0; i < usosConsolidados.length; i++) {
+            try {
+                sHTML = sHTML + (usosConsolidados[i]) + "\n";
+            } catch (err) {
+
+            }
+        }
+        if (sHTML.length == 0) {
+            sHTML = "No disponible\n";
+        }
+        sHTML = sHTML.substring(0, sHTML.length - 1);
+        $("#usoLote").html(sHTML);
+    });
+
+    var queryPlaca = new _QueryTask(queryPlacaUrl);
+    var _queryPlaca = new _query();
+    _queryPlaca.outFields = ["*"];
+    _queryPlaca.returnGeometry = false;
+    _queryPlaca.where = "PDOCLOTE = '" + currentLote + "'";
+    queryPlaca.execute(_queryPlaca, function (relatedRecords) {
+        var fset = relatedRecords.features;
+        var sHTML = "";
+        for (var i = 0; i < fset.length; i++) {
+            try {
+                sHTML = sHTML + fset[i].attributes["PDOTEXTO"] + "<br/>";
+            } catch (err) {
+
+            }
+        }
+        if (sHTML.length == 0) {
+            sHTML = "No disponible<br/>";
+        }
+        sHTML = sHTML.substring(0, sHTML.length - 5);
+        $("#placaLote").html(sHTML);
+    });
+
+};
+
+function translate_usos(value) {
+    var val = parseInt(value);
+    for (var i = 0; i < usos_homologacion.length; i++) {
+        if (usos_homologacion[i].value == value) {
+            return usos_homologacion[i].consolidado;
+        }
+    }
+}
+
+function registroLike(signo) {
+    $("#btnReporteLike").hide();
+    $("#btnReporteDislike").hide();    
+
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "setLikeToPoint",
+            user: currentUser,
+            token: currentToken,
+            pointID: currentPointId,
+            setLike: signo
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.status == "OK") {
+
+            };
+        },
+        error: function () {
+            myApp.hidePreloader();
+
+        }
+    });
+}
+
 function gotoRegistro() {
-    initRegistro = true;
     hideAll();
     $("#registroDiv").show();
     $("#registro-toolbar").show();
@@ -358,20 +904,44 @@ function gotoCatalogo() {
     $("#catalogo-toolbar").show();
 }
 
+function gotoComentario() {
+    $("#txtComentario").val("");
+    $(".star").removeClass("star_active");
+    myApp.popup('#comentariosDiv');
+}
+
+function starClick(value) {
+    var stars = $(".star");
+    $(".star").removeClass("star_active");
+    for (var i = 0; i < stars.length; i++) {
+        if (parseInt($(stars[i]).attr("data-value")) <= value) {
+            $(stars[i]).addClass("star_active");
+        }
+    }
+}
+
+function enviarComentario() {
+    myApp.closeModal('#comentariosDiv');
+}
+
+function cancelarComentario() {
+    myApp.closeModal('#comentariosDiv');
+}
+
+function gotoRegistrosDetail() {
+    previousScreen = "listado";
+    hideAll();
+    myApp.closePanel('right');
+    $("#registrosDetailDiv").show();
+    $("#registros-detail-toolbar").show();
+}
+
 function gotoCatalogoDetail() {
     hideAll();
     myApp.closePanel('right');
     $("#catalogoDetailDiv").show();
     $("#catalogo-detail-toolbar").show();
 }
-
-function dial() {
-    if ($("#speed-dial").hasClass('speed-dial-opened')) {
-        $('#speed-dial').removeClass('speed-dial-opened');
-    } else {
-        $('#speed-dial').addClass('speed-dial-opened');
-    }
-};
 
 function addPhotos(sourceType) {
     if (photoURLS.length == 3) {
@@ -380,7 +950,7 @@ function addPhotos(sourceType) {
     };
 
     navigator.camera.getPicture(captureSuccess, captureFail, {
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,
         sourceType: sourceType,
         quality: 50,
         targetHeight: 1024,
@@ -389,39 +959,14 @@ function addPhotos(sourceType) {
     });
 };
 
-function captureSuccess(imageURI) {
-    myApp.showPreloader("Cargando foto, por favor, espere.");
-
-    var fail, ft, options, params, win;
-    options = new FileUploadOptions();
-    options.fileKey = "nva_imagen";
-    options.fileName = "imagen_" + new Date().getTime() + ".jpg";
-    ft = new FileTransfer();
-    imageCache = imageURI;
-    ft.upload(imageURI, _url_photo, uploadSuccessFT, uploadFail, options);
+function captureSuccess(imageData) {
+    photoURLS.push("data:image/jpeg;base64," + imageData);
+    $('#photolist').append('<img class="image_thumb" src="data:image/jpeg;base64,' + imageData + '" />');
 }
 
 function captureFail(imageURI) {
     sendAlert("Error en la captura de la imagen");
 }
-
-function uploadSuccessFT(response) {
-    myApp.hidePreloader();
-    setTimeout(function () {
-        sendAlert("Foto cargada exitosamente.");
-    }, 1500);
-    var objResponse;
-    objResponse = response.response;
-    photoURLS.push(objResponse);
-    $('#photolist').append('<img class="image_thumb" src="' + imageCache + '" />');
-};
-
-function uploadFail(error) {
-    myApp.hidePreloader();
-    setTimeout(function () {
-        sendAlert("No se pudo cargar la foto, por favor, intente m&aacute;s tarde.");
-    }, 1500);
-};
 
 function clearPhotos() {
     photoURLS = new Array();
@@ -434,67 +979,84 @@ function submitReport() {
         return;
     }
 
-    if ($("input:radio[name ='ftipo']:checked").length == 0) {
-        sendAlert('Debe seleccionar un tipo de reporte.');
-        return;
-    }
-
-    if ($("input:radio[name ='ftipo']:checked")[0].value == cambioStr) {
-        if ($("input:radio[name ='ftipodetalle']:checked").length == 0) {
-            sendAlert('Debe seleccionar un tipo de cambio.');
-            return;
-        }
-    }
-    
     myApp.showPreloader("Enviando reporte, por favor, espere.");
 
-    var photoMSG = '';
+    var photoMSG = [];
     if (photoURLS.length > 0) {
         for (var i = 0; i < photoURLS.length; i++) {
-            photoMSG = photoMSG + '&foto=' + encodeURIComponent(photoURLS[i]);
+            photoMSG.push({ url : photoURLS[i] });
         }
     };
+        
+    var p = {};
+    p.lat = currentLoteY;
+    p.lon = currentLoteX;
+    p.lotID = currentLote;
+    p.changeType = $("#pointChangeType").val();
+    p.currentUse = $("#pointCurrentUse").val();
+    p.storeyNumber = $("#pointStoreyNumber").val();
+    p.notes = $("#pointNotes").val();
+    p.pictures = photoMSG;
 
-    var tipoText;
-    if ($("input:radio[name ='ftipo']:checked")[0].value == cambioStr) {
-        tipoText = $("input:radio[name ='ftipo']:checked")[0].value + " - " + $("input:radio[name ='ftipodetalle']:checked")[0].value;
-    } else {
-        tipoText = $("input:radio[name ='ftipo']:checked")[0].value;
-    }
-
-    var msgURL = _url_msg + "email=" + encodeURIComponent(currentUser)
-                          + "&tipoRegistro=" + tipoText + "&latitud=" + currentPointX + "&longitud=" + currentPointY + photoMSG;
     $.ajax({
-        url: msgURL,
-        type: 'GET',
-        success: function () {                
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "registerPoint",
+            user: currentUser,
+            token: currentToken,
+            point: p
+        },
+        dataType: 'json',
+        success: function (response) {
             myApp.hidePreloader();
-            setTimeout(function () {
-                sendAlert('&#161;Muchas gracias por reportar un nuevo cambio en Bogot&aacute;&#33; Tu participaci&oacute;n nos aporta valiosa informaci&oacute;n para construir ciudad.');
-            }, 1500);
-            updateUser();
+            if (response.status == "OK") {
+                myApp.hidePreloader();
+                setTimeout(function () {
+                    sendAlert('&#161;Muchas gracias por reportar un nuevo cambio en Bogot&aacute;&#33; Tu participaci&oacute;n nos aporta valiosa informaci&oacute;n para construir ciudad.');
+                }, 1500);
+                gotoMap();
+                myApp.openPanel('right');
+                updateUser();
+                updatePoints();
+            } else {
+                setTimeout(function () {
+                    sendAlert('No se pudo registrar el cambio, por favor, intente m&aacute;s tarde.');
+                }, 1500);
+            };
         },
         error: function () {
             myApp.hidePreloader();
             setTimeout(function () {
-                sendAlert('No se pudo enviar el reporte, por favor, intente m&aacute;s tarde.');
+                sendAlert('No se pudo registrar el cambio, por favor, intente m&aacute;s tarde.');
             }, 1500);
+
         }
     });
 
-    gotoMap();
 };
 
-function updateUser() {
-    $("#user_email").html(currentUser);
+function updatePoints() {
     $.ajax({
-        url: _url_balance + "email=" + encodeURIComponent(currentUser),
-        type: 'GET',
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "getPointsByExtent",
+            user: currentUser,
+            token: currentToken,
+            extent: [[map.extent.xmin, map.extent.ymin], [map.extent.xmax, map.extent.ymax]]
+        },
         dataType: 'json',
         success: function (response) {
-            if (response.status == "true") {
-                $("#user_name").html(response.nombres + " " + response.apellidos);
-                $("#ptTotales").html(response.puntos);
+            if (response.status == "OK") {
+                for (var i = 0; i < response.points.length; i++) {
+                    cacheReportes[response.points[i].lotID] = response.points[i].pointID;
+                    renderer.addValue(response.points[i].lotID, new _SimpleFillSymbol().setColor(new _Color([255, 0, 0, 0.5])));
+                }
+                loteLayer.refresh();
+                loteLayer2.refresh();
+            } else {
+
             };
         },
         error: function () {
@@ -503,10 +1065,57 @@ function updateUser() {
     });
 };
 
+function updateUser() {
+    $("#user_email").html(currentUser);
+    $("#registrosList").html("");
+
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "getUserDetails",
+            user: currentUser,
+            token: currentToken
+        },
+        dataType: 'json',
+        success: function (response) {
+            myApp.hidePreloader();
+            if (response.status == "OK") {
+                $("#user_name").html(response.name);
+                $("#ptTotales").html(response.scoreBalance);
+                $("#rgTotales").html(response.points.length);
+                for (var i = 0; i < response.points.length; i++) {
+                    var sHTML = "";
+                    sHTML = sHTML + "<li>";
+                    sHTML = sHTML + "<a href='#' class='item-link item-content' onclick='gotoReporteListado(\"" + response.points[i].pointID + "\");'>";
+                    sHTML = sHTML + "<div class='item-inner'>";
+                    sHTML = sHTML + "<div class='item-title-row'>";
+                    sHTML = sHTML + "<div class='item-title'>Lote " + response.points[i].lotID + "</div>";
+                    sHTML = sHTML + "<div class='item-after'>" + response.points[i].likes + "</div>";
+                    sHTML = sHTML + "</div>";
+                    sHTML = sHTML + "<div class='item-subtitle'>" + response.points[i].timestamp + "</div>";
+                    sHTML = sHTML + "</div>";
+                    sHTML = sHTML + "</a>";
+                    sHTML = sHTML + "</li>";
+                    $("#registrosList").append(sHTML);
+                }
+            } else {
+               
+            };
+        },
+        error: function () {
+
+        }
+    });
+
+};
+
 function logout() {
     myApp.closePanel('right');
     currentUser = null;
+    currentToken = null;
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("token");
     window.localStorage.removeItem("tutorial");
     gotoMain();
 };
