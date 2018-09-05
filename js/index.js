@@ -229,6 +229,7 @@ function initMap2() {
     });
     map = new _Map("map", {
         zoom: 9,
+        minZoom: 7,
         basemap: "referencia",
         spatialReference: { wkid: 4686  },
         center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
@@ -239,6 +240,7 @@ function initMap2() {
     });
     mapDetalle = new _Map("mapDetalle", {
         zoom: 9,
+        minZoom: 7,
         basemap: "referencia",
         spatialReference: { wkid: 4686 },
         center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
@@ -684,7 +686,6 @@ function gotoReporte(readOnly) {
         glPoint2.add(new _Graphic(currentPoint, marker), null, null);
         mapDetalle.centerAt(currentPoint);
 
-        $("#photoAreaTitleReporte").show();
         $("#photoAreaReporte").show();
         $("#TextAreaReporte").show();
         photoURLS = new Array();
@@ -732,7 +733,6 @@ function cargarPunto() {
 
                 $("#reporteDiv").show();
                 $("#reporte-toolbar").show();
-                $("#photoAreaTitleReporte").hide();
                 $("#photoAreaReporte").hide();
                 $("#TextAreaReporte").hide();
                 $('#photolist').html("");
