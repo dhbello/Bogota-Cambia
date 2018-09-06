@@ -232,7 +232,7 @@ function initMap2() {
         minZoom: 7,
         basemap: "referencia",
         spatialReference: { wkid: 4686  },
-        center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
+        center: new _Point(-74.0817810139777, 4.62585823130184, { wkid: 4686 }),
         autoresize: false,
         slider: false,
         showLabels: true,
@@ -243,7 +243,7 @@ function initMap2() {
         minZoom: 7,
         basemap: "referencia",
         spatialReference: { wkid: 4686 },
-        center: new _Point(-74.0668084, 4.600885262127369, { wkid: 4686 }),
+        center: new _Point(-74.0817810139777, 4.62585823130184, { wkid: 4686 }),
         autoresize: false,
         slider: false,
         showLabels: true
