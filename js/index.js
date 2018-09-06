@@ -672,6 +672,7 @@ function volverReporte() {
 }
 
 function gotoReporte(readOnly) {
+    $("#reporteLike").hide();
     $("#btnReporteLike").hide();
     $("#btnReporteDislike").hide();
 
@@ -723,6 +724,13 @@ function cargarPunto() {
                 $("#pointCurrentUse").prop("disabled", true);
                 $("#pointStoreyNumber").prop("disabled", true);
 
+                $("#reporteLike").show();
+                $("#reporteLikeCounter").html(response.likes);
+                if (response.likes >= 0) {
+                    $("#reporteLikeCounterTxt").html("<i class='fa fa-thumbs-o-up'></i>");                    
+                } else {
+                    $("#reporteLikeCounterTxt").html("<i class='fa fa-thumbs-o-down'></i>");
+                }
                 $("#btnReporteLike").show();
                 $("#btnReporteDislike").show();
 
@@ -853,6 +861,7 @@ function translate_usos(value) {
 }
 
 function registroLike(signo) {
+    $("#reporteLike").hide();
     $("#btnReporteLike").hide();
     $("#btnReporteDislike").hide();    
 
