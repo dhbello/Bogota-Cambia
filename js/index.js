@@ -248,11 +248,7 @@ function initMap2() {
         slider: false,
         showLabels: true
     });
-    mapDetalle.on("update-end", function (evt) {
-        if (currentPoint != null) {
-            mapDetalle.centerAt(currentPoint);
-        }
-    });
+
     map.on("extent-change", function (evt) {
         updatePoints();
     });
@@ -685,7 +681,7 @@ function gotoReporte(readOnly) {
 
         glPoint2.clear();
         glPoint2.add(new _Graphic(currentPoint, marker), null, null);
-        mapDetalle.centerAt(currentPoint);
+        mapDetalle.centerAndZoom(currentPoint, 9);
 
         $("#photoAreaReporte").show();
         $("#TextAreaReporte").show();
@@ -748,7 +744,7 @@ function cargarPunto() {
 
                 glPoint2.clear();
                 glPoint2.add(new _Graphic(currentPoint, marker), null, null);
-                mapDetalle.centerAt(currentPoint);
+                mapDetalle.centerAndZoom(currentPoint, 9);
                 cargarDatos();
             } else {
                
