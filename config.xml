@@ -5,7 +5,7 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "gov.ideca.DinamicaUrbana"
 	      version   = "130"
-        ios-CFBundleVersion="1.3.1"
+        ios-CFBundleVersion="1.3.2"
         android-versionCode="130">
 
     <name>Bogotá Cambia</name>
@@ -48,12 +48,24 @@
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-splashscreen" />
-    <plugin name="cordova-plugin-media-capture">
-      <variable name="CAMERA_USAGE_DESCRIPTION" value="Se puede requerir fotos de la camara." />
-      <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Se puede requerir fotos de la libreria de fotos." />
-    </plugin>
+    <plugin name="cordova-plugin-media-capture" />
+    <platform name="ios">
+      <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Esta aplicacion puede requerir tomar fotos de la camara</string>
+      </edit-config>
+      <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Esta aplicacion puede requerir cargar fotos de la galeria de imagenes</string>
+      </edit-config>
+      <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Esta aplicacion puede requerir tu ubicacion geografica</string>
+      </edit-config>
+      <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Esta aplicacion puede requerir tu ubicacion geografica</string>
+      </edit-config>
+    </platform>
+
   
-    <platform name="android">
+  <platform name="android">
         <preference name="android-build-tool" value="gradle" />
 
         <icon src="res/icon/android/drawable-ldpi-icon.png"                  platform="android"  density="ldpi" />
