@@ -532,7 +532,7 @@ function submitRegistro() {
     };
 
     if ($("#terminosCheck").prop('checked') == false) {
-        sendAlert('Debe aceptar los terminos de uso.');
+        sendAlert('Debe aceptar los t&eacute;rminos de uso.');
         return;
     }
 
@@ -551,10 +551,13 @@ function submitRegistro() {
         success: function (response) {
             myApp.hidePreloader();
             if (response.status == "OK") {
-                setTimeout(function () {
-                    sendAlert('Registro exitoso.');
-                }, 1500);
-                gotoRegistro();
+                currentUser = $("#fcorreo").val().toLowerCase();
+                window.localStorage.setItem("user", currentUser);
+                currentToken = response.token;
+                window.localStorage.setItem("token", currentToken);
+                gotoMap();
+                updateUser();
+                updatePoints();
             } else {
                 setTimeout(function () {
                     sendAlert('No se pudo registrar el usuario, por favor, intente m&aacute;s tarde.');
@@ -673,7 +676,20 @@ function gotoReporte(readOnly) {
     $("#btnReporteDislike").hide();
 
     if (currentPointId == null) {
-        cargarDatos();
+        $("#pointCurrentUse").empty();
+        $('#pointCurrentUse').append($('<option>', { value: 'Comercial', text: 'Comercial' }));
+        $('#pointCurrentUse').append($('<option>', { value: 'Industrial', text: 'Industrial' }));
+        $('#pointCurrentUse').append($('<option>', { value: 'Dotacional', text: 'Dotacional' }));
+        $('#pointCurrentUse').append($('<option>', { value: 'Residencial', text: 'Residencial' }));
+        $('#pointCurrentUse').append($('<option>', { value: 'Recreacional', text: 'Recreacional' }));
+        $('#pointCurrentUse').append($('<option>', { value: 'Otro', text: 'Otro' }));
+        $("#pointCurrentUse").val("");
+        cargarDatos(false);
+
+        $("#pointNotes").val("");
+        $("#pointStoreyNumber").val("");        
+        $("#pointChangeType").val("");
+
         hideAll();
         currentPoint = new _Point(currentLoteX, currentLoteY, { wkid: 4686 });
         $("#reporteDiv").show();
@@ -714,8 +730,11 @@ function cargarPunto() {
                 
                 hideAll();
                 $("#pointChangeType").val(response.changeType);
+
+                $("#pointCurrentUse").empty();
+                $('#pointCurrentUse').append($('<option>', { value: response.currentUse, text: response.currentUse }));
                 $("#pointCurrentUse").val(response.currentUse);
-                $("#pointStoreyNumber").val(response.storeyNumber);
+                $("#pointStoreyNumber").val(response.storeyNumber);                
                 $("#pointChangeType").prop("disabled", true);
                 $("#pointCurrentUse").prop("disabled", true);
                 $("#pointStoreyNumber").prop("disabled", true);
@@ -727,8 +746,13 @@ function cargarPunto() {
                 } else {
                     $("#reporteLikeCounterTxt").html("<i class='fa fa-thumbs-o-down'></i>");
                 }
-                $("#btnReporteLike").show();
-                $("#btnReporteDislike").show();
+                if (response.likeEnabled) {
+                    $("#btnReporteLike").show();
+                    $("#btnReporteDislike").show();
+                } else {
+                    $("#btnReporteLike").hide();
+                    $("#btnReporteDislike").hide();
+                }
 
                 currentLoteY = response.lat;
                 currentLoteX = response.lon;
@@ -745,7 +769,7 @@ function cargarPunto() {
                 glPoint2.clear();
                 glPoint2.add(new _Graphic(currentPoint, marker), null, null);
                 mapDetalle.centerAndZoom(currentPoint, 9);
-                cargarDatos();
+                cargarDatos(true);
             } else {
                
             };
@@ -757,7 +781,7 @@ function cargarPunto() {
     });
 }
 
-function cargarDatos() {
+function cargarDatos(readOnly) {
     $("#codigoLote").html(currentLote);
     $("#placaLote").html("");
     $("#usoLote").html("");
@@ -811,7 +835,7 @@ function cargarDatos() {
         var sHTML = "";
         for (var i = 0; i < usosConsolidados.length; i++) {
             try {
-                sHTML = sHTML + (usosConsolidados[i]) + "\n";
+                sHTML = sHTML + (usosConsolidados[i]) + "<br />";
             } catch (err) {
 
             }
@@ -819,6 +843,25 @@ function cargarDatos() {
         if (sHTML.length == 0) {
             sHTML = "No disponible\n";
         }
+
+        if ((usosConsolidados.length > 1) && (!readOnly)) {
+            $("#pointCurrentUse").empty();
+            for (var i = 0; i < usosConsolidados.length; i++) {
+                try {
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Comercial', text: 'De ' + usosConsolidados[i] + ' a Comercial' }));
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Industrial', text: 'De ' + usosConsolidados[i] + ' a Industrial' }));
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Dotacional', text: 'De ' + usosConsolidados[i] + ' a Dotacional' }));
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Residencial', text: 'De ' + usosConsolidados[i] + ' a Residencial' }));
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Recreacional', text: 'De ' + usosConsolidados[i] + ' a Recreacional' }));
+                    $('#pointCurrentUse').append($('<option>', { value: 'De ' + usosConsolidados[i] + ' a Otro', text: 'De ' + usosConsolidados[i] + ' a Otro' }));
+                } catch (err) {
+
+                }
+            }            
+            $("#pointCurrentUse").val("");
+        }
+        
+
         sHTML = sHTML.substring(0, sHTML.length - 1);
         $("#usoLote").html(sHTML);
     });
@@ -885,12 +928,6 @@ function registroLike(signo) {
 }
 
 function gotoRegistro() {
-    hideAll();
-    $("#registroDiv").show();
-    $("#registro-toolbar").show();
-}
-
-function gotoRegistroAgain() {
     hideAll();
     $("#registroDiv").show();
     $("#registro-toolbar").show();

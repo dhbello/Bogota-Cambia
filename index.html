@@ -104,7 +104,7 @@
                 </div>
                 <div class="navbar-inner" id="terminos-toolbar" style="display: none;">
                     <div class="left">
-                        <a href="#" onclick="gotoRegistroAgain();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                        <a href="#" onclick="gotoRegistro2();" class="link"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="center navcenter">Bogotá Cambia</div>
                     <div class="right">
@@ -182,7 +182,7 @@
                         <div id="registroDiv" style="display: none;">
                             <div class="content-block">
                                 <div class="content-block">
-                                    <p>Para iniciar ingresa tu correo y password:</p>
+                                    <p>Para iniciar ingresa tu correo y contrase&ntilde;a:</p>
                                     <div class="list-block inset">
                                         <ul>
                                             <li>
@@ -198,7 +198,7 @@
                                                 <div class="item-content">
                                                     <div class="item-inner">
                                                         <div class="item-input">
-                                                            <input id="loginpassword" type="password" placeholder="Password">
+                                                            <input id="loginpassword" type="password" placeholder="Contraseña">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -234,7 +234,7 @@
                         <div id="registro2Div" style="display: none;">
                             <div class="content-block">
                                 <div class="content-block">
-                                    <p>Para registrarte, ingresa tus datos b&aacute;sicos:</p>
+                                    <p>Para registrarte, ingresa tus datos:</p>
                                     <div class="list-block">
                                         <ul>
                                             <li>
@@ -268,7 +268,7 @@
                                                 <div class="item-content">
                                                     <div class="item-inner">
                                                         <div class="item-input">
-                                                            <input id="fpassword" type="password" placeholder="Password">
+                                                            <input id="fpassword" type="password" placeholder="Contraseña">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -543,12 +543,7 @@
                                                 <div style="text-align: center; width: 100%;">
                                                     <div style="color: #145F7E;font-weight: bold;">Uso</div>
                                                     <select id="pointCurrentUse" style="text-align: center; text-align-last: center;">
-                                                        <option>Comercial</option>
-                                                        <option>Industrial</option>
-                                                        <option>Dotacional</option>
-                                                        <option>Residencial</option>
-                                                        <option>Recreacional</option>
-                                                        <option>Otro</option>
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
@@ -585,10 +580,10 @@
 
                                                     </div>
                                                     <br />
-                                                    <p class="buttons-row">
-                                                        <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="background-color: #004167;margin-left: 0px; border-radius: 0px;" class="button color-white"><i class="fa fa-camera" aria-hidden="true"></i></a>
-                                                        <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="background-color: #004167;margin-left: 0px; border-radius: 0px;" class="button color-white"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
-                                                        <a href="#" onclick="clearPhotos();" style="margin-left: 0px; border-radius: 0px;" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                    <p class="buttons-row" style="margin-left: -20px;">
+                                                        <a href="#" onclick="addPhotos(Camera.PictureSourceType.CAMERA);" style="background-color: #145F7E;color:#37C5EF !important;padding-left: 0px; padding-right: 0px; margin-left: 0px; border-radius: 0px;" class="button color-white"><i class="fa fa-camera" aria-hidden="true"></i></a>
+                                                        <a href="#" onclick="addPhotos(Camera.PictureSourceType.SAVEDPHOTOALBUM);" style="background-color: #145F7E;color:#37C5EF !important;padding-left: 0px; padding-right: 0px; margin-left: 0px; border-radius: 0px;" class="button color-white"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                                                        <a href="#" onclick="clearPhotos();" style="background-color: #E8343E;padding-left: 0px; padding-right: 0px; margin-left: 0px; border-radius: 0px;" class="button color-white bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                     </p>
 
                                                 </div>
