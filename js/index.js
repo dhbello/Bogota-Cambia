@@ -921,7 +921,7 @@ function registroLike(signo) {
             };
         },
         error: function () {
-            myApp.hidePreloader();
+            
 
         }
     });
@@ -964,6 +964,35 @@ function starClick(value) {
 
 function enviarComentario() {
     myApp.closeModal('#comentariosDiv');
+    var value = 0;
+    var stars = $(".star_active");
+    for (var i = 0; i < stars.length; i++) {
+        if (parseInt($(stars[i]).attr("data-value")) > value) {
+            value = parseInt($(stars[i]).attr("data-value"));
+        }        
+    }
+
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "rateApp",
+            user: currentUser,
+            token: currentToken,
+            score: value,
+            comment: $("#txtComentario").val()
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.status == "OK") {
+
+            };
+        },
+        error: function () {
+
+
+        }
+    });
 }
 
 function cancelarComentario() {
