@@ -489,6 +489,13 @@ function gotoRegistro2() {
     $("#registro2-toolbar").show();
 }
 
+function gotoRegistro2Again() {
+    hideAll();
+    $("#registro2Div").show();
+    $("#registro2-toolbar").show();
+}
+
+
 function submitRegistro() {
 
     $.validity.start();
@@ -551,6 +558,9 @@ function submitRegistro() {
         success: function (response) {
             myApp.hidePreloader();
             if (response.status == "OK") {
+                setTimeout(function () {
+                    sendAlert('Registro exitoso.');
+                }, 1500);
                 currentUser = $("#fcorreo").val().toLowerCase();
                 window.localStorage.setItem("user", currentUser);
                 currentToken = response.token;
