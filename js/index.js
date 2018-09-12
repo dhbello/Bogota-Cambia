@@ -88,14 +88,6 @@ function init() {
         }
     }
     initMap();
-    $('input[type=radio][name=ftipo]').on('change', function () {
-        if ($(this).val() == cambioStr) {
-            $("#detalleTipo").show();
-            $("input:radio[name ='ftipodetalle']").removeAttr("checked");
-        } else {
-            $("#detalleTipo").hide();
-        }
-    });
 }
 
 function initMap() {
@@ -1057,6 +1049,21 @@ function clearPhotos() {
 function submitReport() {
     if (photoURLS.length == 0) {
         sendAlert('Debe incluir por lo menos una foto.');
+        return;
+    }
+
+    if (($("#pointChangeType").val() == null) || ($("#pointChangeType").val() == "")) {
+        sendAlert('Debe seleccionar un tipo de cambio.');
+        return;
+    }
+
+    if (($("#pointCurrentUse").val() == null) || ($("#pointCurrentUse").val() == "")) {
+        sendAlert('Debe seleccionar un tipo de uso.');
+        return;
+    }
+
+    if (($("#pointStoreyNumber").val() == null) || ($("#pointStoreyNumber").val() == "")) {
+        sendAlert('Debe seleccionar el n&uacute;mero de pisos.');
         return;
     }
 
