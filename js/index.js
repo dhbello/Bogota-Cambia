@@ -52,14 +52,7 @@ var queryConstruccionUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/re
 var queryUsoUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/52";
 var queryPlacaUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/34";
 
-/*
-var _url_photo = 'https://dinamica-147714.appspot.com/Imagen';
-var _url_msg = 'https://20161105t160625-dot-dinamica-147714.appspot.com/Registro?';
-var _url_user = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioRegistro?';
-var _url_balance = 'https://20161105t160625-dot-dinamica-147714.appspot.com/UsuarioBalance?';
-*/
-
-var _url = 'http://54.152.110.2:8080/bogotaCambia';
+var _url = 'http://13.92.62.227:8080/bogotaCambia';
 
 gotoMain();
 
@@ -376,9 +369,9 @@ function gotoSettings() {
             onClick: function () {
                 alturasLayer.setOpacity(0.5);
                 usosLayer.setOpacity(0);
-                $("#legendDiv").show();
                 $("#alturaTable").show();
                 $("#usosTable").hide();
+                $("#reporteTable").hide();
             }
         },
         {
@@ -386,9 +379,9 @@ function gotoSettings() {
             onClick: function () {
                 alturasLayer.setOpacity(0);
                 usosLayer.setOpacity(0.5);
-                $("#legendDiv").show();
                 $("#alturaTable").hide();
                 $("#usosTable").show();
+                $("#reporteTable").hide();
             }
         },
         {
@@ -396,7 +389,9 @@ function gotoSettings() {
             onClick: function () {
                 alturasLayer.setOpacity(0);
                 usosLayer.setOpacity(0);
-                $("#legendDiv").hide();
+                $("#alturaTable").hide();
+                $("#usosTable").hide();
+                $("#reporteTable").show();
             }
         }
     ], [
