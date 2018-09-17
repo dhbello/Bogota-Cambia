@@ -648,7 +648,11 @@ function gotoMap() {
     if (window.localStorage.getItem("tutorial") == null) {
         gotoTutorial();
     };
-    glPoint.clear();
+    try {
+        glPoint.clear();
+    } catch (err) {
+
+    }
 
 };
 

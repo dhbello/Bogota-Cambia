@@ -35,23 +35,35 @@
         <div style="background: #fff;" class="content-block">
             <h1 id="user_name" style="margin-bottom: 0em;"></h1>
             <p id="user_email" style="margin-top: 0;"></p>
-            <div class="chip chip2" style="width: 100%;">
-                <div id="ptTotales" class="chip-media chip-media2" style="background-color: #004167;"></div>
-                <div class="chip-label">Puntos</div>
-            </div>
-            <div class="chip chip2" style="width: 100%;">
-                <div id="rgTotales" class="chip-media chip-media2" style="background-color: #004167;"></div>
-                <div class="chip-label">Registros</div>
-            </div>
+            <table style="width:100%;" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td style="background-color:#F2F2F2;text-align: center;border-bottom: 1px #145B7C solid;">
+                            <img src="images/PUNTOS.png" style="height: 30px;margin-top: 3px;width: 30px;">
+                        </td>
+                        <td style="background-color:#F2F2F2;color:#145B7C;border-bottom: 1px #145B7C solid;">Puntos</td>
+                        <td style="background-color: #15AAE4;color: white;border-bottom: 1px #145B7C solid;width: 64px;text-align: center;font-size: large;"><div id="ptTotales" ></div></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#F2F2F2;text-align: center;">
+                            <img src="images/REGISTROS.png" style="height: 30px;margin-top: 3px;width: 30px;">
+                        </td>
+                        <td style="background-color:#F2F2F2;color:#145B7C;">Registros</td>
+                        <td style="background-color: #15AAE4;color: white;width: 64px;text-align: center;font-size: large;"><div id="rgTotales"></div></td>
+                    </tr>
+                </tbody>
+            </table>
             <br />
             <p class="buttons-row">
-                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoRegistrosDetail();">Ver puntos registrados</a>
+                <a href="#" class="button button-fill button-raised" style="background-color: #15AAE4;" onclick="gotoRegistrosDetail();">
+                    <img src="images/VERPUNTOS-REGISTRADOS.png" style="height: 30px;margin-top: 3px;width: 30px;">&nbsp;&nbsp;<span style="vertical-align:top;">Puntos registrados</span>
+                </a>
             </p>
             <p class="buttons-row">
-                <a href="#" class="button button-fill button-raised" style="background-color: #004167;" onclick="gotoComentario();">Calificar la app</a>
+                <a href="#" class="button button-fill button-raised" style="background-color: #15AAE4;" onclick="gotoComentario();">Calificar la app</a>
             </p>
             <p class="buttons-row">
-                <a href="#" class="button button-fill button-raised color-red" onclick="logout();">Cerrar sesi&oacute;n</a>
+                <a href="#" class="button button-fill button-raised" style="background-color: #E8343F;" onclick="logout();">Cerrar sesi&oacute;n</a>
             </p>
             <img src="images/Logo_ideca_color.png" style="width: 100%;">
         </div>
@@ -666,9 +678,9 @@
                         </div>
                         <div id="tutorialDiv" style="display: none;height: 100%;overflow: hidden;">
                             <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;background: #00ADEE;"></div>
-                            <div class="content-block" style="height: 100%;">
+                            <div class="content-block" style="height: 100%; margin-top: 0px;">
                                 <div class="swiper-container" style="width: auto; height: 100%;">
-                                    <div class="swiper-pagination" style="bottom: 56px;"></div>
+                                    <div class="swiper-pagination" style=""></div>
                                     <div class="swiper-wrapper" style="height: 100%;">
                                         <div class="swiper-slide" style="color: white;font-weight: bold;">
                                             <div style="position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;color: #1888B8;text-align: center;font-size: 90vw;vertical-align: bottom;z-index: -5;">1</div>
@@ -690,6 +702,12 @@
                                                 <img src="./images/3.png" style="height: 35vw;width: 35vw;text-align: center;"><br />
                                                 Pero si observas que un terreno que antes era residencial y ahora es comercial, ó viceversa, ó incluso cualquier otra variación del predio en cuanto a su uso, entras a Bogotá Cambia, señalas Cambio de uso y especificas cuál.
                                             </p>
+                                        </div>
+                                        <div class="swiper-slide" style="color: white;font-weight: bold;text-align: center;">
+                                            <img src="./images/SELECCION-DE-PREDIOS.png" style="text-align: center;">
+                                        </div>
+                                        <div class="swiper-slide" style="color: white;font-weight: bold;text-align: center;">
+                                            <img src="./images/TRASNPARENCIA-TUTORIAL.png" style="text-align: center;">
                                         </div>
                                     </div>
                                 </div>
