@@ -52,7 +52,7 @@ var queryConstruccionUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/re
 var queryUsoUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/52";
 var queryPlacaUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/34";
 
-var _url = 'http://13.92.62.227:8080/bogotaCambia';
+var _url = 'http://13.92.93.156:8080/bogotaCambia';
 
 gotoMain();
 
@@ -214,7 +214,7 @@ function initMap2() {
     });
     map = new _Map("map", {
         zoom: 9,
-        minZoom: 7,
+        minZoom: 8,
         basemap: "referencia",
         spatialReference: { wkid: 4686  },
         center: new _Point(-74.0817810139777, 4.62585823130184, { wkid: 4686 }),
@@ -225,7 +225,7 @@ function initMap2() {
     });
     mapDetalle = new _Map("mapDetalle", {
         zoom: 9,
-        minZoom: 7,
+        minZoom: 8,
         basemap: "referencia",
         spatialReference: { wkid: 4686 },
         center: new _Point(-74.0817810139777, 4.62585823130184, { wkid: 4686 }),
@@ -292,7 +292,7 @@ function initMap2() {
         mode: _FeatureLayer.MODE_AUTO,
         outFields: ["PDoTexto"]
     });
-    placaLayer2 = new _ArcGISDynamicMapServiceLayer("http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/");
+    placaLayer2 = new _ArcGISDynamicMapServiceLayer("https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/");
 
     glPoint = new _GraphicsLayer();
     //map.addLayers([placaLayer, placaLayer2, loteLayer, glPoint]);
@@ -314,14 +314,16 @@ function initLocationGPS() {
     try {
 
         navigator.geolocation.getCurrentPosition(function (position) {
-            currentPointX = position.coords.longitude;
-            currentPointY = position.coords.latitude;
-            currentPoint = new _Point(currentPointX, currentPointY, { wkid: 4686 });
-            glPoint.clear();
-            glPoint.add(new _Graphic(currentPoint, marker2), null, null);
-            map.centerAt(currentPoint);
-        },
-            function (error) {
+            if ((position.coords.longitude > -75.0) && (position.coords.longitude < -73.0) &&
+                (position.coords.latitude > 4.5) && (position.coords.latitude < 4.8)) {
+                currentPointX = position.coords.longitude;
+                currentPointY = position.coords.latitude;
+                currentPoint = new _Point(currentPointX, currentPointY, { wkid: 4686 });
+                glPoint.clear();
+                glPoint.add(new _Graphic(currentPoint, marker2), null, null);
+                map.centerAt(currentPoint);
+            }
+            }, function (error) {
 
             },
             { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 });
@@ -342,18 +344,18 @@ function updateSize() {
 function gotoSettings() {
     myApp.actions([[
          {
-             text: 'Mapa Base',
+             text: 'Imagen de fondo',
              label: true
          },
         {
-            text: 'Referencia',
+            text: 'Sat&eacute;lite',
             onClick: function () {
                 map.setBasemap("referencia");
                 mapDetalle.setBasemap("referencia");
             }
         },
         {
-            text: 'Hibrido',
+            text: 'H&iacute;brido',
             onClick: function () {
                 map.setBasemap("hibrido");
                 mapDetalle.setBasemap("hibrido");
@@ -361,7 +363,7 @@ function gotoSettings() {
         }
     ], [
         {
-            text: 'Informacion adicional',
+            text: 'Informaci&oacute;n adicional',
             label: true
         },
         {
@@ -615,7 +617,7 @@ function login() {
                 updatePoints();
             } else {
                 setTimeout(function () {
-                    sendAlert('Usuario o contrase&ntilde;a invalido.');
+                    sendAlert('Usuario o contrase&ntilde;a invalido. Si tiene problemas con el acceso puede contactar a ideca@catrastrobogota.gov.co');
                 }, 1500);
             };
         },
