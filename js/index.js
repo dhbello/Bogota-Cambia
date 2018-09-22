@@ -410,6 +410,8 @@ function hideAll() {
     $("#map-toolbar").hide();
     $("#map-footer-toolbar").hide();
     $("#gpsBtn").hide();
+    $("#btnReporteLike").hide();
+    $("#btnReporteDislike").hide();
 
     $("#reporteDiv").hide();
     $("#reporte-toolbar").hide();
