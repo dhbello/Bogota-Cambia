@@ -348,7 +348,7 @@ function gotoSettings() {
              label: true
          },
         {
-            text: 'Sat&eacute;lite',
+            text: 'Mapa',
             onClick: function () {
                 map.setBasemap("referencia");
                 mapDetalle.setBasemap("referencia");
@@ -617,7 +617,7 @@ function login() {
                 updatePoints();
             } else {
                 setTimeout(function () {
-                    sendAlert('Usuario o contrase&ntilde;a invalido. Si tiene problemas con el acceso puede contactar a ideca@catrastrobogota.gov.co');
+                    sendAlert('Usuario o contrase&ntilde;a inv&aacute;lido. Si tiene problemas con el acceso cont&aacute;ctenos a trav&eacute;s de ideca@catrastrobogota.gov.co');
                 }, 1500);
             };
         },
@@ -1140,7 +1140,7 @@ function updatePoints() {
             if (response.status == "OK") {
                 for (var i = 0; i < response.points.length; i++) {
                     cacheReportes[response.points[i].lotID] = response.points[i].pointID;
-                    renderer.addValue(response.points[i].lotID, new _SimpleFillSymbol().setColor(new _Color([255, 0, 0, 0.5])));
+                    renderer.addValue(response.points[i].lotID, new _SimpleFillSymbol().setColor(new _Color([165, 7, 18, 0.5])));
                 }
                 loteLayer.refresh();
                 loteLayer2.refresh();

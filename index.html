@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
         -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
@@ -169,15 +169,15 @@
                     </div>
                 </div>
             </div>
-            <a href="#" id="gpsBtn" style="left: 10px;top: 70px;" class="floating-button" onclick="initLocationGPS();">
+            <a href="#" id="gpsBtn" style="left: 10px;top: 70px;display: none;" class="floating-button" onclick="initLocationGPS();">
                 <img src="./images/gps.png" style="width:25px;height:25px;">
             </a>
-            <div class="speed-dial" id="speed-dial" style="display: none;">
-                <a href="#" class="floating-button" style="background-color: #004167;">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                </a>
-            </div>
+            <a href="#" id="btnReporteLike" class="floating-button" style="left: 16px;display: none; " onclick="registroLike('-');">
+                <i class="fa fa-thumbs-o-down"></i>
+            </a>
+            <a href="#" id="btnReporteDislike" class="floating-button" style="display: none;" onclick="registroLike('+');">
+                <i class="fa fa-thumbs-o-up"></i>
+            </a>
             <div class="pages">
                 <div data-page="index" class="page navbar-fixed">
                     <div class="page-content">
@@ -484,12 +484,6 @@
                             <div id="map" style="padding: 0px; width: 100%; height: 100%;"></div>
                         </div>
                         <div id="reporteDiv" style="display: none;">
-                            <a href="#" id="btnReporteLike" class="floating-button floating-button-to-popover open-popover" style="left: 16px; position: fixed;" onclick="registroLike('-');">
-                                <i class="fa fa-thumbs-o-down"></i>
-                            </a>
-                            <a href="#" id="btnReporteDislike" class="floating-button floating-button-to-popover open-popover" style="position: fixed;" onclick="registroLike('+');">
-                                <i class="fa fa-thumbs-o-up"></i>
-                            </a>
                             <div class="content-block">
                                 <div id="mapDetalle" style="height: 400px; width: 100%;">
                                 </div>
@@ -511,7 +505,7 @@
                                         <div class="item-media"><img src="./images/codigo-dellote.png" /></div>
                                         <div class="item-inner" style="background: lightgray; padding-left: 16px; margin-left: 0px;">
                                             <div style="text-align: center; width: 100%;">
-                                                <div style="color: #145F7E;font-weight: bold;">Codigo de Lote</div>
+                                                <div style="color: #145F7E;font-weight: bold;">C&oacute;digo de Lote</div>
                                                 <div id="codigoLote" style="font-size: initial;color: gray;"></div>
                                             </div>
                                         </div>
@@ -704,10 +698,10 @@
                                             </p>
                                         </div>
                                         <div class="swiper-slide" style="color: white;font-weight: bold;text-align: center;">
-                                            <img src="./images/SELECCION-DE-PREDIOS.png" style="text-align: center;">
+                                            <img src="./images/TRASNPARENCIA-TUTORIAL.png" style="text-align: center;">
                                         </div>
                                         <div class="swiper-slide" style="color: white;font-weight: bold;text-align: center;">
-                                            <img src="./images/TRASNPARENCIA-TUTORIAL.png" style="text-align: center;">
+                                            <img src="./images/SELECCION-DE-PREDIOS.png" style="text-align: center;">
                                         </div>
                                     </div>
                                 </div>
