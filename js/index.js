@@ -72,8 +72,8 @@ function onDeviceReady() {
 }
 
 function init() {
-    currentUser = window.localStorage.getItem("user");
-    currentToken = window.localStorage.getItem("token");
+    currentUser = window.localStorage.getItem("user2");
+    currentToken = window.localStorage.getItem("token2");
     if (isPhoneGapExclusive()) {
         if ((navigator.connection.type == 0) || (navigator.connection.type == 'none')) {
             sendAlert('Esta aplicaci&oacute;n requiere conexi&oacute;n a internet.');
@@ -467,6 +467,8 @@ function gotoTutorial() {
     $("#tutorialDiv").show();
     $("#tutorial-toolbar").show();
     myApp.swiper($('.swiper-container'), { pagination: '.swiper-pagination' });
+    $$('.swiper-container')[0].swiper.slideTo(1);
+    $$('.swiper-container')[0].swiper.slideTo(0);
     window.localStorage.setItem("tutorial", true);
 };
 
@@ -553,9 +555,9 @@ function submitRegistro() {
                     sendAlert('Registro exitoso.');
                 }, 1500);
                 currentUser = $("#fcorreo").val().toLowerCase();
-                window.localStorage.setItem("user", currentUser);
+                window.localStorage.setItem("user2", currentUser);
                 currentToken = response.token;
-                window.localStorage.setItem("token", currentToken);
+                window.localStorage.setItem("token2", currentToken);
                 gotoMap();
                 updateUser();
                 updatePoints();
@@ -611,9 +613,9 @@ function login() {
             myApp.hidePreloader();
             if (response.status == "OK") {
                 currentUser = $("#logincorreo").val().toLowerCase();
-                window.localStorage.setItem("user", currentUser);
+                window.localStorage.setItem("user2", currentUser);
                 currentToken = response.token;
-                window.localStorage.setItem("token", currentToken);
+                window.localStorage.setItem("token2", currentToken);
                 gotoMap();
                 updateUser();
                 updatePoints();
@@ -1205,8 +1207,8 @@ function logout() {
     myApp.closePanel('right');
     currentUser = null;
     currentToken = null;
-    window.localStorage.removeItem("user");
-    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("user2");
+    window.localStorage.removeItem("token2");
     window.localStorage.removeItem("tutorial");
     gotoMain();
 };
