@@ -52,7 +52,7 @@ var queryConstruccionUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/re
 var queryUsoUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/52";
 var queryPlacaUrl = "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/34";
 
-var _url = 'http://13.92.93.156:8080/bogotaCambia';
+var _url = 'http://moviles.ideca.gov.co:8080/bogotaCambia';
 
 gotoMain();
 
@@ -621,7 +621,28 @@ function login() {
                 updatePoints();
             } else {
                 setTimeout(function () {
-                    sendAlert('Usuario o contrase&ntilde;a inv&aacute;lido. Si tiene problemas con el acceso cont&aacute;ctenos a trav&eacute;s de ideca@catrastrobogota.gov.co');
+                    myApp.modal({
+                        text: 'Usuario o contrase&ntilde;a inv&aacute;lido. Si tiene problemas con el acceso cont&aacute;ctenos a trav&eacute;s de ideca@catastrobogota.gov.co',
+                        verticalButtons: true,
+                        buttons: [
+                          {
+                              text: 'Aceptar',
+                              onClick: function () {
+                                  
+                              }
+                          },
+                          {
+                              text: 'Cambio de contrase&ntilde;a',
+                                onClick: function () {
+                                    resetPassword();
+                                }
+                          }
+                        ]
+                    });
+                    /*
+                    sendAlert('. Si tiene problemas con el acceso cont&aacute;ctenos a trav&eacute;s de ideca@catastrobogota.gov.co');
+                    */
+
                 }, 1500);
             };
         },
@@ -634,6 +655,40 @@ function login() {
         }
     });
 }
+
+
+function resetPassword() {
+
+    myApp.showPreloader("Por favor, espere.");
+    $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+            action: "resetPassword",
+            user: $("#logincorreo").val().toLowerCase()
+        },
+        dataType: 'json',
+        success: function (response) {
+            myApp.hidePreloader();
+            if (response.status == "OK") {
+                setTimeout(function () {
+                    sendAlert('Solicitud de cambio de contrase&ntilde;a exitoso. Recibir&aacute; un correo con instrucciones.');
+                }, 1500);
+            } else {
+                setTimeout(function () {
+                    sendAlert('No se pudo solicitar el cambio de contrase&ntilde;a del usuario. Si tiene problemas con el acceso cont&aacute;ctenos a trav&eacute;s de ideca@catastrobogota.gov.co');
+                }, 1500);
+            };
+        },
+        error: function () {
+            myApp.hidePreloader();
+            setTimeout(function () {
+                sendAlert('No se pudo solicitar el cambio de contrase&ntilde;a del usuario, por favor, intente m&aacute;s tarde.');
+            }, 1500);
+
+        }
+    });
+};
 
 function gotoMain() {
     hideAll();

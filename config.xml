@@ -4,9 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "gov.ideca.DinamicaUrbana"
-	      version   = "130"
-        ios-CFBundleVersion="1.4.0"
-        android-versionCode="130">
+	      version   = "131"
+        ios-CFBundleVersion="1.5.0"
+        android-versionCode="131">
 
     <name>Bogotá Cambia</name>
 
